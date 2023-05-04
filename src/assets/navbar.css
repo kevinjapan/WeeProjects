@@ -1,0 +1,165 @@
+/*
+NavBar - simple, responsive, generic navigation bar
+         using nesting to achieve differential transition speeds
+*/
+.navbar {
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    height:2rem;
+    margin-block:0;
+    padding-block:0;
+}
+
+/* top - title and hamburger */
+.navbar_topbar {
+    display:flex;
+    width:100%;
+    justify-content:space-between;
+    /* background:white; */
+    position:relative;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 255, .1);
+}
+.navbar_title a {text-decoration:none;}
+
+/* 
+links - child of NavBar component 
+*/
+
+/* preserve initial height in flow - and hides NavBar left offscreen */
+.navbar_links_wrap_init {
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    z-index:999999999999;
+    /* we use scale to remove hidden links from flow */
+    transform:scaleY(.0002);
+    transition:transform 1.25s ease-in-out;
+}
+
+/* provides vertical movement on dropdown */
+.navbar_links_wrap {
+    width:100%;
+    transform:translateY(-20%);
+    transition:transform .5s ease-in-out;  
+}
+
+/* dropdown links - hidden */
+.navbar_links {
+    width:100%;
+    margin-top:10px;
+    opacity:0;
+    transition:opacity .5s ease-in-out;
+    /* background:white; */
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 255, .1);
+}
+/* .navbar_links ul {
+    display:flex;
+    flex-direction:column;
+    gap:.5rem;
+    list-style:none;
+    padding:1rem;
+} */
+.navbar_links a {
+    text-decoration:none;
+}
+
+/* dropdown links - expanded */
+
+.navbar_links_wrap_init.nav_droppeddown{
+    transform:scaleY(1);
+    transition:transform .0002s ease-in-out;
+}
+.navbar_links_wrap.nav_droppeddown {
+    transform:translateY(0%);
+    transition:transform .5s ease-in-out;
+}
+.navbar_links.nav_droppeddown {
+    opacity:1;
+    transition:transform .00001s ease-in-out,opacity .5s ease-in-out; 
+}
+
+/*
+md/lg NavBar 
+*/
+@media screen and (min-width: 768px) {
+    .navbar {
+        flex-direction:row;
+        align-items:center;
+    }
+    .navbar_topbar {
+        width:fit-content;
+    }
+    .navbar_links_wrap_init {
+        flex-direction:row;
+    }
+    .navbar_links_wrap {
+        transform:translateY(0%);
+    }
+    .navbar_links {
+        position:static;
+        box-shadow: none;
+        margin-top:0;
+    }
+    /* .navbar_links ul {
+        flex-direction:row;
+        justify-content:flex-end;
+        gap:2rem;
+        padding:.25rem;
+    }  */
+}
+
+/* 
+Component - NavBar Hamburger 
+*/
+.nav_hamburger {
+    position:relative;
+    width:21px;
+    height:21px;
+    margin-inline:1rem;
+    cursor:pointer;
+    background:black;
+    z-index:9999999;
+    /* align-self:flex-end; */
+}
+.nav_hamburger::before,
+.nav_hamburger::after {
+    content:'';
+    position:absolute;
+    width:100%;
+    height:6px;
+    background:white;
+}
+.nav_hamburger::before {
+    top:3px;
+}
+.nav_hamburger::after {
+    top:12px;
+} 
+.nav_hamburger[data-nav-open="true"] {
+    background:lightgrey;
+}
+
+
+
+/* hide/show utility for nav */
+
+.hide {display:none;}
+.show {display:block;}
+
+@media screen and (min-width: 576px) {
+    .hide-sm {display:none;}
+    .show-sm {display:block;}
+}
+@media screen and (min-width: 768px) {
+    .hide-md {display:none;}
+    .show-md {display:block;}
+}
+@media screen and (min-width: 992px) {
+    .hide-lg {display:none;}
+    .show-lg {display:block;}
+}
+@media screen and (min-width: 1400px) {
+    .hide-xl {display:none;}
+    .show-xl {display:block;}
+}

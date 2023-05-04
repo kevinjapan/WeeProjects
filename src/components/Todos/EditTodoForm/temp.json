@@ -1,0 +1,49 @@
+{
+   "outcome":"success",
+   "bearer_token":"kadfbnadfpoiyoaidn823ksdfdat_eo24jlad",
+   "data":{
+      "id":1,"title":"weeprojects","slug":"weeprojects","created_at":"2023-03-04 12:33:07","updated_at":"2023-04-04 11:38:01",
+      "tasks":[
+            {
+               "id":45,"title":"Back-End API","slug":"Back-End-API","outline":"Complete primary functionality of basic back-end engine","project_id":1,"author_id":0,"created_at":"2023-04-03 12:45:18","updated_at":"2023-04-03 12:45:18",
+               "todos":[
+                  {"id":417,"title":"Security - implement bearer token model","slug":"Security---implement-bearer-token-model","done_at":null,"created_at":"2023-04-03 12:45:35"},
+                  {"id":418,"title":"Security - validation on all strings - Controllers","slug":"Security---validation-on-all-strings---Controllers","done_at":null,"created_at":"2023-04-03 12:45:52"}
+               ]
+            },
+            {
+               "id":41,"title":"Comments","slug":"Comments","outline":"add comments for all artifacts","project_id":1,"author_id":1,"created_at":"2023-03-30 12:57:03","updated_at":"2023-03-30 12:57:03",
+               "todos":[
+                  {"id":404,"title":"Add Comments to backend and API","slug":"Add-Comments-to-backend-and-API","done_at":"2023-04-25 12:34:43","created_at":"2023-03-30 12:57:18"},
+                  {"id":405,"title":"Add Comments for all artifacts to frontend UI","slug":"Add-Comments-for-all-artifacts-to-frontend-UI","done_at":null,"created_at":"2023-03-30 12:57:32"},
+                  {"id":406,"title":"Cascade deletes on artifacts to include all comments","slug":"Cascade-deletes-on-artifacts-to-include-all-comments","done_at":null,"created_at":"2023-03-30 12:58:05"}
+               ]
+            },
+            {
+               "id":6,"title":"User Interface","slug":"User-Interface","outline":"UI for weeprojects version 1","project_id":1,"author_id":1,"created_at":"2023-03-04 12:33:07","updated_at":"2023-03-04 12:33:07",
+               "todos":[
+                  {
+                     "id":415,"title":"Edit Todo field and UX is variable","slug":"Edit-Todo-field-and-UX-is-variable","done_at":null,"created_at":"2023-04-03 12:43:59"},
+                  {
+                     "id":416,"title":"Make all forms consistent layout and styling","slug":"Make-all-forms-consistent-layout-and-styling","done_at":null,"created_at":"2023-04-03 12:44:26"
+                  },
+                  {
+                     "id":419,"title":"NavBar - edge-cases - title length and number of links","slug":"NavBar---edge-cases---title-length-and-number-of-links","done_at":null,"created_at":"2023-04-03 12:48:06"
+                  },
+                  {
+                     "id":426,"title":"Tidy Layout &amp; Styling All Pages","slug":"Tidy-Layout-&amp;-Styling-All-Pages","done_at":null,"created_at":"2023-04-04 11:44:09"},
+                  {
+                     "id":427,"title":"Try horizontal carousel TasksList","slug":"Try-horizontal-carousel-TasksList","done_at":null,"created_at":"2023-04-04 11:50:19"},
+                  {
+                     "id":456,"title":"Delete a task doesn't update on front-end","slug":"Delete-a-task-doesn't-update-on-front-end","done_at":null,"created_at":"2023-04-24 12:31:17"
+                  },
+                  {
+                     "id":457,"title":"Navbar media query doesn't kick in for narrow bars on lg screens","slug":"Navbar-media-query-doesn't-kick-in-for-narrow-bars-on-lg-screens","done_at":null,"created_at":"2023-04-24 12:39:17"
+                  },
+                  {
+                     "id":458,"title":"Task navigation needs improvement - dates? -current task of tasks?","slug":"Task-navigation-needs-improvement---dates?--current-task-of-tasks?","done_at":null,"created_at":"2023-04-24 12:42:48"
+                  }
+               ]}
+      ]
+   }
+}

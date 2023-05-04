@@ -1,0 +1,55 @@
+*,*::before,*::after {
+   box-sizing: border-box;
+ }
+ 
+ html {
+   scroll-behavior: smooth;
+ }
+
+ * {
+   margin:0;
+ }
+ 
+ body {
+   font-size:16px;
+ }
+
+
+
+ /* App components */
+
+ .app_status {
+   position:fixed;
+   top:0;
+   left:0;
+   right:0;
+   z-index:var(--z-index-app-status);
+   max-width:50%;
+   margin:auto;
+   padding:2rem;
+   padding-block:5rem;
+   text-align:center;
+   opacity:0;
+   -webkit-transition:opacity .35s ease-in;   
+   -o-transition:opacity .35s ease-in; 
+   transform:translateY(-100%);  
+   transition:opacity .5s ease-in-out,transform .75s ease-in-out;
+}
+
+
+.app_status_bg {
+   opacity:.95;
+   -webkit-transition:opacity .35s ease-in;   
+   -o-transition:opacity .35s ease-in;  
+   transform:translateY(30%); 
+   transition:opacity 1s ease-in-out,transform 1s ease-in-out;
+
+}
+
+
+.disabled,
+button.disabled:hover {
+    color:lightgrey;border:solid 1px lightgrey;background:none;
+}
+
+
