@@ -53,8 +53,8 @@ const CommentsList = props => {
 
    return (
       <section className=" my-7 max-w-3xl mx-auto">
+         <h3 className="text-xl text-slate-400">Comments</h3>
          <ul className="flex flex-col gap-5 list-none p-2">
-            <h3 className="text-xl text-slate-400">Comments</h3>
             {comments ?
                comments.map((comment) => (
                   <li key={comment.id}>
@@ -64,6 +64,8 @@ const CommentsList = props => {
                :  null
             }
          </ul>
+
+         {comments ? comments.length : null}
          
          <div className="flex justify-end">
             <StyledButton aria-label="Add a comment." onClicked={() => setShowAddModal(true)} classes="flex gap-1">

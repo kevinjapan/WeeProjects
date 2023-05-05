@@ -68,7 +68,7 @@ const Comment = props => {
       <section className="border rounded p-2 text-slate-500">
          <h4 className="text-lg text-slate-700">{comment.title}</h4>
          <p className="leading-relaxed">{comment.body}</p>
-         <p className="text-sm">{get_ui_ready_date(comment.author_id)}</p>
+         <p className="text-sm">{comment.author_id}</p>
          <p className="text-sm">{get_ui_ready_date(comment.created_at)}</p>
 
          <div className="flex gap-1 justify-end">

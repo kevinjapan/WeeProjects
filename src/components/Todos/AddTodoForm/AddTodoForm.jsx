@@ -4,6 +4,7 @@ import { validate_int, validate_string } from '../../Utility/Validation/uiValida
 import StyledInput from '../../Utility/StyledInput/StyledInput'
 import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
+import { generate_slug } from '../../Utility/Stringer/uiStringer'
 
 
 
@@ -37,7 +38,8 @@ const AddTodoForm = props => {
       if(!validate_string(formJson['title'],{'min_length':10,'max_length':250},setTitleFeedback)) {
          validated = false
       } else {
-         formJson['slug'] = encodeURIComponent(formJson['title'].replace(/ /g,'-'))
+         // to do : encodeURIComponent() ?
+         formJson['slug'] = generate_slug(formJson['title'])
       }
 
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {

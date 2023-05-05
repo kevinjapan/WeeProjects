@@ -9,7 +9,6 @@ const Task = props => {
 
    return (
       <div className="md:w-8/12 mx-auto">
-
          {/* Task details */}
          <section className="mb-5">
             <h3 className="text-sm text-slate-500">
@@ -24,7 +23,6 @@ const Task = props => {
             <div>author:{props.task.author_id}</div>
             <div></div>
          </section>
-
       </div>
    )
 }

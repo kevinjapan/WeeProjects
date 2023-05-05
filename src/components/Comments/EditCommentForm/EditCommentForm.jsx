@@ -5,6 +5,7 @@ import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import StyledInput from '../../Utility/StyledInput/StyledInput'
 import StyledTextArea from '../../Utility/StyledTextArea/StyledTextArea'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
+import { generate_slug } from '../../Utility/Stringer/uiStringer'
 
 
 
@@ -40,7 +41,7 @@ const EditCommentForm = props => {
       if(!validate_string(formJson['title'],{'min_length':10,'max_length':250},setTitleFeedback)) {
          validated = false
       } else {
-         formJson['slug'] = formJson['title'].replace(/ /g,'-')
+         formJson['slug'] = generate_slug(formJson['title'])
       }
 
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {

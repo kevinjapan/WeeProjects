@@ -5,6 +5,7 @@ import StyledInput from '../../Utility/StyledInput/StyledInput'
 import StyledTextArea from '../../Utility/StyledTextArea/StyledTextArea'
 import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
+import { generate_slug } from '../../Utility/Stringer/uiStringer'
 
 
 
@@ -41,7 +42,7 @@ const UpdateTaskForm = props => {
       if(!validate_string(formJson['title'],{'min_length':3,'max_length':120},setTitleFeedback)) {
          validated = false
       } else {
-         formJson['slug'] = formJson['title'].replace(/ /g,'-')
+         formJson['slug'] = generate_slug(formJson['title'])
       }
 
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {

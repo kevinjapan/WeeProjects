@@ -31,7 +31,9 @@ const TodoContainer = () => {
 
    return (
       <div>
-         <Todo todo={todo} />
+         {todo.title ?
+            <Todo todo={todo} />
+         :  null}
       </div>
    )
 }
