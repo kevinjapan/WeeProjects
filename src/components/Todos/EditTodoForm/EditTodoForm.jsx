@@ -15,7 +15,7 @@ const EditTodoForm = props => {
    const [author_id,setAuthorId] = useState(props.todo.author_id)
    const [title_feedback,setTitleFeedback] = useState('')
    const [author_id_feedback,setAuthorIdFeedback] = useState('')
-
+   const [pin,setPin] = useState(props.todo.pin > 0 ? true : false)
    const [is_on_going,setIsOnGoing] = useState(props.todo.on_going > 0 ? true : false)
 
    const handleSubmit = e => {
@@ -27,6 +27,7 @@ const EditTodoForm = props => {
       const form = e.target
       const formData = new FormData(form)
       const formJson = Object.fromEntries(formData.entries());
+      formJson.pin = pin
       formJson.on_going = is_on_going
 
       let validated = true
@@ -50,7 +51,10 @@ const EditTodoForm = props => {
       
       if(validated) props.onSubmit(formJson)
    }
-   
+
+   const toggle_pin = () => {
+      setPin(!pin)
+   } 
    const toggle_ongoing = () => {
       setIsOnGoing(!is_on_going)
    }
@@ -61,6 +65,7 @@ const EditTodoForm = props => {
          <h5 className="text-2xl mb-5">Edit Todo</h5>
 
          <input type="hidden" name="id" value={id || 0} />
+         <input type="hidden" name="done_at" value={props.todo.done_at} />
 
          <FormElement>
             <label htmlFor="title" className="w-12/12 md:w-2/12">Title</label>
@@ -92,7 +97,14 @@ const EditTodoForm = props => {
                   onChange={e => {toggle_ongoing(e.target.checked)}} 
                />mark as on-going
             </div>
-
+         <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
+            <input 
+               name="pin"
+               type="checkbox" 
+               checked={pin || false}
+               onChange={e => {toggle_pin(e.target.checked)}} 
+            />pin to start of task list
+         </div>
             <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>
             <StyledButton aria-label="Delete." onClicked={props.onDelete}>Delete</StyledButton>
             <StyledButton aria-label="Cancel." onClicked={props.close_modal}>Cancel</StyledButton>

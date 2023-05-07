@@ -26,17 +26,15 @@ const CommentsList = props => {
          await new Promise(resolve => setTimeout(resolve, 1000))
          
          if(jsonData.outcome === 'success') {
-
             formJson['id'] = jsonData.id
             let modified_comments = comments ? [...comments] : []
-
             if(!modified_comments.some(todo => todo.id === formJson.id)) {
-                  modified_comments.push(formJson)
+               modified_comments.push(formJson)
             }
             setComments(modified_comments)
          }
          else {
-            console.log("Server couldn't create a new Comment")
+            setStatusMsg("Server couldn't create a new Comment")
          }
       }
       catch (err){

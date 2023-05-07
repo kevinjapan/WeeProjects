@@ -18,6 +18,7 @@ const UpdateTaskForm = props => {
    const [title_feedback,setTitleFeedback] = useState('')
    const [author_id_feedback,setAuthorIdFeedback] = useState('')
    const [outline_feedback,setOutlineFeedback] = useState('')
+   const [pin,setPin] = useState(props.task.pin > 0 ? true : false)
 
    const handleSubmit = e => {
       
@@ -29,6 +30,7 @@ const UpdateTaskForm = props => {
       const form = e.target
       const formData = new FormData(form)
       const formJson = Object.fromEntries(formData.entries());
+      formJson.pin = pin
 
       let validated = true
 
@@ -53,6 +55,10 @@ const UpdateTaskForm = props => {
       }
       
       if(validated) props.onSubmit(formJson)
+   }
+
+   const toggle_pin = () => {
+      setPin(!pin)
    }
 
    return (
@@ -91,6 +97,15 @@ const UpdateTaskForm = props => {
          </FormElement>
          
          <FormElementFeedback feedback_msg={outline_feedback}/>
+
+         <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
+            <input 
+               name="pin"
+               type="checkbox" 
+               checked={pin || false}
+               onChange={e => {toggle_pin(e.target.checked)}} 
+            />pin to start of task list
+         </div>
 
          <div className="flex justify-end gap-1 my-1">
                <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>

@@ -38,7 +38,6 @@ const AddTodoForm = props => {
       if(!validate_string(formJson['title'],{'min_length':10,'max_length':250},setTitleFeedback)) {
          validated = false
       } else {
-         // to do : encodeURIComponent() ?
          formJson['slug'] = generate_slug(formJson['title'])
       }
 

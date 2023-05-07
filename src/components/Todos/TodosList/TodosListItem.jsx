@@ -9,6 +9,7 @@ import StyledButton from '../../Utility/StyledButton/StyledButton'
 import EditTodoForm from '../EditTodoForm/EditTodoForm'
 import DeleteTodoForm from '../DeleteTodoForm/DeleteTodoForm'
 import { BookOpenIcon } from '@heroicons/react/24/solid'
+import { BookmarkIcon } from '@heroicons/react/24/outline'
 
 
 
@@ -25,10 +26,15 @@ const TodosListItem = props => {
       props.todo.done_at === null ? setChecked(false) : setChecked(props.todo.done_at)
    },[props.todo.done_at])
 
-   const check_todo = modified_todo => {
+   const check_todo = async(modified_todo) => {
       setLocalStatus(Notifications.UPDATING)
+
+      // we could update on-the-fly - but if server fails, costly to preserve prev. done_at 
+      // so we wait and let props.update_list() call refresh the list
+      // props.check_todo(modified_todo)
+
+      // update server
       update_todo(modified_todo)
-      props.check_todo(modified_todo)
    }
 
    const update_todo = async(formJson) => {
@@ -41,6 +47,7 @@ const TodosListItem = props => {
          await new Promise(resolve => setTimeout(resolve, 1000))
          if(jsonData.outcome === Notifications.SUCCESS) {
             setTodo(formJson)
+            props.update_list()
          }
          setLocalStatus(Notifications.DONE)
          await new Promise(resolve => setTimeout(resolve, 1000))
@@ -82,12 +89,12 @@ const TodosListItem = props => {
 
    return (
       <>
-         <li 
-            key={props.todo.id}
-            className={`${item_classes} ${todo.on_going && !checked > 0 ? 'bg-yellow-200' : ''}`} >
+         <li key={props.todo.id} className={`${item_classes} ${todo.on_going && !checked > 0 ? 'bg-yellow-200' : ''}`} >
             <div className="flex justify-between gap-1 items-center w-full m-0">
 
-               {/* checkbox */}
+               {todo.pin ? <BookmarkIcon style={{width:'16px',height:'16px'}}/> : <div style={{width:'16px'}}></div>}
+            
+               {/* list_item checkbox */}
                <input type="checkbox" checked={checked || false}
                   onChange={e => {
                      check_todo({
@@ -111,12 +118,10 @@ const TodosListItem = props => {
                      </StyledButton>
                   </Link>
                </div>
-
             </div>
                
             {/* status dropdown */}
             {local_status ? <div className="w-full text-slate-400 text-sm">{local_status}</div> : <div></div>}
-
          </li>
 
          {show_edit_modal && (

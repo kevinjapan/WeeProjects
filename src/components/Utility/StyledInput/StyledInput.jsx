@@ -10,12 +10,13 @@ const StyledInput = props => {
 
    const on_change = (e) => {
 
-      // we exclude chars not URI friendly eg '/' - g since user could paste.
+      // we exclude chars not URI friendly eg '/' (use g since user could paste.)
       let valid_string = e.target.value.replace(/\/|&|\.|<|>/g, '')   // regexp OR '|' multiple excludes
 
          // to do : this is currently a blacklist - more secure to create a whitelist - numbers/chars/some special chars
-         //         issue is our generating the slug from this title - some elements will break url refreshing eg Todo view:
-         //  <     >      ?     .     
+         //         issue is : we generate the slug from this title - some elements will break url w/ slug eg Todo view:
+         //  <     >      ?     .    
+         // note : this is not exclusive to the 'title' field. 
          // what is our whitelist - how to handle any special chars we may want to permit.
          // - any char not in our whitelist we should remove
          
@@ -25,17 +26,17 @@ const StyledInput = props => {
    }
 
    return (
-      props.onChanged
-         ?  <input 
-               name={props.name} 
-               value={props.value || ''}  
-               className={classes}
-               onChange={e => on_change(e)}/>
-         :  <input 
-               name={props.name} 
-               defaultValue={props.value || ''}  
-               className={classes}
-               onChange={e => on_change(e)} />
+      props.onChanged ?  
+         <input 
+            name={props.name} 
+            value={props.value || ''}  
+            className={classes}
+            onChange={e => on_change(e)}/>
+      :  <input 
+            name={props.name} 
+            defaultValue={props.value || ''}  
+            className={classes}
+            onChange={e => on_change(e)} />
    )
 }
 

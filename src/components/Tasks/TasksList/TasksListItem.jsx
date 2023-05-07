@@ -6,9 +6,11 @@ import TodosList from '../../Todos/TodosList/TodosList'
 import NavBar from '../../App/NavBar/NavBar'
 import Modal from '../../Utility/Modal/Modal'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
+import get_ui_ready_date from '../../Utility/Dates/Dates'
 import EditTaskForm from '../EditTaskForm/EditTaskForm'
 import DeleteTaskForm from '../DeleteTaskForm/DeleteTaskForm'
 import { PencilIcon,TrashIcon } from '@heroicons/react/24/solid'
+import { BookmarkIcon } from '@heroicons/react/24/outline'
 
 
 
@@ -24,7 +26,7 @@ const TasksListItem = props => {
          type: 'load',
          task: props.task
       })
-   })
+   })   
 
    const check_todo = () => {
       dispatch({
@@ -33,7 +35,12 @@ const TasksListItem = props => {
    }
 
    const update_todos = updated_todos => {
-     props.update_task_todos(task.id,updated_todos)
+     let modified = {...task}
+     modified.todos = updated_todos
+     dispatch ({
+         type:'load',
+         task: modified
+     })
    }
 
    const delete_task = async () => {
@@ -56,15 +63,15 @@ const TasksListItem = props => {
          const jsonData = await data.json()
          await new Promise(resolve => setTimeout(resolve, 1000))
          if(jsonData.outcome === 'success') {
-               dispatch({
-                  type: 'update_task',
-                  task: formJson
-               })
-               props.update_task(task.id,formJson)
+               // dispatch({
+               //    type: 'update_task',
+               //    task: formJson
+               // })
                setStatusMsg('task updated')
+               props.update_list()
          }
          else {
-            console.log("Server couldn't update Task")
+            setStatusMsg("Server couldn't update Task")
          }
       }
       catch (err){
@@ -96,6 +103,10 @@ const TasksListItem = props => {
                   </li>
                </ul>
             </NavBar>
+            <div className="flex justify-between pt-2 px-2">
+               {get_ui_ready_date(task.created_at)}
+               {task.pin ? <BookmarkIcon style={{width:'16px',height:'16px'}}/> : null}
+            </div>
 
             <TodosList 
                project_slug={props.project_slug} 

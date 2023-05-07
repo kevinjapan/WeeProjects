@@ -28,7 +28,6 @@ const Comment = props => {
       try {
          setStatusMsg(Notifications.UPDATING)
          const data = await fetch(`${api}/comments`,reqInit("PUT",bearer_token,formJson))
-         console.log('in')
          const jsonData = await data.json()
          if(jsonData.outcome === Notifications.SUCCESS) {
             setComment(formJson)

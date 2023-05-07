@@ -1,6 +1,9 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,useContext } from 'react'
+import { AppContext } from '../../App/AppContext/AppContext'
+import reqInit from '../../Utility/RequestInit/RequestInit'
 import TasksListItem from './TasksListItem'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
+import { ArrowLeftIcon,ArrowRightIcon } from '@heroicons/react/24/solid'
 
 
 
@@ -13,15 +16,16 @@ const TasksList = props => {
    const tasks_window_size = 3
    const [tasks_start_index,setTasksStartIndex] = useState(0)
 
+   const {api,bearer_token,setStatusMsg} = useContext(AppContext)
+
    useEffect(() => {
       if(props.project.tasks) {
          setTasks([...props.project.tasks])
          filter_tasks([...props.project.tasks],0)
       }
-   },[props.project])
+   },[props.project,props.refreshed])
 
    const filter_tasks = (tasks_list,start_index) => {
-      // console.log(tasks_list)
       if(tasks_list.length <= tasks_window_size) {
          setFilteredTasks(tasks_list)
       }
@@ -49,27 +53,29 @@ const TasksList = props => {
       filter_tasks(modified_tasks,tasks_start_index)
    }
 
-   // on changing tasks viewed, we refresh children w/ each 'task'
-   // so - must update todo lists here as well as in the child:
-   const update_task_todos = (task_id,updated_todos) => {
-      let modified_tasks = [...tasks]
-      let task = modified_tasks.find(task => {
-         return task.id === task_id
-      })
-      if(task) {task.todos = [...updated_todos]}
-      filter_tasks(modified_tasks,tasks_start_index)
+
+   // listitems may invoke changes to parent list ('pin to start' etc)
+   // we retrieve list dataset upon listitem's request (upon order changing actions)
+   const get_tasks = async() => {
+      try {
+         const data = await fetch(`${api}/${props.project_slug}/tasks`,reqInit("GET",bearer_token))
+         const jsonData = await data.json()
+         // await new Promise(resolve => setTimeout(resolve, 1000))
+         if(jsonData.outcome === 'success') {
+            setTasks(jsonData.data)
+            filter_tasks(jsonData.data,0)
+         }
+         else {
+            setStatusMsg("Server couldn't retrieve updated Todos list.")
+         }
+      } catch (error){
+         setStatusMsg('Sorry, we are unable to retrieve data from the server at this time. ' + error)
+      }
    }
 
-   const update_task = (task_id,updated_task) => {
-      let modified_tasks = [...tasks]
-      let task_index = modified_tasks.findIndex(task => {
-         return task.id === task_id
-      })
-      if(task_index > -1) {
-         modified_tasks[task_index] = updated_task
-         setTasks([...modified_tasks])
-         filter_tasks(modified_tasks,tasks_start_index)
-      }
+   // an updated Task can affect list order, so we refresh from server
+   const update_list = () => {
+      get_tasks()
    }
 
    const is_unique = (item_id,item_field,value) => {
@@ -80,18 +86,19 @@ const TasksList = props => {
 
    return (
       <>
-         <div className="flex justify-between mt-4 mb-2 ">
+         <div className="flex justify-between items-center mt-4 mb-2 ">
             <StyledButton 
                aria-label="Display newer tasks." 
-               onClicked={advance_recent_tasks}>Recent Tasks
+               onClicked={advance_recent_tasks}>
+                  <ArrowLeftIcon style={{width:'16px',height:'16px'}}/>Recent Tasks
             </StyledButton>
 
             <div className="text-sm text-slate-400">{tasks.length} tasks</div>
-            <div className="text-sm text-slate-400">{filtered_tasks.length} filtered_tasks</div>
             
             <StyledButton 
                aria-label="Display older tasks." 
-               onClicked={advance_earlier_tasks}>Earlier Tasks
+               onClicked={advance_earlier_tasks}>
+                  Earlier Tasks<ArrowRightIcon style={{width:'16px',height:'16px'}}/>
             </StyledButton>
          </div>
          <ul className="flex flex-col sm:flex-row flex-wrap justify-between gap-2 p-0 m-0">
@@ -102,9 +109,8 @@ const TasksList = props => {
                      project_slug={props.project_slug} 
                      task={task} 
                      is_unique={is_unique}
+                     update_list={update_list}
                      remove_deleted_task={remove_deleted_task}
-                     update_task={update_task}
-                     update_task_todos={update_task_todos}
                   />
                ))
             :null}

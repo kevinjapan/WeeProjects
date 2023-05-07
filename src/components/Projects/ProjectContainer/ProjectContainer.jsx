@@ -13,23 +13,26 @@ const ProjectContainer = props => {
    const [loading_status,setLoadingStatus] = useState('loading..')
    let params = useParams()
 
+   // our initial retrieval returns a snapshot of the Project to initialise our UI,
+   // thereafter, async ops are carried out at lower component levels.
    useEffect(() => {
       const get_project = async (api,slug) => {
          try {
-               const data = await fetch(`${api}/projects/${slug}`,reqInit())
-               const jsonData = await data.json()
-               if(jsonData.outcome === 'success') {
-                  setProject(jsonData.data)
-               } else {
-                  await new Promise(resolve => setTimeout(resolve, 1000))
-                  setLoadingStatus(jsonData.message)
-               }
+            const data = await fetch(`${api}/projects/${slug}`,reqInit())
+            const jsonData = await data.json()
+            if(jsonData.outcome === 'success') {
+               setProject(jsonData.data)
+            } else {
+               await new Promise(resolve => setTimeout(resolve, 1000))
+               setLoadingStatus(jsonData.message)
+            }
          } catch {
                setStatusMsg('Sorry, unable to fetch data from the server.')
          }
       }
       get_project(api,params.project_slug)
    },[api,params.project_slug,setStatusMsg])
+
 
    return (
       Object.keys(project).length !== 0  ?

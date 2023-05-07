@@ -73,7 +73,7 @@ const Project = props => {
             props.update_project_in_list(formJson)
          }
          else {
-            console.log("Server couldn't update Project")
+            setStatusMsg("Server couldn't update Project")
          }
       } catch (error){
          setStatusMsg('Sorry, we are unable to update data on the server at this time. ' + error)
@@ -112,7 +112,8 @@ const Project = props => {
 
             <TasksList 
                project_slug={project.slug} 
-               project={project} />
+               project={project}
+               refresh_project={props.refresh_project} />
 
             {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>

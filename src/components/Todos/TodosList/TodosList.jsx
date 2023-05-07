@@ -9,7 +9,7 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 
 
 
-const Todos = props => {
+const TodosList = props => {
 
    const [todos,setTodos] = useState(props.todos)
    const [task_slug,setTaskSlug] = useState("")
@@ -24,7 +24,7 @@ const Todos = props => {
    const check_todo = modified_todo => {
       let modified_todos = todos.map(todo => {
          if(todo.id === modified_todo.id) {
-               todo.done_at = modified_todo.done_at
+            todo.done_at = modified_todo.done_at
          }
          return todo
       })
@@ -35,6 +35,27 @@ const Todos = props => {
       let modified = todos.filter((todo) => todo.id !== deleted_todo_id)
       setTodos(modified)
       props.update_todos(modified)
+   }
+
+   const get_todos = async() => {
+      try {
+         const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/todos`,reqInit("GET",bearer_token))
+         const jsonData = await data.json()
+         await new Promise(resolve => setTimeout(resolve, 1000))
+         if(jsonData.outcome === 'success') {
+            setTodos(jsonData.data)
+         }
+         else {
+            setStatusMsg("Server couldn't retrieve updated Todos list.")
+         }
+      } catch (error){
+         setStatusMsg('Sorry, we are unable to retrieve data from the server at this time. ' + error)
+      }
+   }
+
+   // an updated Todo can affect list order (eg 'pin to start'), so requests refresh from server
+   const update_list = () => {
+      get_todos()
    }
 
    const add_todo = async(formJson) => {
@@ -82,8 +103,9 @@ const Todos = props => {
                         project_slug={props.project_slug}
                         task_slug={props.task_slug}
                         todo={todo} 
-                        check_todo={check_todo}
                         is_unique={is_unique}
+                        update_list={update_list}
+                        check_todo={check_todo}
                         remove_deleted_todo={remove_deleted_todo}
                      />
                   ))
@@ -116,4 +138,4 @@ const Todos = props => {
    )
 }
 
-export default Todos
+export default TodosList

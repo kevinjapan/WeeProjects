@@ -49,7 +49,7 @@ const Projects = () => {
                setProjects(modified)
          }
          else {
-               console.log("Server couldn't create new Project")
+            setStatusMsg("Server couldn't create new Project")
          }
       }
       catch (err){
