@@ -29,7 +29,7 @@ const Projects = () => {
                setStatusMsg("Server couldn't retrieve Projects")
             }
          } catch(error) {
-               setStatusMsg('Sorry, unable to fetch data from the server.')
+               setStatusMsg('Sorry, unable to fetch data from the server. ' + error)
          }
       }
       get_projects(api)

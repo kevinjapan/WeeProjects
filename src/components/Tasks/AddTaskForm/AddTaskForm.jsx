@@ -37,7 +37,7 @@ const AddTaskForm = props => {
          validated = false
       }
 
-      if(!validate_string(formJson['title'],{'min_length':2,'max_length':120},setTitleFeedback)) {
+      if(!validate_string(formJson['title'],{'min_length':3,'max_length':120},setTitleFeedback)) {
          validated = false
       } else {
          formJson['slug'] = generate_slug(formJson['title'])

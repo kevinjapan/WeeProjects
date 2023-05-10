@@ -34,7 +34,7 @@ const AddProjectForm = props => {
          validated = false
       }
 
-      if(!validate_string(formJson['title'],{'min_length':10,'max_length':20},setTitleFeedback)) {
+      if(!validate_string(formJson['title'],{'min_length':3,'max_length':50},setTitleFeedback)) {
             validated = false
       } else {
          formJson['slug'] = generate_slug(formJson['title'])

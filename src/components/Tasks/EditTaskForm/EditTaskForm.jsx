@@ -25,8 +25,8 @@ const UpdateTaskForm = props => {
       setTitleFeedback('')
       setAuthorIdFeedback('')
       setOutlineFeedback('')
-
       e.preventDefault()
+      
       const form = e.target
       const formData = new FormData(form)
       const formJson = Object.fromEntries(formData.entries());
