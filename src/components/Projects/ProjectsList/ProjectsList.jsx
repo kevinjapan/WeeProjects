@@ -18,19 +18,22 @@ const ProjectsList = props => {
 
    return (
       props.projects && (
-         <>
-            <table className="w-full">
+         <section className="m-5">
+            <table className="w-full my-5">
                <tbody>
                   <tr>
-                     <td><a className="cursor-pointer" onClick={() => props.order_by('title')}>title</a></td>
-                     <td><a className="cursor-pointer" onClick={() => props.order_by('created_at')}>made</a></td>
-                     <td><a className="cursor-pointer" onClick={() => props.order_by('updated_at')}>updated</a></td>
+                     <td className="pt-1 text-gray-400">
+                        <a className="cursor-pointer" onClick={() => props.order_by('title')}>title</a></td>
+                     <td className="pt-1 text-gray-400">
+                        <a className="cursor-pointer text-grey-100" onClick={() => props.order_by('created_at')}>started</a></td>
+                     <td className="pt-1 text-gray-400">
+                        <a className="cursor-pointer" onClick={() => props.order_by('updated_at')}>updated</a></td>
                   </tr>
                   {props.projects.map((item) => (
-                     <tr key={item.id}>
-                           <td><Link to={`/projects/${item.slug}`}>{item.title}</Link></td>
-                           <td><Link to={`/projects/${item.slug}`}>{get_ui_ready_date(item.created_at)}</Link></td>
-                           <td><Link to={`/projects/${item.slug}`}>{get_ui_ready_date(item.updated_at)}</Link></td>
+                     <tr key={item.id} >
+                           <td className="pt-1"><Link to={`/projects/${item.slug}`}>{item.title}</Link></td>
+                           <td className="pt-1"><Link to={`/projects/${item.slug}`}>{get_ui_ready_date(item.created_at)}</Link></td>
+                           <td className="pt-1"><Link to={`/projects/${item.slug}`}>{get_ui_ready_date(item.updated_at)}</Link></td>
                      </tr>
                   ))}
                </tbody>
@@ -48,7 +51,7 @@ const ProjectsList = props => {
                      <AddProjectForm onSubmit={add_project} is_unique={props.is_unique} close_modal={() => setShowAddModal(false)}/>
                   </Modal>
             )}
-         </>
+         </section>
       ) 
    )
 }

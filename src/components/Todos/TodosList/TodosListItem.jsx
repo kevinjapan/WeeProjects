@@ -8,7 +8,6 @@ import Modal from '../../Utility/Modal/Modal'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
 import EditTodoForm from '../EditTodoForm/EditTodoForm'
 import DeleteTodoForm from '../DeleteTodoForm/DeleteTodoForm'
-import { BookOpenIcon } from '@heroicons/react/24/solid'
 import { BookmarkIcon } from '@heroicons/react/24/outline'
 
 
@@ -84,40 +83,60 @@ const TodosListItem = props => {
       setShowEditModal(false)
    }
 
+   const view_todo_details = () => {
+      // to do : open in right-side panel.  make right-side panel fixed?
+
+      props.view_todo_details(todo)
+   }
+
    const item_classes = 'w-full border rounded px-1 py-0.5 '
-   const title_classes = 'p-0.5 cursor-pointer text-slate-500 hover:text-slate-700 leading-tight'
+   const title_classes = 'p-0.5 cursor-pointer text-slate-600 hover:text-slate-800 leading-tight'
 
    return (
       <>
          <li key={props.todo.id} className={`${item_classes} ${todo.on_going && !checked > 0 ? 'bg-yellow-200' : ''}`} >
             <div className="flex justify-between gap-1 items-center w-full m-0">
 
-               {todo.pin ? <BookmarkIcon style={{width:'16px',height:'16px'}}/> : <div style={{width:'16px'}}></div>}
+               {todo.pin 
+                  ?  <BookmarkIcon style={{width:'16px',height:'16px',opacity:'.7'}}/> 
+                  :  <BookmarkIcon style={{width:'16px',height:'16px',opacity:'.3'}}/> 
+               }
             
                {/* list_item checkbox */}
                <input type="checkbox" checked={checked || false}
                   onChange={e => {
                      check_todo({
                         ...todo,
-                        done_at: e.target.checked ? datetimestamp() : null
+                        done_at: e.target.checked ? datetimestamp() : null,
+                        pin:0,
+                        on_going:0,
                      }) 
                   }}
                />
 
                {/* title */}
                <div className="w-full">
-                  <div className={`${title_classes} ${checked ? 'line-through text-zinc-300 hover:text-zinc-400' : ''} `} 
-                     onClick={() => setShowEditModal(true)}>{todo.title}</div>
+                  <div className={`${title_classes} ${checked ? 'line-through text-zinc-400 hover:text-zinc-600' : ''} `} 
+                     onClick={() => view_todo_details()}>{todo.title}</div>
                </div>
+               {/* <div className="w-full">
+                  <div className={`${title_classes} ${checked ? 'line-through text-zinc-400 hover:text-zinc-600' : ''} `} 
+                     onClick={() => setShowEditModal(true)}>{todo.title}</div>
+               </div> */}
 
-               {/* open the Todo item - separate view */}
-               <div>
+               {/* open the Todo item view */}
+               {/* <StyledButton aria-label="Delete this task." onClicked={() => view_todo_details()}>
+                  <BookOpenIcon style={{width:'16px',height:'16px'}}/>View
+               </StyledButton> */}
+
+               {/* retain for option to open in separate window..
+                <div>
                   <Link to={`/projects/${props.project_slug}/${props.task_slug}/${todo.slug}`}>
                      <StyledButton aria-label="Open todo.">
                         <BookOpenIcon style={{width:'12px',height:'12px'}}/>View
                      </StyledButton>
                   </Link>
-               </div>
+               </div> */}
             </div>
                
             {/* status dropdown */}

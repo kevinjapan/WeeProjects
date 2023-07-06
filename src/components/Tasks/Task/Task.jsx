@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState,useEffect} from 'react'
 import { Link,useParams } from 'react-router-dom'
 import get_ui_ready_date from '../../Utility/Dates/Dates'
 
 
 const Task = props => {
 
+   const [task,setTask] = useState({})
    let params = useParams()
+
+   useEffect(() => {
+      setTask(props.task)
+   },[props.task])
 
    return (
       <div className="md:w-8/12 mx-auto">
@@ -14,7 +19,7 @@ const Task = props => {
             <h3 className="text-sm text-slate-500">
                <Link to={`/projects/${params.project_slug}`}>{params.project_slug}</Link>
             </h3>
-            <h1 className="text-2xl text-slate-600">{props.task.title}</h1>
+            <h1 className="text-2xl text-slate-600">title: {props.task.title}</h1>
          </section>
 
          <section className="flex flex-col gap-2 border rounded m-2 p-2">

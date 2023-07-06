@@ -3,6 +3,7 @@ import StyledButton from '../../Utility/StyledButton/StyledButton'
 import { validate_int, validate_string } from '../../Utility/Validation/uiValidation'
 import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import StyledInput from '../../Utility/StyledInput/StyledInput'
+import StyledTextArea from '../../Utility/StyledTextArea/StyledTextArea'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 import { generate_slug } from '../../Utility/Stringer/uiStringer'
 
@@ -11,10 +12,12 @@ import { generate_slug } from '../../Utility/Stringer/uiStringer'
 const EditTodoForm = props => {
 
    const [id] = useState(props.todo.id)
-   const [title,setTitle] = useState(props.todo.title)
-   const [author_id,setAuthorId] = useState(props.todo.author_id)
+   const [title,setTitle] = useState(props.todo.title || '')
+   const [author_id,setAuthorId] = useState(props.todo.author_id || 0)
+   const [outline,setOutline] = useState('')
    const [title_feedback,setTitleFeedback] = useState('')
    const [author_id_feedback,setAuthorIdFeedback] = useState('')
+   const [outline_feedback,setOutlineFeedback] = useState('')
    const [pin,setPin] = useState(props.todo.pin > 0 ? true : false)
    const [is_on_going,setIsOnGoing] = useState(props.todo.on_going > 0 ? true : false)
 
@@ -22,6 +25,7 @@ const EditTodoForm = props => {
       
       setTitleFeedback('')
       setAuthorIdFeedback('')
+      setOutlineFeedback('')
       e.preventDefault()
 
       const form = e.target
@@ -48,6 +52,9 @@ const EditTodoForm = props => {
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {
          validated = false
       }
+      if(!validate_string(formJson['outline'],{'min_length':10,'max_length':500},setOutlineFeedback)) {
+         validated = false
+      }
       
       if(validated) props.onSubmit(formJson)
    }
@@ -65,7 +72,7 @@ const EditTodoForm = props => {
          <h5 className="text-2xl mb-5">Edit Todo</h5>
 
          <input type="hidden" name="id" value={id || 0} />
-         <input type="hidden" name="done_at" value={props.todo.done_at} />
+         <input type="hidden" name="done_at" value={props.todo.done_at ? props.todo.done_at : ''} />
 
          <FormElement>
             <label htmlFor="title" className="w-12/12 md:w-2/12">Title</label>
@@ -87,6 +94,17 @@ const EditTodoForm = props => {
 
          <FormElementFeedback feedback_msg={author_id_feedback}/>
 
+         <FormElement>
+               <label htmlFor="outline" className="w-12/12 md:w-2/12">Outline</label>
+               <StyledTextArea 
+                  name="outline" 
+                  value={outline}
+                  placeholder=""
+                  onChanged={setOutline}></StyledTextArea>
+         </FormElement>
+
+         <FormElementFeedback feedback_msg={outline_feedback}/>
+
          <div className="flex justify-end gap-1">
 
             <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
@@ -94,6 +112,7 @@ const EditTodoForm = props => {
                   name="on_going"
                   type="checkbox" 
                   checked={is_on_going || false}
+                  value=''
                   onChange={e => {toggle_ongoing(e.target.checked)}} 
                />mark as on-going
             </div>
@@ -102,6 +121,7 @@ const EditTodoForm = props => {
                name="pin"
                type="checkbox" 
                checked={pin || false}
+               value=''
                onChange={e => {toggle_pin(e.target.checked)}} 
             />pin to start of task list
          </div>

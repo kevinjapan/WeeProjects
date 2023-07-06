@@ -83,13 +83,14 @@ const TasksListItem = props => {
    return (
       <>
          <li key={task.id}
-            className="flex-1 border rounded p-1 px-2 min-h-screen list-none"
+            className="flex-1 border rounded p-1 px-2 min-h-screen"
+            style={{minWidth:'300px',maxWidth:'47.5%'}}
             >
 
             {/* <h5 className="text-2xl mb-5">{task.title}</h5> */}
 
             <NavBar title={task.title} >
-               <ul className="flex flex-row w-full">
+               <ul className="flex flex-row">
                   <li>
                      <StyledButton aria-label="Delete this task." onClicked={() => setShowDeleteModal(true)}>
                         <TrashIcon style={{width:'16px',height:'16px'}}/>Delete
@@ -113,7 +114,6 @@ const TasksListItem = props => {
                todos={task.todos}
                check_todo={check_todo}
                update_todos={update_todos}
-               view_todo_details={props.view_todo_details}
                />
                
             {show_edit_modal && (

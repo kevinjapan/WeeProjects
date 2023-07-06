@@ -107,6 +107,7 @@ const TodosList = props => {
                         update_list={update_list}
                         check_todo={check_todo}
                         remove_deleted_todo={remove_deleted_todo}
+                        view_todo_details={props.view_todo_details}
                      />
                   ))
                :null}
