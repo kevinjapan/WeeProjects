@@ -25,6 +25,11 @@ const Todo = props => {
    const [show_delete_modal,setShowDeleteModal] = useState(false)
 
    useEffect(() => { 
+      console.log(props.todo)
+      setTodo(props.todo)
+   },[props.todo])
+
+   useEffect(() => { 
       props.todo.done_at === null ? setChecked(false) : setChecked(props.todo.done_at)
    },[props.todo.done_at])
 
@@ -33,12 +38,16 @@ const Todo = props => {
       let clear_message // prev. comment prevents warning ("clear_message not used.."")
       try {
          setLocalStatus(Notifications.UPDATING)
+
+         // to do : any way to make endpoints clearer here? (rather than trying to match a url route each time)
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/todos/${todo.slug}`,reqInit("PUT",bearer_token,formJson))
          const jsonData = await data.json()
          await new Promise(resolve => setTimeout(resolve, 1000))
          if(jsonData.outcome === Notifications.SUCCESS) {
+
+            // console.log(formJson)
             setTodo(formJson)
-            props.update_list()
+            //props.update_list()      // to do : refresh UI required?
          }
          setLocalStatus(Notifications.DONE)
          await new Promise(resolve => setTimeout(resolve, 1000))
@@ -75,23 +84,47 @@ const Todo = props => {
       setShowEditModal(false)
    }
 
+   const close_todo = () => {
+      setTodo({})
+   }
+
 
    const item_classes = 'w-full border rounded px-1 py-0.5 '
    const title_classes = 'p-0.5 cursor-pointer text-slate-600 hover:text-slate-800 leading-tight'
 
    return (
-      <>
+      todo.title ?
+      <section className="fixed top-32 right-1 border rounded p-1" style={{width:'32%'}}>
    
+         <section className="w-full h-6">
+            <div onClick={() => close_todo()} className="float-right mr-2 cursor-pointer" >X</div>
+         </section>
          <h1 className="text-2xl text-slate-600">{props.todo.title}</h1>
 
          <section className="flex flex-col gap-2 border rounded m-2 p-2">
-            <div>created at: {get_ui_ready_date(props.todo.created_at)}</div>
-            <div>updated at:{get_ui_ready_date(props.todo.updated_at)}</div>
-            <div>author:{props.todo.author_id}</div>
-            <div>task:{props.todo.task_id}</div>
-            <div>outline:{props.todo.outline}</div>
-            <div></div>
+
+            {props.todo.outline
+               ? <p className="text-gray-700">{props.todo.outline}</p>
+               : <p className="italic text-gray-300">This todo has no description.</p>}
          </section>
+
+         <section className="flex flex-col gap-2 border rounded m-2 p-2">
+
+            <div>
+               created: {get_ui_ready_date(props.todo.created_at)}
+            </div>
+
+            <div>
+               last updated:{get_ui_ready_date(props.todo.updated_at)}
+            </div>
+
+            <div>author:{props.todo.author_id}</div>
+
+            {/* <div>task id:{props.todo.task_id}</div> */}
+
+
+         </section>
+
 
          <section>
          {/* to do : populate - see EditTodoForm */}
@@ -115,14 +148,16 @@ const Todo = props => {
          {show_edit_modal && (
             <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
                <EditTodoForm 
-                  onSubmit={props.update_todo} 
-                  onDelete={props.confirm_delete_todo} 
-                  todo={props.todo} 
+                  onSubmit={update_todo} 
+                  onDelete={confirm_delete_todo} 
+                  todo={todo} 
                   is_unique={props.is_unique}
                   close_modal={() => setShowEditModal(false)}/>
             </Modal>)}
 
-      </>
+      </section>
+      : null
+         
       // <div className="md:w-8/12 mx-auto">
 
       //    {/* Todo details */}

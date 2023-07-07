@@ -100,23 +100,17 @@ const TasksList = props => {
 
          </section>
 
-         <section className="fixed top-32 right-1 border rounded p-1" style={{width:'32%'}}>
-            <div className=" " >
+
 
                {
                selected_todo ?
-                  <div>
                      <Todo 
                         todo={selected_todo}
                         is_unique={is_unique}
-                     />
-                  </div>
-                  
+                     />                  
                   : null
                }
 
-            </div>
-         </section>
       </div>
    )
 }

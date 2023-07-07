@@ -12,9 +12,10 @@ import { generate_slug } from '../../Utility/Stringer/uiStringer'
 const EditTodoForm = props => {
 
    const [id] = useState(props.todo.id)
+   const [task_id] = useState(props.todo.task_id)
    const [title,setTitle] = useState(props.todo.title || '')
    const [author_id,setAuthorId] = useState(props.todo.author_id || 0)
-   const [outline,setOutline] = useState('')
+   const [outline,setOutline] = useState(props.todo.outline || '')
    const [title_feedback,setTitleFeedback] = useState('')
    const [author_id_feedback,setAuthorIdFeedback] = useState('')
    const [outline_feedback,setOutlineFeedback] = useState('')
@@ -72,6 +73,9 @@ const EditTodoForm = props => {
          <h5 className="text-2xl mb-5">Edit Todo</h5>
 
          <input type="hidden" name="id" value={id || 0} />
+
+         <input type="hidden" name="task_id" value={task_id || 0} />
+
          <input type="hidden" name="done_at" value={props.todo.done_at ? props.todo.done_at : ''} />
 
          <FormElement>
@@ -98,7 +102,7 @@ const EditTodoForm = props => {
                <label htmlFor="outline" className="w-12/12 md:w-2/12">Outline</label>
                <StyledTextArea 
                   name="outline" 
-                  value={outline}
+                  value={outline || ''}
                   placeholder=""
                   onChanged={setOutline}></StyledTextArea>
          </FormElement>
