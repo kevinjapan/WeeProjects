@@ -21,6 +21,7 @@ NavBar - simple, responsive, generic navigation bar
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 255, .1);
 }
 .navbar_title a {text-decoration:none;}
+.navbar_title {width:fit-content;white-space:nowrap;}
 
 /* 
 links - child of NavBar component 
@@ -89,6 +90,7 @@ md/lg NavBar
     }
     .navbar_topbar {
         width:fit-content;
+        /* height:16px; */
     }
     .navbar_links_wrap_init {
         flex-direction:row;

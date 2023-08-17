@@ -18,14 +18,14 @@ const NavBar = props => {
    const HeadingTag = props.title_tag || "h3"
 
    // client can append or override styles
-   let classes = "text-lg leading-tight" 
+   let classes = "" 
    if(props.classes) classes += " " + props.classes
 
    return (
       <NavBarProvider>
-         <div className="flex justify-between items-center z-40 w-full h-fit">
-               <div className="navbar_topbar">
-                  <div className="navbar_title">
+         <div className="flex justify-between items-center z-50 w-full ">
+               <div className="navbar_topbar ">
+                  <div className="navbar_title ">
                      {props.title_link ?
                            <HeadingTag className={classes}><Link to={`${props.title_link}`}>{props.title}</Link></HeadingTag>
                      :   <HeadingTag className={classes}>{props.title}</HeadingTag>}
@@ -36,7 +36,7 @@ const NavBar = props => {
 
                {/* links / dropdown */}
                {props.children && (
-                  <div>
+                  <div className="w-full px-12">
                      <NavBarLg>{props.children}</NavBarLg>
                      <NavBarSm>{props.children}</NavBarSm>
                   </div>

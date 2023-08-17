@@ -28,6 +28,13 @@ const TasksListItem = props => {
       })
    })   
 
+   useEffect(() => {
+      dispatch({
+         type: 'update_task',
+         task: props.task
+      })
+   },[props.task_updated])
+
    const check_todo = () => {
       dispatch({
          type: 'check_todo'

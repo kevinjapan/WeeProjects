@@ -19,9 +19,10 @@ const EditTodoForm = props => {
    const [title_feedback,setTitleFeedback] = useState('')
    const [author_id_feedback,setAuthorIdFeedback] = useState('')
    const [outline_feedback,setOutlineFeedback] = useState('')
-   const [pin,setPin] = useState(props.todo.pin > 0 ? true : false)
-   const [is_on_going,setIsOnGoing] = useState(props.todo.on_going > 0 ? true : false)
+   const [pin,setPin] = useState(props.todo.pin ? true : false)
+   const [is_on_going,setIsOnGoing] = useState(props.todo.on_going ? true : false)
 
+   
    const handleSubmit = e => {
       
       setTitleFeedback('')
@@ -127,11 +128,11 @@ const EditTodoForm = props => {
                checked={pin || false}
                value=''
                onChange={e => {toggle_pin(e.target.checked)}} 
-            />pin to start of task list
+            />pin to start of todo list
          </div>
-            <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>
-            <StyledButton aria-label="Delete." onClicked={props.onDelete}>Delete</StyledButton>
-            <StyledButton aria-label="Cancel." onClicked={props.close_modal}>Cancel</StyledButton>
+            <StyledButton aria-label="Apply" type="submit">Apply</StyledButton>
+            <StyledButton aria-label="Delete" onClicked={props.onDelete}>Delete</StyledButton>
+            <StyledButton aria-label="Cancel" onClicked={props.close_modal}>Cancel</StyledButton>
          </div>
       </form>
    )

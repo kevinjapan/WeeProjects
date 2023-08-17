@@ -13,7 +13,7 @@ import get_ui_ready_date from '../../Utility/Dates/Dates'
 
 
 
-const Todo = props => {
+const TodoCard = props => {
 
    let params = useParams()
    
@@ -33,9 +33,12 @@ const Todo = props => {
       props.todo.done_at === null ? setChecked(false) : setChecked(props.todo.done_at)
    },[props.todo.done_at])
 
+
    const update_todo = async(formJson) => {
+
       // eslint-disable-next-line
       let clear_message // prev. comment prevents warning ("clear_message not used.."")
+
       try {
          setLocalStatus(Notifications.UPDATING)
 
@@ -45,9 +48,10 @@ const Todo = props => {
          await new Promise(resolve => setTimeout(resolve, 1000))
          if(jsonData.outcome === Notifications.SUCCESS) {
 
-            // console.log(formJson)
-            setTodo(formJson)
-            //props.update_list()      // to do : refresh UI required?
+            // console.log('on-going: ' + formJson.on_going)
+
+            setTodo(formJson) 
+            props.update_todo(todo.id,formJson)
          }
          setLocalStatus(Notifications.DONE)
          await new Promise(resolve => setTimeout(resolve, 1000))
@@ -94,7 +98,7 @@ const Todo = props => {
 
    return (
       todo.title ?
-      <section className="fixed top-32 right-1 border rounded p-1" style={{width:'32%'}}>
+      <section className="fixed top-12 right-1 border rounded p-1" style={{width:'32%'}}>
    
          <section className="w-full h-6">
             <div onClick={() => close_todo()} className="float-right mr-2 cursor-pointer" >X</div>
@@ -185,4 +189,4 @@ const Todo = props => {
    )
 }
 
-export default Todo
+export default TodoCard

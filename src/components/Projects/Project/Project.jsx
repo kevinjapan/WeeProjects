@@ -90,7 +90,7 @@ const Project = props => {
    return (
       project && project.id ?
          <>
-            <NavBar title={project.title} title_tag="h1" classes="text-3xl">
+            <NavBar title={project.title} title_tag="h1" classes="">
                <ul  className="flex flex-row">                        
                   <li>
                      <StyledButton aria-label="Delete this project." onClicked={() => setShowDeleteModal(true)}>

@@ -2,7 +2,7 @@ import React, { useState,useEffect,useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
-import Todo from './Todo'
+import TodoCard from './TodoCard'
 
 
 
@@ -32,7 +32,7 @@ const TodoContainer = () => {
    return (
       <div>
          {todo.title ?
-            <Todo todo={todo} />
+            <TodoCard todo={todo} />
          :  null}
       </div>
    )

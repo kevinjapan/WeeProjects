@@ -10,7 +10,7 @@ const MainNavBarLinks = () => {
    const active_link_classes = "border-b border-slate-400 pb-1 "
 
    return (
-      <ul className="flex flex-col md:flex-row justify-end gap-5 p-0.5">
+      <ul className="flex flex-col md:flex-row justify-start gap-5 p-0.5">
          <li>
             <NavLink to="/" 
             onClick={() => setDisplayDropdown(false)}

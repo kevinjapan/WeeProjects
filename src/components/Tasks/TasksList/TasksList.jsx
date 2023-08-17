@@ -3,7 +3,7 @@ import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 // import Task from '../Task/Task'
 import TasksListItem from './TasksListItem'
-import Todo from '../../Todos/Todo/Todo'
+import TodoCard from '../../Todos/Todo/TodoCard'
 
 // import StyledButton from '../../Utility/StyledButton/StyledButton'
 // import { ArrowLeftIcon,ArrowRightIcon } from '@heroicons/react/24/solid'
@@ -19,6 +19,8 @@ const TasksList = props => {
 
    // selected todo
    const [selected_todo,setSelectedTodo] = useState({})
+
+   const [task_updated,setTaskUpdated] = useState(0)
 
    useEffect(() => {
       if(props.project.tasks) {
@@ -43,7 +45,25 @@ const TasksList = props => {
          const jsonData = await data.json()
          // await new Promise(resolve => setTimeout(resolve, 1000))
          if(jsonData.outcome === 'success') {
+            
             setTasks(jsonData.data)
+
+            if(selected_task) {
+               
+               const selected_task_id = selected_task.id
+               console.log(jsonData.data)
+               const updated_selected_task = jsonData.data.filter(task => parseInt(task.id) === parseInt(selected_task_id))
+
+               // console.log(updated_selected_task[0])
+
+   // to do : this hasn't rcvd updated version from server.. 
+
+
+               setSelectedTask(updated_selected_task[0])
+               setTaskUpdated(task_updated + 1)
+            }
+            // to do : we need to now refresh the Todos in the list from this updated data..
+
          }
          else {
             setStatusMsg("Server couldn't retrieve updated Todos list.")
@@ -56,6 +76,16 @@ const TasksList = props => {
    // an updated Task can affect list order, so we refresh from server
    const update_list = () => {
       get_tasks()
+   }
+
+   const update_todo = (id,todo) => {
+      console.log(id,todo)
+
+      // ------------------------------------------------------------------------------------------------------------------
+      // to do : now we have updated todo here - so refresh this list somehow - inject this todo / replace prev. version...
+      // ------------------------------------------------------------------------------------------------------------------
+
+
    }
 
    const is_unique = (item_id,item_field,value) => {
@@ -74,7 +104,7 @@ const TasksList = props => {
    }
 
    return (
-      <div className="flex "  >
+      <div className="flex ">
          <section style={{width:'12%'}}>
             <ul className="flex flex-col gap-2 p-0 m-1">
                <label className="text-gray-400">Tasks</label>
@@ -86,11 +116,11 @@ const TasksList = props => {
             </ul>
          </section>
 
-{/* to do : this is no longer a 'listitem' */}
-         <section  style={{width:'55%'}}>
-            {/* <Task task={selected_task} /> */}
+         {/* to do : this is no longer a 'listitem'  -> TaskCard  */}
+         <section style={{width:'55%'}}>
             <TasksListItem
                project_slug={props.project_slug} 
+               task_updated={task_updated}
                task={selected_task} 
                is_unique={is_unique}
                update_list={update_list}
@@ -100,28 +130,15 @@ const TasksList = props => {
 
          </section>
 
-
-
-               {
-               selected_todo ?
-                     <Todo 
-                        todo={selected_todo}
-                        is_unique={is_unique}
-                     />                  
-                  : null
-               }
+         {/* show selected Todo in TodoCard */}
+         {selected_todo 
+            ?  <TodoCard todo={selected_todo} is_unique={is_unique} update_todo={update_todo} />           
+            :  null
+         }
 
       </div>
    )
 }
 
- {/* <TasksListItem
-                     key={task.id} 
-                     project_slug={props.project_slug} 
-                     task={selected_task} 
-                     is_unique={is_unique}
-                     update_list={update_list}
-                     remove_deleted_task={remove_deleted_task}
-                  /> */}
                   
 export default TasksList

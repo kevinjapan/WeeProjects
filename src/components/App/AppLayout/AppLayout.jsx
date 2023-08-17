@@ -28,14 +28,14 @@ const AppLayout = () => {
    return (
       <>
          <AppHeader/>
-         <main className="mt-6 p-5 px-4  min-h-screen">
-               <Routes>
-                  <Route path="/" element={<AppWrap />}>
-                     <Route path="/" element={<Home />} />
-                     <Route path="/projects/*" element={<Projects />} />
-                     <Route path="/search" element={<Search />} />
-                  </Route>
-               </Routes>
+         <main className="px-4 min-h-screen">
+            <Routes>
+               <Route path="/" element={<AppWrap />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/projects/*" element={<Projects />} />
+                  <Route path="/search" element={<Search />} />
+               </Route>
+            </Routes>
          </main>
          <AppFooter/>
          <AppStatus/>

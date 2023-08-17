@@ -36,7 +36,10 @@ const TodosListItem = props => {
       update_todo(modified_todo)
    }
 
+
+   // to do : _depr - we use Todo.<EditTodoForm>
    const update_todo = async(formJson) => {
+
       // eslint-disable-next-line
       let clear_message // prev. comment prevents warning ("clear_message not used.."")
       try {
