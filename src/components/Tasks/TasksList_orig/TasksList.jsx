@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useContext } from 'react'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
-import TasksListItem from './TasksListItem'
+import TaskCard from './TaskCard'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
 import { ArrowLeftIcon,ArrowRightIcon } from '@heroicons/react/24/solid'
 
@@ -92,7 +92,7 @@ const TasksList = props => {
          <ul className="flex flex-col sm:flex-row flex-wrap justify-between gap-2 p-0 m-0">
             {filtered_tasks ? 
                filtered_tasks.map(task => (
-                  <TasksListItem
+                  <TaskCard
                      key={task.id} 
                      project_slug={props.project_slug} 
                      task={task} 

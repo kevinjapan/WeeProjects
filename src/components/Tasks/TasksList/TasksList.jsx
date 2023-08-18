@@ -2,7 +2,7 @@ import React, { useState,useEffect,useContext } from 'react'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 // import Task from '../Task/Task'
-import TasksListItem from './TasksListItem'
+import TaskCard from './TaskCard'
 import TodoCard from '../../Todos/Todo/TodoCard'
 
 // import StyledButton from '../../Utility/StyledButton/StyledButton'
@@ -27,8 +27,6 @@ const TasksList = props => {
          setTasks([...props.project.tasks])
       }
    },[props.project,props.refreshed])
-
-
 
 
    const remove_deleted_task = deleted_task_id => {
@@ -105,6 +103,9 @@ const TasksList = props => {
 
    return (
       <div className="flex ">
+      
+
+         {/* // tasks list in left panel */}
          <section style={{width:'12%'}}>
             <ul className="flex flex-col gap-2 p-0 m-1">
                <label className="text-gray-400">Tasks</label>
@@ -116,9 +117,10 @@ const TasksList = props => {
             </ul>
          </section>
 
-         {/* to do : this is no longer a 'listitem'  -> TaskCard  */}
+         {/* // TaskCard */}
          <section style={{width:'55%'}}>
-            <TasksListItem
+
+            <TaskCard
                project_slug={props.project_slug} 
                task_updated={task_updated}
                task={selected_task} 

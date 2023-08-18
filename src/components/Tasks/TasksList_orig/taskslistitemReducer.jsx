@@ -1,5 +1,5 @@
 
-export default function taskslistitemReducer(task, action) {
+export default function taskcardReducer(task, action) {
 
    switch (action.type) {
       case 'load': {

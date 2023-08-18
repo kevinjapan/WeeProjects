@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useReducer,useContext } from 'react'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
-import taskslistitemReducer from './taskslistitemReducer'
+import taskcardReducer from './taskcardReducer'
 import TodosList from '../../Todos/TodosList/TodosList'
 import NavBar from '../../App/NavBar/NavBar'
 import Modal from '../../Utility/Modal/Modal'
@@ -14,9 +14,9 @@ import { BookmarkIcon } from '@heroicons/react/24/outline'
 
 
 
-const TasksListItem = props => {
+const TaskCard = props => {
 
-   const [task, dispatch] = useReducer(taskslistitemReducer, {})
+   const [task, dispatch] = useReducer(taskcardReducer, {})
    const [show_edit_modal,setShowEditModal] = useState(false)
    const [show_delete_modal,setShowDeleteModal] = useState(false)
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
@@ -135,4 +135,4 @@ const TasksListItem = props => {
    )
 }
 
-export default TasksListItem
+export default TaskCard
