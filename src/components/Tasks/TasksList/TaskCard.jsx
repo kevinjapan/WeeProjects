@@ -33,7 +33,7 @@ const TaskCard = props => {
          type: 'update_task',
          task: props.task
       })
-   },[props.task_updated])
+   },[props.task])
 
    const check_todo = () => {
       dispatch({

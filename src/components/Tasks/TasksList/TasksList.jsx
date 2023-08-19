@@ -1,18 +1,13 @@
 import React, { useState,useEffect,useContext } from 'react'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
-// import Task from '../Task/Task'
 import TaskCard from './TaskCard'
 import TodoCard from '../../Todos/Todo/TodoCard'
-
-// import StyledButton from '../../Utility/StyledButton/StyledButton'
-// import { ArrowLeftIcon,ArrowRightIcon } from '@heroicons/react/24/solid'
 
 
 
 const TasksList = props => {
 
-   // the tasks we show
    const [tasks,setTasks] = useState([])
    const [selected_task,setSelectedTask] = useState({})
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
@@ -28,15 +23,15 @@ const TasksList = props => {
       }
    },[props.project,props.refreshed])
 
-
    const remove_deleted_task = deleted_task_id => {
       let modified_tasks = tasks.filter((task) => task.id !== deleted_task_id)
       setTasks(modified_tasks)
    }
 
 
-   // listitems may invoke changes to parent list ('pin to start' etc)
-   // we retrieve list dataset upon listitem's request (upon order changing actions)
+   //
+   //    get_tasks
+   //
    const get_tasks = async() => {
       try {
          const data = await fetch(`${api}/${props.project_slug}/tasks`,reqInit("GET",bearer_token))
@@ -47,21 +42,11 @@ const TasksList = props => {
             setTasks(jsonData.data)
 
             if(selected_task) {
-               
                const selected_task_id = selected_task.id
-               console.log(jsonData.data)
                const updated_selected_task = jsonData.data.filter(task => parseInt(task.id) === parseInt(selected_task_id))
-
-               // console.log(updated_selected_task[0])
-
-   // to do : this hasn't rcvd updated version from server.. 
-
-
                setSelectedTask(updated_selected_task[0])
                setTaskUpdated(task_updated + 1)
             }
-            // to do : we need to now refresh the Todos in the list from this updated data..
-
          }
          else {
             setStatusMsg("Server couldn't retrieve updated Todos list.")
@@ -76,14 +61,30 @@ const TasksList = props => {
       get_tasks()
    }
 
-   const update_todo = (id,todo) => {
-      console.log(id,todo)
+   //
+   //    update_todo
+   //
+   const update_todo = (task_id,todo_id,updated_todo) => {
+      
+      // get parent task
+      const task_index = tasks.findIndex(task => parseInt(task.id) === parseInt(task_id))
+      const task = tasks[task_index]
 
-      // ------------------------------------------------------------------------------------------------------------------
-      // to do : now we have updated todo here - so refresh this list somehow - inject this todo / replace prev. version...
-      // ------------------------------------------------------------------------------------------------------------------
+      // get index of updated Todo in existing tasks dataset
+      const todo_index = task.todos.findIndex(element => parseInt(element.id) === parseInt(todo_id))
 
+      let modified_tasks = tasks
 
+      // we are modifying deep so useEffect in TaskCard doesn't detect the change - so we flush it to ensure it does.
+      setSelectedTask({})
+
+      // option 1 - just reload entire updated Tasks for project
+      get_tasks()
+
+      // to do : 
+      // currently we retrieve all tasks - ok while no. is low - 
+      // investigate alternative of injecting 'updated_todo' into existing tasks (and refresh that if required.)
+      // so we maintain local copy of updated dataset.
    }
 
    const is_unique = (item_id,item_field,value) => {
@@ -103,9 +104,8 @@ const TasksList = props => {
 
    return (
       <div className="flex ">
-      
-
-         {/* // tasks list in left panel */}
+   
+         {/* TasksList */}
          <section style={{width:'12%'}}>
             <ul className="flex flex-col gap-2 p-0 m-1">
                <label className="text-gray-400">Tasks</label>
@@ -117,9 +117,8 @@ const TasksList = props => {
             </ul>
          </section>
 
-         {/* // TaskCard */}
+         {/* TaskCard */}
          <section style={{width:'55%'}}>
-
             <TaskCard
                project_slug={props.project_slug} 
                task_updated={task_updated}
@@ -129,10 +128,9 @@ const TasksList = props => {
                remove_deleted_task={remove_deleted_task}
                view_todo_details={view_todo_details}
             /> 
-
          </section>
 
-         {/* show selected Todo in TodoCard */}
+         {/* TodoCard */}
          {selected_todo 
             ?  <TodoCard todo={selected_todo} is_unique={is_unique} update_todo={update_todo} />           
             :  null

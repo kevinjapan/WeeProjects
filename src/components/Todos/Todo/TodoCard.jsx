@@ -51,7 +51,7 @@ const TodoCard = props => {
             // console.log('on-going: ' + formJson.on_going)
 
             setTodo(formJson) 
-            props.update_todo(todo.id,formJson)
+            props.update_todo(todo.task_id,todo.id,formJson)
          }
          setLocalStatus(Notifications.DONE)
          await new Promise(resolve => setTimeout(resolve, 1000))
