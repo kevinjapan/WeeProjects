@@ -85,6 +85,10 @@ const TasksList = props => {
       // currently we retrieve all tasks - ok while no. is low - 
       // investigate alternative of injecting 'updated_todo' into existing tasks (and refresh that if required.)
       // so we maintain local copy of updated dataset.
+
+      // to do : update TodoCard
+      // selected_todo
+      setSelectedTodo(updated_todo)
    }
 
    const is_unique = (item_id,item_field,value) => {
@@ -95,30 +99,40 @@ const TasksList = props => {
    }
 
    const select_task = task => {
+      setSelectedTodo({})
       setSelectedTask(task)
    }
 
    const view_todo_details = todo => {
       setSelectedTodo(todo)
    }
+   const is_selected_task = id => {
+      return parseInt(id) === parseInt(selected_task.id)
+         ? ' border border-blue-900'
+         : ' border border-transparent'
+   }
 
    return (
-      <div className="flex ">
+      <div className="flex">
    
          {/* TasksList */}
-         <section style={{width:'12%'}}>
-            <ul className="flex flex-col gap-2 p-0 m-1">
+         <section style={{width:'10%'}}>
+            <ul className="flex flex-col gap-1 p-0 m-1">
                <label className="text-gray-400">Tasks</label>
                {tasks ? 
                   tasks.map(task => (
-                     <li key={task.id}><a className="cursor-pointer" onClick={() => select_task(task)}>{task.title}</a></li>
+                     <li key={task.id} className={"px-1 " + is_selected_task(task.id)}>
+                        <a className="cursor-pointer" onClick={() => select_task(task)}>{task.title}</a>
+                     </li>
                   ))
                :null}
             </ul>
          </section>
 
+         {/* to do : make layout here responsive / media query */}
+
          {/* TaskCard */}
-         <section style={{width:'55%'}}>
+         <section style={{width:'50%'}}>
             <TaskCard
                project_slug={props.project_slug} 
                task_updated={task_updated}
@@ -131,10 +145,17 @@ const TasksList = props => {
          </section>
 
          {/* TodoCard */}
+         {/* to do : we removed 'fixed' to get layout widths 
+                     but have lost auto-positioning of card next to item list
+                     perhaps we can get scroll and add margin-top to align? */}
+         <section style={{width:'40%'}}>
          {selected_todo 
-            ?  <TodoCard todo={selected_todo} is_unique={is_unique} update_todo={update_todo} />           
+            ?  <TodoCard 
+                  todo={selected_todo} 
+                  is_unique={is_unique} 
+                  update_todo={update_todo} />           
             :  null
-         }
+         }</section>
 
       </div>
    )

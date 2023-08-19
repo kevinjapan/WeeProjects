@@ -12,6 +12,7 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 const TodosList = props => {
 
    const [todos,setTodos] = useState(props.todos)
+   const [selected_todo_id,setSelectedTodoId] = useState(0)
    const [task_slug,setTaskSlug] = useState("")
    const [show_add_modal,setShowAddModal] = useState(false)
    const [adding_todo,setAddingTodo] = useState(false)
@@ -93,6 +94,11 @@ const TodosList = props => {
       return filtered_todos ? !filtered_todos.some(todo => todo[item_field] === value) : true
    }
 
+   const view_todo_details = todo => {
+      setSelectedTodoId(todo.id)
+      props.view_todo_details(todo)
+   }
+
    return (
       <>
          <ul className="flex flex-col gap-1 p-0 my-3 list-none w-full ">
@@ -103,11 +109,12 @@ const TodosList = props => {
                         project_slug={props.project_slug}
                         task_slug={props.task_slug}
                         todo={todo} 
+                        selected_todo_id={selected_todo_id}
                         is_unique={is_unique}
                         update_list={update_list}
                         check_todo={check_todo}
                         remove_deleted_todo={remove_deleted_todo}
-                        view_todo_details={props.view_todo_details}
+                        view_todo_details={view_todo_details}
                      />
                   ))
                :null}
