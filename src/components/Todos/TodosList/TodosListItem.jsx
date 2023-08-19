@@ -92,8 +92,11 @@ const TodosListItem = props => {
       props.view_todo_details(todo)
    }
 
-   const item_classes = 'w-full border rounded px-1 py-0.5 '
-   const title_classes = 'p-0.5 cursor-pointer text-slate-600 hover:text-slate-800 leading-tight'
+   let item_classes = 'w-full border rounded px-1 py-0.5 '
+   let title_classes = 'p-0.5 cursor-pointer text-slate-600 hover:text-slate-800 leading-tight'
+   if(parseInt(props.selected_todo_id) === todo.id) {
+      item_classes += ' border-blue-900'
+   }
 
    return (
       <>

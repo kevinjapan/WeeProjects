@@ -28,7 +28,7 @@ const AppLayout = () => {
    return (
       <>
          <AppHeader/>
-         <main className="px-4 min-h-screen">
+         <main className="min-h-screen">
             <Routes>
                <Route path="/" element={<AppWrap />}>
                   <Route path="/" element={<Home />} />

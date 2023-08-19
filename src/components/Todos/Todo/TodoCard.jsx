@@ -98,7 +98,7 @@ const TodoCard = props => {
 
    return (
       todo.title ?
-      <section className="fixed top-12 right-1 border rounded p-1" style={{width:'32%'}}>
+      <section className="border rounded p-1">
    
          <section className="w-full h-6">
             <div onClick={() => close_todo()} className="float-right mr-2 cursor-pointer" >X</div>
