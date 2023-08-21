@@ -70,8 +70,8 @@ const AddTodoForm = props => {
                classes="grow" 
                onChanged={setTitle}></StyledInput>
          </FormElement>
-
          <FormElementFeedback feedback_msg={title_feedback}/>
+
 
          <FormElement>
             <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
@@ -82,8 +82,8 @@ const AddTodoForm = props => {
                classes="grow"
                onChanged={setAuthorId}></StyledInput>
          </FormElement>
-
          <FormElementFeedback feedback_msg={author_id_feedback}/>
+
 
          <FormElement>
                <label htmlFor="outline" className="w-12/12 md:w-2/12">Outline</label>
@@ -93,8 +93,8 @@ const AddTodoForm = props => {
                   placeholder=""
                   onChanged={setOutline}></StyledTextArea>
          </FormElement>
-
          <FormElementFeedback feedback_msg={outline_feedback}/>
+   
    
          <div className="flex justify-end gap-1 my-1">
                <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>

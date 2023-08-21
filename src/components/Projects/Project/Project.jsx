@@ -110,16 +110,6 @@ const Project = props => {
                </ul>
             </NavBar>
 
-
-      {/* to do : change UI
-      
-         we want -
-
-         - list of tasks - click on to open one
-         - current open task (only one at a time is displayed)
-         
-         to do : github-type progress calendar here..
-       */}
             <TasksList 
                project_slug={project.slug} 
                project={project}
