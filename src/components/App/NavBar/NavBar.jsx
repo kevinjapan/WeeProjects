@@ -15,7 +15,7 @@ import NavBarToggler from './NavBarToggler'
 const NavBar = props => {
     
    // we retain heading tag for semantics, but style w/ tailwind
-   const HeadingTag = props.title_tag || "h3"
+   const HeadingTag = props.title_tag || "h4"
 
    // client can append or override styles
    let classes = "" 
@@ -26,9 +26,9 @@ const NavBar = props => {
          <div className="flex justify-between items-center z-50 w-full ">
                <div className="navbar_topbar ">
                   <div className="navbar_title ">
-                     {props.title_link ?
-                           <HeadingTag className={classes}><Link to={`${props.title_link}`}>{props.title}</Link></HeadingTag>
-                     :   <HeadingTag className={classes}>{props.title}</HeadingTag>}
+                     {props.title_link 
+                        ?  <HeadingTag className={classes}><Link to={`${props.title_link}`}>{props.title}</Link></HeadingTag>
+                        :  <HeadingTag className={classes}>{props.title}</HeadingTag>}
                   </div>
                   {props.children && (
                      <NavBarToggler />)}

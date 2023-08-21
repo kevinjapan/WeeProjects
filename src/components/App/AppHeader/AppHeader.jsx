@@ -6,7 +6,7 @@ import MainNavBarLinks from '../NavBar/MainNavBarLinks'
 const AppHeader = () => {
    return (
       <header className=" w-full left-0 top-0 p-1 px-3 pb-2 bg-neutral-100">
-         <NavBar title="weeprojects" title_link="/" classes="text-2xl font-bold">
+         <NavBar title="weeprojects" title_link="/" title_tag="h5">
                <MainNavBarLinks></MainNavBarLinks>
          </NavBar>
       </header>
