@@ -16,9 +16,11 @@ const EditTodoForm = props => {
    const [title,setTitle] = useState(props.todo.title || '')
    const [author_id,setAuthorId] = useState(props.todo.author_id || 0)
    const [outline,setOutline] = useState(props.todo.outline || '')
+   const [solution,setSolution] = useState(props.todo.solution || '')
    const [title_feedback,setTitleFeedback] = useState('')
    const [author_id_feedback,setAuthorIdFeedback] = useState('')
    const [outline_feedback,setOutlineFeedback] = useState('')
+   const [solution_feedback,setSolutionFeedback] = useState('')
    const [pin,setPin] = useState(props.todo.pin ? true : false)
    const [is_on_going,setIsOnGoing] = useState(props.todo.on_going ? true : false)
 
@@ -28,6 +30,7 @@ const EditTodoForm = props => {
       setTitleFeedback('')
       setAuthorIdFeedback('')
       setOutlineFeedback('')
+      setSolutionFeedback('')
       e.preventDefault()
 
       const form = e.target
@@ -57,6 +60,9 @@ const EditTodoForm = props => {
       if(!validate_string(formJson['outline'],{'min_length':10,'max_length':500},setOutlineFeedback)) {
          validated = false
       }
+      if(!validate_string(formJson['solution'],{'min_length':10,'max_length':500},setSolutionFeedback)) {
+         validated = false
+      }
       
       if(validated) props.onSubmit(formJson)
    }
@@ -72,43 +78,68 @@ const EditTodoForm = props => {
       <form onSubmit={handleSubmit} className="p-3 px-4">
 
          <h5 className="text-2xl mb-5">Edit Todo</h5>
+               <FormElement>
+                  <StyledInput 
+                     name="title" 
+                     value={title || ''} 
+                     classes="text-lg"
+                     onChanged={setTitle}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={title_feedback}/>
 
-         <input type="hidden" name="id" value={id || 0} />
+         <div className="flex">
 
-         <input type="hidden" name="task_id" value={task_id || 0} />
+            <section className="w-4/12">
+               <FormElement>
+                  <label htmlFor="id" className="w-12/12 md:w-2/12">Id</label>  
+                  <StyledInput 
+                     name="id" 
+                     value={id || ''}></StyledInput>
+                     {/* to do : make this field un-editable */}
+               </FormElement>
+               <FormElementFeedback />    
 
-         <input type="hidden" name="done_at" value={props.todo.done_at ? props.todo.done_at : ''} />
+               <input type="hidden" name="task_id" value={task_id || 0} />
+               <input type="hidden" name="done_at" value={props.todo.done_at ? props.todo.done_at : ''} />
 
-         <FormElement>
-            <label htmlFor="title" className="w-12/12 md:w-2/12">Title</label>
-            <StyledInput 
-               name="title" 
-               value={title || ''} 
-               onChanged={setTitle}></StyledInput>
-         </FormElement>
 
-         <FormElementFeedback feedback_msg={title_feedback}/>
+               <FormElement>
+                  <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
+                  <StyledInput 
+                     name="author_id" 
+                     value={author_id || ''} 
+                     onChanged={setAuthorId}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={author_id_feedback}/>
+            </section>
 
-         <FormElement>
-            <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
-            <StyledInput 
-               name="author_id" 
-               value={author_id || ''} 
-               onChanged={setAuthorId}></StyledInput>
-         </FormElement>
 
-         <FormElementFeedback feedback_msg={author_id_feedback}/>
+            <section className="w-6/12">
+               <FormElement>
+                     <label htmlFor="outline" className="w-12/12 md:w-2/12">Outline</label>
+                     <StyledTextArea 
+                        name="outline" 
+                        value={outline || ''}
+                        placeholder=""
+                        onChanged={setOutline}></StyledTextArea>
+               </FormElement>
+               <FormElementFeedback feedback_msg={outline_feedback}/>
+            </section>
 
-         <FormElement>
-               <label htmlFor="outline" className="w-12/12 md:w-2/12">Outline</label>
-               <StyledTextArea 
-                  name="outline" 
-                  value={outline || ''}
-                  placeholder=""
-                  onChanged={setOutline}></StyledTextArea>
-         </FormElement>
 
-         <FormElementFeedback feedback_msg={outline_feedback}/>
+            <section className="w-6/12">
+               <FormElement>
+                     <label htmlFor="solution" className="w-12/12 md:w-2/12">Solution</label>
+                     <StyledTextArea 
+                        name="solution" 
+                        value={solution || ''}
+                        placeholder=""
+                        onChanged={setSolution}></StyledTextArea>
+               </FormElement>
+               <FormElementFeedback feedback_msg={solution_feedback}/>
+            </section>
+
+         </div>
 
          <div className="flex justify-end gap-1">
 
@@ -121,15 +152,17 @@ const EditTodoForm = props => {
                   onChange={e => {toggle_ongoing(e.target.checked)}} 
                />mark as on-going
             </div>
-         <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
-            <input 
-               name="pin"
-               type="checkbox" 
-               checked={pin || false}
-               value=''
-               onChange={e => {toggle_pin(e.target.checked)}} 
-            />pin to start of todo list
-         </div>
+            
+            <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
+               <input 
+                  name="pin"
+                  type="checkbox" 
+                  checked={pin || false}
+                  value=''
+                  onChange={e => {toggle_pin(e.target.checked)}} 
+               />pin to start of todo list
+            </div>
+
             <StyledButton aria-label="Apply" type="submit">Apply</StyledButton>
             <StyledButton aria-label="Delete" onClicked={props.onDelete}>Delete</StyledButton>
             <StyledButton aria-label="Cancel" onClicked={props.close_modal}>Cancel</StyledButton>

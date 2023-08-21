@@ -53,7 +53,15 @@ const UpdateProjectForm = props => {
 
          <h5 className="text-2xl mb-5">Edit Project</h5>
 
-         <input type="hidden" name="id" value={id || ''} />
+         <FormElement>
+            <label htmlFor="id" className="w-12/12 md:w-2/12">Id</label>
+            <StyledInput 
+               name="id" 
+               value={id || ''}></StyledInput>
+               {/* to do : make this field un-editable */}
+         </FormElement>
+
+         <FormElementFeedback />
 
          <FormElement>
             <label htmlFor="title" className="w-12/12 md:w-2/12">Title</label>
