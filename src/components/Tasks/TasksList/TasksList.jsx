@@ -86,8 +86,6 @@ const TasksList = props => {
       // investigate alternative of injecting 'updated_todo' into existing tasks (and refresh that if required.)
       // so we maintain local copy of updated dataset.
 
-      // to do : update TodoCard
-      // selected_todo
       setSelectedTodo(updated_todo)
    }
 
@@ -95,7 +93,7 @@ const TasksList = props => {
       //if(tasks) return true
       //const tasks = tasks.filter(task => parseInt(task.id) !== parseInt(item_id))
       //return tasks ? !tasks.some(task => task[item_field] === value) : true
-      return true // to do : re-enable
+      return true
    }
 
    const select_task = task => {
@@ -108,21 +106,21 @@ const TasksList = props => {
    }
    const is_selected_task = id => {
       return parseInt(id) === parseInt(selected_task.id)
-         ? ' border border-blue-900'
-         : ' border border-transparent'
+         ? ' border rounded border-blue-900'
+         : ' border rounded border-grey-100'
    }
 
    return (
-      <div className="flex">
+      <div className="flex gap-2 mt-4">
    
          {/* TasksList */}
-         <section style={{width:'10%'}}>
-            <ul className="flex flex-col gap-1 p-0 m-1">
+         <section style={{width:'15%',marginLeft:'.5rem'}}>
+            <ul className="flex flex-col gap-3 p-0 m-1 border rounded">
                <label className="text-gray-400">Tasks</label>
                {tasks ? 
                   tasks.map(task => (
-                     <li key={task.id} className={"px-1 " + is_selected_task(task.id)}>
-                        <a className="cursor-pointer" onClick={() => select_task(task)}>{task.title}</a>
+                     <li key={task.id} className={"w-full px-1 " + is_selected_task(task.id)} >
+                        <a className="w-full block cursor-pointer" onClick={() => select_task(task)}>{task.title}</a>
                      </li>
                   ))
                :null}
@@ -132,30 +130,34 @@ const TasksList = props => {
          {/* to do : make layout here responsive / media query */}
 
          {/* TaskCard */}
-         <section style={{width:'50%'}}>
-            <TaskCard
-               project_slug={props.project_slug} 
-               task_updated={task_updated}
-               task={selected_task} 
-               is_unique={is_unique}
-               update_list={update_list}
-               remove_deleted_task={remove_deleted_task}
-               view_todo_details={view_todo_details}
-            /> 
+         <section style={{width:'42%',marginRight:'.35rem'}}>
+            {selected_task 
+               ?  <TaskCard
+                     project_slug={props.project_slug} 
+                     task_updated={task_updated}
+                     task={selected_task} 
+                     is_unique={is_unique}
+                     update_list={update_list}
+                     remove_deleted_task={remove_deleted_task}
+                     view_todo_details={view_todo_details}
+                  /> 
+               :  null
+            }
          </section>
 
          {/* TodoCard */}
          {/* to do : we removed 'fixed' to get layout widths 
                      but have lost auto-positioning of card next to item list
                      perhaps we can get scroll and add margin-top to align? */}
-         <section style={{width:'40%'}}>
-         {selected_todo 
-            ?  <TodoCard 
-                  todo={selected_todo} 
-                  is_unique={is_unique} 
-                  update_todo={update_todo} />           
-            :  null
-         }</section>
+         <section style={{width:'44%',marginRight:'.5rem'}}>
+            {selected_todo 
+               ?  <TodoCard 
+                     todo={selected_todo} 
+                     is_unique={is_unique} 
+                     update_todo={update_todo} />
+               :  null
+            }
+         </section>
 
       </div>
    )

@@ -95,24 +95,36 @@ const TodoCard = props => {
 
    const item_classes = 'w-full border rounded px-1 py-0.5 '
    const title_classes = 'p-0.5 cursor-pointer text-slate-600 hover:text-slate-800 leading-tight'
+   const border_color = 'border-blue-200'
 
    return (
       todo.title ?
-      <section className="border rounded p-1">
+      <section className="border border-gray-300 rounded p-1">
    
-         <section className="w-full h-6">
-            <div onClick={() => close_todo()} className="float-right mr-2 cursor-pointer" >X</div>
+         <section className="flex justify-between w-full mb-0 pb-0 ">
+            <h5 className="mb-0 pb-0">{props.todo.title}</h5>
+            <div onClick={() => close_todo()} className="float-right mr-2 p-2 cursor-pointer text-lg" >X</div>
          </section>
-         <h1 className="text-2xl text-slate-600">{props.todo.title}</h1>
 
-         <section className="flex flex-col gap-2 border rounded m-2 p-2">
 
+         <section className={`flex flex-col gap-2 m-2 mt-0 p-2 `}>
             {props.todo.outline
                ? <p className="text-gray-700">{props.todo.outline}</p>
-               : <p className="italic text-gray-300">This todo has no description.</p>}
+                  : <p className="italic text-gray-500">This todo has no description.</p>}
          </section>
 
-         <section className="flex flex-col gap-2 border rounded m-2 p-2">
+
+         {/* only show solution if populated (if relevant) */}
+         {props.todo.solution
+            ?  <section className={`flex flex-col gap-2 border border-gray-300 rounded m-2 p-2 ${border_color}`}>
+                  <label>Solution</label>
+                  <p className="text-gray-700">{props.todo.solution}</p>
+               </section>
+            :  null
+         }
+
+
+         <section className={`flex flex-col gap-2 border border-gray-300 rounded m-2 p-2 ${border_color}`}>
 
             <div>
                created: {get_ui_ready_date(props.todo.created_at)}
@@ -126,15 +138,8 @@ const TodoCard = props => {
 
             {/* <div>task id:{props.todo.task_id}</div> */}
 
-
          </section>
 
-
-         <section>
-         {/* to do : populate - see EditTodoForm */}
-         mark as on-going
-         pin 
-         </section>
 
       {/* <CommentsList 
          commentable_type="todo"
@@ -161,31 +166,7 @@ const TodoCard = props => {
 
       </section>
       : null
-         
-      // <div className="md:w-8/12 mx-auto">
 
-      //    {/* Todo details */}
-      //    <section className="mb-5">
-      //       <h3 className="text-sm text-slate-500">
-      //          <Link to={`/projects/${params.project_slug}`}>{params.project_slug}</Link> / 
-      //          <Link to={`/projects/${params.project_slug}/${params.task_slug}`}>{params.task_slug}</Link>
-      //       </h3>
-      //       <h1 className="text-2xl text-slate-600">{props.todo.title}</h1>
-      //    </section>
-
-      //    <section className="flex flex-col gap-2 border rounded m-2 p-2">
-      //       <div>created at: {get_ui_ready_date(props.todo.created_at)}</div>
-      //       <div>updated at:{get_ui_ready_date(props.todo.updated_at)}</div>
-      //       <div>author:{props.todo.author_id}</div>
-      //       <div>task:{props.todo.task_id}</div>
-      //       <div></div>
-      //    </section>
-
-      //    <CommentsList 
-      //       commentable_type="todo"
-      //       commentable_id={props.todo.id}
-      //       comments={props.todo.comments} />
-      // </div>
    )
 }
 

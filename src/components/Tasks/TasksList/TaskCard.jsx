@@ -88,6 +88,7 @@ const TaskCard = props => {
    }
    
    return (
+      task.title ?
       <>
          <li key={task.id}
             className="flex-1 border rounded p-1 px-2 min-h-screen list-none"
@@ -139,6 +140,7 @@ const TaskCard = props => {
             )}
          </li>
       </>
+      : null
    )
 }
 
