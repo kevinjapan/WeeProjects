@@ -6,7 +6,7 @@ import React from 'react'
 
 const FormElement = props => {
    return (
-      <div className={`flex flex-col md:flex-row items-start gap-2 ${props.classes}`}>
+      <div className={`flex flex-col md:flex-row items-start gap-2 px-2 min-h-24 ${props.classes}`}>
          {props.children}
       </div>
    )

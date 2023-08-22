@@ -78,7 +78,7 @@ const TasksList = props => {
       // we are modifying deep so useEffect in TaskCard doesn't detect the change - so we flush it to ensure it does.
       setSelectedTask({})
 
-      // option 1 - just reload entire updated Tasks for project
+      // currently we just reload entire updated Tasks for project
       get_tasks()
 
       // to do : 
@@ -87,6 +87,15 @@ const TasksList = props => {
       // so we maintain local copy of updated dataset.
 
       setSelectedTodo(updated_todo)
+   }
+
+   const remove_deleted_todo = () => {
+
+      // flush Task it to ensure it does.
+      setSelectedTask({})
+
+      // reload updated Tasks for project
+      get_tasks()
    }
 
    const is_unique = (item_id,item_field,value) => {
@@ -106,8 +115,8 @@ const TasksList = props => {
    }
    const is_selected_task = id => {
       return parseInt(id) === parseInt(selected_task.id)
-         ? ' border rounded border-blue-900'
-         : ' border rounded border-grey-100'
+         ? ' rounded bg-yellow-200'
+         : ' '
    }
 
    return (
@@ -115,7 +124,7 @@ const TasksList = props => {
    
          {/* TasksList */}
          <section style={{width:'15%',marginLeft:'.5rem'}}>
-            <ul className="flex flex-col gap-3 p-0 m-1 border rounded">
+            <ul className="flex flex-col gap-3 p-1 border border-gray-200 rounded shadow-lg">
                <label className="text-gray-400">Tasks</label>
                {tasks ? 
                   tasks.map(task => (
@@ -154,7 +163,9 @@ const TasksList = props => {
                ?  <TodoCard 
                      todo={selected_todo} 
                      is_unique={is_unique} 
-                     update_todo={update_todo} />
+                     update_todo={update_todo} 
+                     remove_deleted_todo={remove_deleted_todo}
+                     />
                :  null
             }
          </section>

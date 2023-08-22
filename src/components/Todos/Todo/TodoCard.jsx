@@ -2,6 +2,7 @@ import React, { useState,useEffect,useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { AppContext } from '../../App/AppContext/AppContext'
 import { datetimestamp } from '../../Utility/Dates/Dates'
+import truncate from '../../Utility/Stringer/uiStringer'
 import { Notifications } from '../../Utility/utilities/enums'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 import Modal from '../../Utility/Modal/Modal'
@@ -46,13 +47,16 @@ const TodoCard = props => {
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/todos/${todo.slug}`,reqInit("PUT",bearer_token,formJson))
          const jsonData = await data.json()
          await new Promise(resolve => setTimeout(resolve, 1000))
+
          if(jsonData.outcome === Notifications.SUCCESS) {
 
-            // console.log('on-going: ' + formJson.on_going)
-
+            // update local copy of Todo
             setTodo(formJson) 
+
+            // update local copy of parent Task
             props.update_todo(todo.task_id,todo.id,formJson)
          }
+
          setLocalStatus(Notifications.DONE)
          await new Promise(resolve => setTimeout(resolve, 1000))
          setLocalStatus('')
@@ -76,7 +80,10 @@ const TodoCard = props => {
          const jsonData = await data.json()
          await new Promise(resolve => setTimeout(resolve, 1000))
          if(jsonData.outcome === Notifications.SUCCESS) {
+            
+            // update local copy of parent Task
             props.remove_deleted_todo(todo.id)
+
          }
          setLocalStatus(Notifications.DONE)
          await new Promise(resolve => setTimeout(resolve, 1000))
@@ -85,7 +92,7 @@ const TodoCard = props => {
       catch(error) {
          setStatusMsg(Notifications.FAILED_SERVER_UPDATE + error)
       }
-      setShowEditModal(false)
+      setShowDeleteModal(false)
    }
 
    const close_todo = () => {
@@ -99,10 +106,10 @@ const TodoCard = props => {
 
    return (
       todo.title ?
-      <section className="border border-gray-300 rounded p-1">
+      <section className="border border-gray-300 rounded p-1 shadow-lg">
    
          <section className="flex justify-between w-full mb-0 pb-0 ">
-            <h5 className="mb-0 pb-0">{props.todo.title}</h5>
+            <h5 className="mb-0 pb-0">{truncate(props.todo.title,38)}</h5>
             <div onClick={() => close_todo()} className="float-right mr-2 p-2 cursor-pointer text-lg" >X</div>
          </section>
 
@@ -163,6 +170,14 @@ const TodoCard = props => {
                   is_unique={props.is_unique}
                   close_modal={() => setShowEditModal(false)}/>
             </Modal>)}
+
+         {show_delete_modal && (
+         <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
+            <DeleteTodoForm 
+               onSubmit={delete_todo} 
+               todo_id={todo.id} 
+               close_modal={() => setShowDeleteModal(false)}/>
+         </Modal>)}
 
       </section>
       : null

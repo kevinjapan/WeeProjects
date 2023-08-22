@@ -37,7 +37,7 @@ const TodosListItem = props => {
    }
 
 
-   // to do : _depr - we use Todo.<EditTodoForm>
+   // we use Todo.<EditTodoForm>
    const update_todo = async(formJson) => {
 
       // eslint-disable-next-line
@@ -149,7 +149,7 @@ const TodosListItem = props => {
             {local_status ? <div className="w-full text-slate-400 text-sm">{local_status}</div> : <div></div>}
          </li>
 
-         {show_edit_modal && (
+         {/* {show_edit_modal && (
             <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
                <EditTodoForm 
                   onSubmit={update_todo} 
@@ -157,7 +157,7 @@ const TodosListItem = props => {
                   todo={todo} 
                   is_unique={props.is_unique}
                   close_modal={() => setShowEditModal(false)}/>
-            </Modal>)}
+            </Modal>)} */}
 
          {show_delete_modal && (
             <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
