@@ -3,7 +3,7 @@ import React from 'react'
 
 const StyledTextArea = props => {
 
-   let classes = "grow border border-slate-300 rounded leading-5 focus:outline p-2 leading-3 h-36"
+   let classes = "grow border border-slate-300 rounded leading-5 focus:outline p-2 leading-3 h-36 max-h-72   min-h-[160px] "
 
    // client may provide additional / override styling
    if(props.classes) classes += " " + props.classes

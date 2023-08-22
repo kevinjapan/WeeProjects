@@ -3,7 +3,7 @@ import React from 'react'
 
 const StyledInput = props => {
 
-   let classes = "grow border border-slate-300 rounded focus:outline p-2 leading-3"
+   let classes = "grow border border-slate-300 rounded focus:outline p-1 w-full leading-3"
 
    // client may provide additional / override styling
    if(props.classes) classes += " " + props.classes
