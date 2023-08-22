@@ -60,7 +60,7 @@ const EditTodoForm = props => {
       if(!validate_string(formJson['outline'],{'min_length':10,'max_length':500},setOutlineFeedback)) {
          validated = false
       }
-      if(!validate_string(formJson['solution'],{'min_length':10,'max_length':500},setSolutionFeedback)) {
+      if(!validate_string(formJson['solution'],{'min_length':0,'max_length':500},setSolutionFeedback,false)) {
          validated = false
       }
       
@@ -77,64 +77,67 @@ const EditTodoForm = props => {
    return (
       <form onSubmit={handleSubmit} className="p-3 px-4">
 
-         <h5 className="text-2xl mb-5">Edit Todo</h5>
-               <FormElement>
+         <div className="flex justify-center w-full">
+            <section className="w-full mt-1">
+               <FormElement className="w-full">
                   <StyledInput 
                      name="title" 
                      value={title || ''} 
-                     classes="text-lg"
+                     classes="text-2xl w-full text-center font-light border-none pl-0 ml-0"
                      onChanged={setTitle}></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={title_feedback}/>
-
+            </section>
+         </div>
          <div className="flex">
 
-            <section className="w-4/12">
-               <FormElement>
-                  <label htmlFor="id" className="w-12/12 md:w-2/12">Id</label>  
-                  <StyledInput 
-                     name="id" 
-                     value={id || ''}></StyledInput>
-                     {/* to do : make this field un-editable */}
-               </FormElement>
-               <FormElementFeedback />    
+            <section className="w-2/12">
 
                <input type="hidden" name="task_id" value={task_id || 0} />
                <input type="hidden" name="done_at" value={props.todo.done_at ? props.todo.done_at : ''} />
 
+               <FormElement>
+                  <label htmlFor="id" className="italic pt-1 w-12/12 md:w-6/12">ID</label>  
+                  <StyledInput 
+                     name="id" 
+                     value={id || ''}
+                     classes="w-6/12"></StyledInput>
+                     {/* to do : make this field un-editable */}
+               </FormElement>
+               <FormElementFeedback /> 
 
                <FormElement>
-                  <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
+                  <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
                      name="author_id" 
                      value={author_id || ''} 
-                     onChanged={setAuthorId}></StyledInput>
+                     onChanged={setAuthorId}
+                     classes="w-6/12"></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={author_id_feedback}/>
             </section>
 
 
-            <section className="w-6/12">
+            <section className="w-10/12 pl-12">
                <FormElement>
-                     <label htmlFor="outline" className="w-12/12 md:w-2/12">Outline</label>
+                     <label htmlFor="outline" className="italic pt-1 w-12/12 md:w-1/12">Outline</label>
                      <StyledTextArea 
                         name="outline" 
                         value={outline || ''}
                         placeholder=""
-                        onChanged={setOutline}></StyledTextArea>
+                        onChanged={setOutline}
+                        classes="w-11/12"></StyledTextArea>
                </FormElement>
                <FormElementFeedback feedback_msg={outline_feedback}/>
-            </section>
-
-
-            <section className="w-6/12">
+          
                <FormElement>
-                     <label htmlFor="solution" className="w-12/12 md:w-2/12">Solution</label>
+                     <label htmlFor="solution" className="italic pt-1 w-12/12 md:w-1/12">Solution</label>
                      <StyledTextArea 
                         name="solution" 
                         value={solution || ''}
                         placeholder=""
-                        onChanged={setSolution}></StyledTextArea>
+                        onChanged={setSolution}
+                        classes="w-10/12"></StyledTextArea>
                </FormElement>
                <FormElementFeedback feedback_msg={solution_feedback}/>
             </section>

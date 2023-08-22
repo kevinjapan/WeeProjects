@@ -1,26 +1,26 @@
 
 
-export const validate_string = (str,tests,set_msg_callback) => {
+export const validate_string = (str,tests,set_msg_callback,required=true) => {
 
-    if((!str) || (str.length === 0)) {
-        set_msg_callback('This field is required.')
-        return false
-    }
+   if(required && ((!str) || (str.length === 0))) {
+      set_msg_callback('This field is required.')
+      return false
+   }
 
-    // perform client-configured tests
-    if(tests['min_length']) {
-        if(str.length < tests['min_length']) {
-            set_msg_callback('The entered value is too short.')
-            return false
-        }
-    }
-    if(tests['max_length']) {
-        if(str.length > tests['max_length']) {
-            set_msg_callback('The entered value is too long.')
-            return false
-        }
-    }
-    return true
+   // perform client-configured tests
+   if(tests['min_length']) {
+      if(str.length < tests['min_length']) {
+         set_msg_callback('The entered value is too short.')
+         return false
+      }
+   }
+   if(tests['max_length']) {
+      if(str.length > tests['max_length']) {
+         set_msg_callback('The entered value is too long.')
+         return false
+      }
+   }
+   return true
 }
 
 
