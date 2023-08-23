@@ -57,8 +57,8 @@ const UpdateProjectForm = props => {
             <label htmlFor="id" className="w-12/12 md:w-2/12">Id</label>
             <StyledInput 
                name="id" 
-               value={id || ''}></StyledInput>
-               {/* to do : make this field un-editable */}
+               value={id || ''}
+               readonly></StyledInput>
          </FormElement>
 
          <FormElementFeedback />

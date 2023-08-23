@@ -101,7 +101,8 @@ const EditTodoForm = props => {
                   <StyledInput 
                      name="id" 
                      value={id || ''}
-                     classes="w-6/12"></StyledInput>
+                     classes="w-6/12"
+                     readonly></StyledInput>
                      {/* to do : make this field un-editable */}
                </FormElement>
                <FormElementFeedback /> 
@@ -112,7 +113,8 @@ const EditTodoForm = props => {
                      name="author_id" 
                      value={author_id || ''} 
                      onChanged={setAuthorId}
-                     classes="w-6/12"></StyledInput>
+                     classes="w-6/12"
+                     ></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={author_id_feedback}/>
             </section>
