@@ -113,6 +113,10 @@ const TodoCard = props => {
             <div onClick={() => close_todo()} className="float-right mr-2 p-2 cursor-pointer text-lg" >X</div>
          </section>
 
+         <section>
+            <span className="italic px-2 text-gray-300">task id: {todo.task_id}</span>
+         </section>
+
 
          <section className={`flex flex-col gap-2 m-2 mt-0 p-2 `}>
             {props.todo.outline

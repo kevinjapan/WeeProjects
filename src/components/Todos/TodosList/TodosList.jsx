@@ -139,7 +139,12 @@ const TodosList = props => {
               - typically, we are checking an added 'title' is unique */}
          {show_add_modal && (
             <Modal show={show_add_modal} close_modal={() => setShowAddModal(false)}>
-               <AddTodoForm onSubmit={add_todo} is_unique={is_unique} close_modal={() => setShowAddModal(false)}/>
+               <AddTodoForm
+                  onSubmit={add_todo} 
+                  is_unique={is_unique} 
+                  task_id={props.task_id}
+                  close_modal={() => setShowAddModal(false)}
+               />
             </Modal>
          )}
       </>

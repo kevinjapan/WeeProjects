@@ -60,6 +60,8 @@ const AddTodoForm = props => {
       <form onSubmit={handleSubmit}>
 
          <h5 className="text-2xl mb-5">Add Todo</h5>
+
+         <input type="hidden" name="task_id" value={props.task_id || 0} />
          
          <FormElement>
             <label htmlFor="title" className="w-12/12 md:w-2/12">Title</label>
