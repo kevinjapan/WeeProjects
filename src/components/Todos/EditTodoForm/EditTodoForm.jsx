@@ -103,7 +103,6 @@ const EditTodoForm = props => {
                      value={id || ''}
                      classes="w-6/12"
                      readonly></StyledInput>
-                     {/* to do : make this field un-editable */}
                </FormElement>
                <FormElementFeedback /> 
 
