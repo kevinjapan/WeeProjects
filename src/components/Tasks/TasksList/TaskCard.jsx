@@ -91,7 +91,7 @@ const TaskCard = props => {
       task.title ?
       <>
          <li key={task.id}
-            className="flex-1 border rounded p-1 px-2 min-h-screen list-none"
+            className="flex-1 border rounded p-1 px-2 min-h-screen list-none  shadow-lg"
             >
 
             {/* <h5 className="text-2xl mb-5">{task.title}</h5> */}
@@ -118,6 +118,7 @@ const TaskCard = props => {
             <TodosList 
                project_slug={props.project_slug} 
                task_slug={props.task.slug} 
+               task_id={props.task.id}
                todos={task.todos}
                check_todo={check_todo}
                update_todos={update_todos}
