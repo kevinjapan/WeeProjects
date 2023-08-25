@@ -81,7 +81,7 @@ const TasksList = props => {
       // currently we just reload entire updated Tasks for project
       get_tasks()
 
-      // to do : 
+      // future : 
       // currently we retrieve all tasks - ok while no. is low - 
       // investigate alternative of injecting 'updated_todo' into existing tasks (and refresh that if required.)
       // so we maintain local copy of updated dataset.
@@ -136,7 +136,6 @@ const TasksList = props => {
             </ul>
          </section>
 
-         {/* to do : make layout here responsive / media query */}
 
          {/* TaskCard */}
          <section style={{width:'42%',marginRight:'.35rem'}}>

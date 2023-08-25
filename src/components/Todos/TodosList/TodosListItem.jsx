@@ -87,8 +87,6 @@ const TodosListItem = props => {
    }
 
    const view_todo_details = () => {
-      // to do : open in right-side panel.  make right-side panel fixed?
-
       props.view_todo_details(todo)
    }
 

@@ -21,10 +21,10 @@ const MainNavBarLinks = () => {
             <NavLink to="/projects" onClick={() => setDisplayDropdown(false)}
             className={({ isActive }) => isActive ? active_link_classes : ""}>Projects</NavLink>
          </li>
-         <li>
+         {/* <li>
             <NavLink to="/search" onClick={() => setDisplayDropdown(false)}
             className={({ isActive }) => isActive ? active_link_classes : ""}>Search</NavLink>
-         </li>               
+         </li>                */}
       </ul>
    )
 }
