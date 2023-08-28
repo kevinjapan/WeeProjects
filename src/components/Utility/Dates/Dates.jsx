@@ -1,5 +1,10 @@
 
 
+
+const days = ["Sun","Mon","Tues","Wed","Thu","Fri","Sat"]
+const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
+
 //
 //  display on UI - '16 Mar 2023'
 //
@@ -31,4 +36,23 @@ export const datetimestamp = () => {
     // - server converts for display to client? or client converts on-the-fly itself?
     var d = new Date()
     return get_db_ready_datetime(d)
+}
+
+
+//
+// add_days 
+// Return a new Date object with added 'days'
+//
+export const add_days = (date,days) => {
+   
+   return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate() + days,
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
+   )
+
 }

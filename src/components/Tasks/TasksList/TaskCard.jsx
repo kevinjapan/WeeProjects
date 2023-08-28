@@ -11,6 +11,7 @@ import EditTaskForm from '../EditTaskForm/EditTaskForm'
 import DeleteTaskForm from '../DeleteTaskForm/DeleteTaskForm'
 import { PencilIcon,TrashIcon } from '@heroicons/react/24/solid'
 import { BookmarkIcon } from '@heroicons/react/24/outline'
+import SessionsList from '../../Sessions/SessionsList'
 
 
 
@@ -110,6 +111,14 @@ const TaskCard = props => {
                   </li>
                </ul>
             </NavBar>
+
+            
+            <SessionsList 
+               sessionable_type="task"
+               sessionable_id={props.task.id}
+               sessions={props.task.sessions} />
+
+
             <div className="flex justify-between pt-2 px-2">
                {get_ui_ready_date(task.created_at)}
                {task.pin ? <BookmarkIcon style={{width:'16px',height:'16px'}}/> : null}
