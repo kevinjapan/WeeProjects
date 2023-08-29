@@ -1,8 +1,8 @@
 
-export default function truncate(str,len) {
+export default function truncate(str,len,trailing = true) {
    if(str) {
    if(str !== "" && str.length > len) {
-      return str.substring(0, len) + '..';
+      return trailing ? str.substring(0, len) + '..' : str.substring(0, len) 
       }
    }
    return str
