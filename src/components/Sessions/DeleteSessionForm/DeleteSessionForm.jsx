@@ -19,6 +19,13 @@ const DeleteSessionForm = props => {
       props.onSubmit(formJson)
    }
 
+{/* 
+
+to do :  
+- 
+
+*/}
+
    return (
       <form onSubmit={handleSubmit}>
          <h5 className="text-2xl mb-5">Delete session</h5>

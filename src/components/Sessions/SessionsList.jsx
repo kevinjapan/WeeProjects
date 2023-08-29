@@ -2,12 +2,13 @@ import React, { useState,useContext } from 'react'
 import { AppContext } from '../App/AppContext/AppContext'
 import reqInit from '../Utility/RequestInit/RequestInit'
 import Modal from '../Utility/Modal/Modal'
-import Session from './Session'
 import StyledButton from '../Utility/StyledButton/StyledButton'
 import { PlusIcon } from '@heroicons/react/24/solid'
 import Calendar from '../Calendar/Calendar'
 import AddSessionForm from './AddSessionForm/AddSessionForm'
 
+
+// to do : need to view/manage sessions (eg access to edit/delete a session etc)
 
 
 const SessionsList = props => {
@@ -55,9 +56,7 @@ const SessionsList = props => {
 
 
    return (
-      <section className=" my-7 max-w-3xl mx-auto">
-      
-         <h3 className="text-xl text-slate-400">sessions</h3>
+      <section className=" my-2 max-w-3xl mx-auto">
 
          <Calendar sessions={sessions}/>         
          

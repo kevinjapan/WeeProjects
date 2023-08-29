@@ -37,6 +37,15 @@ const EditSessionForm = props => {
       if(validated) props.onSubmit(formJson)
    }
 
+   
+{/* 
+
+to do :  
+- user can edit both start and end time?
+- user can edit date?
+
+*/}
+
    return (
       <form onSubmit={handleSubmit} className="p-3 px-4">
 
