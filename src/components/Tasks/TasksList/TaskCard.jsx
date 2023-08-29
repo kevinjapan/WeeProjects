@@ -92,7 +92,7 @@ const TaskCard = props => {
       task.title ?
       <>
          <li key={task.id}
-            className="flex-1 border rounded p-1 px-2 min-h-screen list-none  shadow-lg"
+            className="flex-1 border border-gray-300 rounded p-1 px-2 min-h-screen list-none  shadow-lg"
             >
 
             {/* <h5 className="text-2xl mb-5">{task.title}</h5> */}
