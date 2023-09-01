@@ -166,12 +166,9 @@ const TasksList = props => {
          </section>
 
 
-         {/* TodoCard */}
-
-         {/* to do : we removed 'fixed' to get layout widths 
-                     but have lost auto-positioning of card next to item list
-                     perhaps we can get scroll and add margin-top to align? */}
          <section style={{width:'44%',marginRight:'.5rem'}}>
+         
+            {/* TodoCard */}
             {selected_todo 
                ?  <TodoCard 
                      todo={selected_todo} 
@@ -181,18 +178,8 @@ const TasksList = props => {
                      />
                :  null
             }
-         
 
-
-         {/* to do : ensure TodoCard and SessionManager are exlusive    - tie selected_todo w/ .. ? */}
-
-
-         {/* SessionManager */}
-
-         {/* to do : we removed 'fixed' to get layout widths 
-                     but have lost auto-positioning of card next to item list
-                     perhaps we can get scroll and add margin-top to align? */}
-                   
+            {/* SessionManager */}
             {manage_task_sessions
                ?  <SessionManager 
                      sessions={selected_task.sessions}
@@ -205,6 +192,7 @@ const TasksList = props => {
                      />
                :  null
             }
+
          </section>
 
 

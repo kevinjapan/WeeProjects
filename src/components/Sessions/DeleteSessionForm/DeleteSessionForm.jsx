@@ -2,11 +2,6 @@ import React from 'react'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
 
 
-//
-// to do : copied of sessions - adapt -> sessions are much simpler data
-//
-
-
 // captures user confirmation
 
 const DeleteSessionForm = props => {
@@ -18,13 +13,6 @@ const DeleteSessionForm = props => {
       const formJson = Object.fromEntries(formData.entries());
       props.onSubmit(formJson)
    }
-
-{/* 
-
-to do :  
-- 
-
-*/}
 
    return (
       <form onSubmit={handleSubmit}>

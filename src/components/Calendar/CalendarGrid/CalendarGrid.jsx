@@ -9,7 +9,6 @@ import { get_day,get_month,extract_db_date_month } from '../../Utility/DateTime/
 
 
 // to do : 
-// - align 'month' labels
 // - mouseover - tooltip details for session? 
 // - deal w/ user not ending a session
 // - verify 'props.num_days' is valid.
@@ -54,7 +53,8 @@ const CalendarGrid = props => {
 
       // we maintain grid alignment by using same <li> dimensions
 
-      // to do : calc spacing - calc index of array to insert label into..
+      // to do : 
+      // - align 'month' labels - calc spacing - calc index of array to insert label into..
       //  since cells in the grid don't know their corresponding date, we can't check against them..
       //  so try stepping backwards from known today's date (and it's position in current month) (or forwards from start_date?)
   

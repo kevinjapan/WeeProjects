@@ -1,14 +1,13 @@
 import React, { useState,useEffect } from 'react'
 import get_ui_ready_date from '../../Utility/DateTime/DateTime'
 
+
 //
 // SessionManagerListItem
+// Display only - any calcs, in parent SessionManager
 // Sessions never extend beyond a single day
 // note : props.sessions will contain *all* sessions - including those w/ 'offset: null' - that's good!
-
-// to do : 
-// - calc duration (approx is ok - eg to nearest .5 hr)
-
+//
 
 const SessionManagerListItem = props => {
 
@@ -34,11 +33,10 @@ const SessionManagerListItem = props => {
    },[props.session])
 
    return (
-      <li className={`border rounded m-1`}>
-         <span style={{fontSize:'.75rem',color:'lightgrey'}}>{get_ui_ready_date(props.session.started_at)}</span>
-
-         <div>duration: {duration}</div>
-         <span>{start_time}</span> - <span>{end_time}</span>
+      <li className={`grid grid-cols-4 border rounded m-1`}>
+         <div>{get_ui_ready_date(props.session.started_at)}</div>
+         <div>{duration} hrs</div> 
+         <div>{start_time}-{end_time}</div>
       </li>
    )
 }

@@ -6,10 +6,11 @@ import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 import {get_db_ready_datetime} from '../../Utility/DateTime/DateTime'
 
-//
-// to do : copied of sessions - adapt -> sessions are much simpler data
-//
 
+// to do :  
+// - initially, implement Session from 'now'
+// - presents a start time - user confirms or adjusts it.
+// - future, you can retrospectively add a Session
 
 
 const AddSessionForm = props => {
@@ -58,16 +59,6 @@ const AddSessionForm = props => {
          <input type="hidden" name="sessionable_type" value={props.sessionable_type} />
          <input type="hidden" name="sessionable_id" value={props.sessionable_id} />
 
-{/* 
-
-to do :  
-- initially, implement Session from 'now'
-- presents a start time - user confirms of adjusts it.
-- future, you can retrospectively add a Session
-- style layout (rollout to all add/edit forms as required)
-*/}
-
-   
          <FormElement>
             <label htmlFor="author_id" className="w-12/12 md:w-2/12">started_at</label>
             <StyledInput 
@@ -90,9 +81,6 @@ to do :
                onChanged={setAuthorId}></StyledInput>
          </FormElement>
          <FormElementFeedback feedback_msg={author_id_feedback}/>
-
-
-         {/* to do : started_at will be automatically generated in DB on creation.. */}
 
 
          <div className="flex justify-end gap-1 my-1">

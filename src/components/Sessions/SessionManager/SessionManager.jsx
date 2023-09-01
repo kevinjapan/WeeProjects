@@ -17,6 +17,9 @@ import { get_ui_ready_time } from '../../Utility/DateTime/DateTime'
 // - delete session
 // - currently doesn't show up to current day - 
 //   we are starting on nearest sunday which may add no.s beyond size of grid array..
+// - SessionManager panel is not updating on 'add a session'
+// - don't allow add a new session if one already open today?
+//
 
 
 const SessionManager = props => {

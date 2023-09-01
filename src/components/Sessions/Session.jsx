@@ -3,23 +3,11 @@ import { AppContext } from '../App/AppContext/AppContext'
 import reqInit from '../Utility/RequestInit/RequestInit'
 import get_ui_ready_date from '../Utility/DateTime/DateTime'
 import { Notifications } from '../Utility/utilities/enums'
-import Modal from '../Utility/Modal/Modal'
-import StyledButton from '../Utility/StyledButton/StyledButton'
-import EditSessionForm from './EditSessionForm/EditSessionForm'
-import DeleteSessionForm from './DeleteSessionForm/DeleteSessionForm'
-import { PencilIcon,TrashIcon } from '@heroicons/react/24/solid'
 
 
 //
-// to do : copied of sessions - adapt -> sessions are much simpler data
-// eg unlikely we ever 'update' a session. (but perhaps modify ended_at ?)
-//
-
-
 // Session
-//
-// Sessions can only occupy a time duration over a single day - they do not extend over multiple days.
-//
+// Sessions can only occupy a time duration over a single day
 //
 
 const Session = props => {
@@ -39,7 +27,6 @@ const Session = props => {
       try {
          setStatusMsg(Notifications.UPDATING)
          
-         // to do : verify matches session API
          const data = await fetch(`${api}/sessions`,reqInit("PUT",bearer_token,formJson))
 
          const jsonData = await data.json()
@@ -62,7 +49,6 @@ const Session = props => {
          formJson.id = formJson.session_id
          setStatusMsg(Notifications.UPDATING)
 
-         // to do : verify matches session API
          const data = await fetch(`${api}/sessions`,reqInit("DELETE",bearer_token,formJson))
 
          const jsonData = await data.json()
@@ -83,12 +69,9 @@ const Session = props => {
    return (
       <section className="border rounded p-2 text-slate-500">
 
-
          <p className="leading-relaxed">{get_ui_ready_date(session.started_at)}</p>
          <p className="leading-relaxed">{get_ui_ready_date(session.ended_at)}</p>
          <p className="text-sm">{session.author_id}</p>
-
-         
 
          {/* <div className="flex gap-1 justify-end">
             <StyledButton aria-label="Edit session." onClicked={() => setShowEditModal(true)}>

@@ -1,7 +1,6 @@
 import React, { useState,useEffect,useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { AppContext } from '../../App/AppContext/AppContext'
-import { datetimestamp } from '../../Utility/DateTime/DateTime'
 import truncate from '../../Utility/Stringer/uiStringer'
 import { Notifications } from '../../Utility/utilities/enums'
 import reqInit from '../../Utility/RequestInit/RequestInit'
@@ -10,7 +9,6 @@ import StyledButton from '../../Utility/StyledButton/StyledButton'
 import EditTodoForm from '../EditTodoForm/EditTodoForm'
 import DeleteTodoForm from '../DeleteTodoForm/DeleteTodoForm'
 import get_ui_ready_date from '../../Utility/DateTime/DateTime'
-// import CommentsList from '../../Comments/CommentsList'
 
 
 
@@ -151,14 +149,10 @@ const TodoCard = props => {
 
          </section>
 
-
-      {/* <CommentsList 
-         commentable_type="todo"
-         commentable_id={props.todo.id}
-         comments={props.todo.comments} /> */}
-
-         
-
+         {/* <CommentsList 
+            commentable_type="todo"
+            commentable_id={props.todo.id}
+            comments={props.todo.comments} /> */}
 
          <StyledButton  aria-label="Edit.">
             <div className={`${title_classes} ${checked ? 'text-zinc-400 hover:text-zinc-600' : ''} `} 
@@ -185,7 +179,6 @@ const TodoCard = props => {
 
       </section>
       : null
-
    )
 }
 
