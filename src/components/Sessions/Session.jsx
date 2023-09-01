@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useContext } from 'react'
 import { AppContext } from '../App/AppContext/AppContext'
 import reqInit from '../Utility/RequestInit/RequestInit'
-import get_ui_ready_date from '../Utility/Dates/Dates'
+import get_ui_ready_date from '../Utility/DateTime/DateTime'
 import { Notifications } from '../Utility/utilities/enums'
 import Modal from '../Utility/Modal/Modal'
 import StyledButton from '../Utility/StyledButton/StyledButton'

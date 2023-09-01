@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { AppContext } from '../../App/AppContext/AppContext'
-import { datetimestamp } from '../../Utility/Dates/Dates'
+import { datetimestamp } from '../../Utility/DateTime/DateTime'
 import truncate from '../../Utility/Stringer/uiStringer'
 import { Notifications } from '../../Utility/utilities/enums'
 import reqInit from '../../Utility/RequestInit/RequestInit'
@@ -9,7 +9,7 @@ import Modal from '../../Utility/Modal/Modal'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
 import EditTodoForm from '../EditTodoForm/EditTodoForm'
 import DeleteTodoForm from '../DeleteTodoForm/DeleteTodoForm'
-import get_ui_ready_date from '../../Utility/Dates/Dates'
+import get_ui_ready_date from '../../Utility/DateTime/DateTime'
 // import CommentsList from '../../Comments/CommentsList'
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import CalendarGrid from './CalendarGrid/CalendarGrid'
-import { add_days } from '../Utility/Dates/Dates'
+import { add_days } from '../Utility/DateTime/DateTime'
 
 
 

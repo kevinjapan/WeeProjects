@@ -1,6 +1,6 @@
 import React, { useState,useEffect} from 'react'
 import { Link,useParams } from 'react-router-dom'
-import get_ui_ready_date from '../../Utility/Dates/Dates'
+import get_ui_ready_date from '../../Utility/DateTime/DateTime'
 
 
 const Task = props => {

@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { get_day,get_month,extract_db_date_month } from '../../Utility/Dates/Dates'
+import { get_day,get_month,extract_db_date_month } from '../../Utility/DateTime/DateTime'
 
 
 
@@ -30,7 +30,7 @@ const CalendarGrid = props => {
          props.sessions.forEach(session => {
 
             // to do : try alternative of re-assigning date to same Date object here... quicker? (scope new Date outside this loop)
-            temp_date = new Date(session.started_at)         
+            temp_date = new Date(session.started_at) 
 
             // add grid offset to the Session - excluding Sessions before start_date
             let offset = Math.round((temp_date - props.start_date ) / (1000 * 3600 * 24))
