@@ -8,10 +8,8 @@ import Calendar from '../Calendar/Calendar'
 import AddSessionForm from './AddSessionForm/AddSessionForm'
 
 
-// to do : need to view/manage sessions (eg access to edit/delete a session etc)
 
-
-const SessionsList = props => {
+const SessionsPanel = props => {
 
    const [sessions,setSessions] = useState(props.sessions)
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
@@ -54,6 +52,10 @@ const SessionsList = props => {
       return filtered_sessions ? !filtered_sessions.some(session => session[item_field] === value) : true
    }
 
+   const manage_sessions = () => {
+      props.manage_sessions()
+   }
+
 
    return (
       <section className=" my-2 max-w-3xl mx-auto">
@@ -61,6 +63,9 @@ const SessionsList = props => {
          <Calendar sessions={sessions}/>         
          
          <div className="flex justify-end">
+            <StyledButton aria-label="Add a session." onClicked={() => manage_sessions()} classes="flex gap-1">
+               Manage sessions
+            </StyledButton>
             <StyledButton aria-label="Add a session." onClicked={() => setShowAddModal(true)} classes="flex gap-1">
                <PlusIcon style={{width:'16px',height:'16px'}}/>Add session
             </StyledButton>
@@ -80,4 +85,4 @@ const SessionsList = props => {
    )
 }
 
-export default SessionsList
+export default SessionsPanel

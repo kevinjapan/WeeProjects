@@ -3,6 +3,7 @@ import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 import TaskCard from './TaskCard'
 import TodoCard from '../../Todos/Todo/TodoCard'
+import SessionManager from '../../Sessions/SessionManager/SessionManager'
 
 
 
@@ -10,6 +11,7 @@ const TasksList = props => {
 
    const [tasks,setTasks] = useState([])
    const [selected_task,setSelectedTask] = useState({})
+   const [manage_task_sessions,setManageTaskSessions] = useState(false)
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
 
    // selected todo
@@ -112,6 +114,7 @@ const TasksList = props => {
 
    const view_todo_details = todo => {
       setSelectedTodo(todo)
+      setManageTaskSessions(false)
    }
    const is_selected_task = id => {
       return parseInt(id) === parseInt(selected_task.id)
@@ -119,10 +122,17 @@ const TasksList = props => {
          : ' '
    }
 
+   const manage_sessions = () => {
+      setSelectedTodo({})
+      setManageTaskSessions(true)
+   }
+
    return (
       <div className="flex gap-2 mt-4">
    
+
          {/* TasksList */}
+
          <section style={{width:'15%',marginLeft:'.5rem'}}>
             <ul className="flex flex-col gap-3 p-1 border border-gray-300 rounded shadow-lg">
                <label className="text-gray-400">Tasks</label>
@@ -138,6 +148,7 @@ const TasksList = props => {
 
 
          {/* TaskCard */}
+
          <section style={{width:'42%',marginRight:'.35rem'}}>
             {selected_task 
                ?  <TaskCard
@@ -148,12 +159,15 @@ const TasksList = props => {
                      update_list={update_list}
                      remove_deleted_task={remove_deleted_task}
                      view_todo_details={view_todo_details}
+                     manage_sessions={manage_sessions}
                   /> 
                :  null
             }
          </section>
 
+
          {/* TodoCard */}
+
          {/* to do : we removed 'fixed' to get layout widths 
                      but have lost auto-positioning of card next to item list
                      perhaps we can get scroll and add margin-top to align? */}
@@ -167,7 +181,32 @@ const TasksList = props => {
                      />
                :  null
             }
+         
+
+
+         {/* to do : ensure TodoCard and SessionManager are exlusive    - tie selected_todo w/ .. ? */}
+
+
+         {/* SessionManager */}
+
+         {/* to do : we removed 'fixed' to get layout widths 
+                     but have lost auto-positioning of card next to item list
+                     perhaps we can get scroll and add margin-top to align? */}
+                   
+            {manage_task_sessions
+               ?  <SessionManager 
+                     sessions={selected_task.sessions}
+
+                     // to do : below required?
+                     todo={selected_todo} 
+                     is_unique={is_unique} 
+                     update_todo={update_todo} 
+                     remove_deleted_todo={remove_deleted_todo}
+                     />
+               :  null
+            }
          </section>
+
 
       </div>
    )

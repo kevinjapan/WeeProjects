@@ -6,12 +6,12 @@ import TodosList from '../../Todos/TodosList/TodosList'
 import NavBar from '../../App/NavBar/NavBar'
 import Modal from '../../Utility/Modal/Modal'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
-import get_ui_ready_date from '../../Utility/Dates/Dates'
+import get_ui_ready_date from '../../Utility/DateTime/DateTime'
 import EditTaskForm from '../EditTaskForm/EditTaskForm'
 import DeleteTaskForm from '../DeleteTaskForm/DeleteTaskForm'
 import { PencilIcon,TrashIcon } from '@heroicons/react/24/solid'
 import { BookmarkIcon } from '@heroicons/react/24/outline'
-import SessionsList from '../../Sessions/SessionsList'
+import SessionsPanel from '../../Sessions/SessionsPanel'
 
 
 
@@ -112,11 +112,14 @@ const TaskCard = props => {
                </ul>
             </NavBar>
 
-            
-            <SessionsList 
+            one
+            <SessionsPanel 
                sessionable_type="task"
                sessionable_id={props.task.id}
-               sessions={props.task.sessions} />
+               sessions={props.task.sessions}
+               manage_sessions={props.manage_sessions}
+               />
+               two
 
 
             <div className="flex justify-between pt-2 px-2">

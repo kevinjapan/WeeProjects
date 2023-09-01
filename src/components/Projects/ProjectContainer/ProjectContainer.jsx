@@ -41,7 +41,7 @@ const ProjectContainer = props => {
             is_unique={props.is_unique} 
             update_project_in_list={props.update_project_in_list}
             />
-         :   <div>{loading_status}</div>
+         :  <h6 className="text-center text-slate-300 mt-24">Loading...</h6>
    )
 }
 
