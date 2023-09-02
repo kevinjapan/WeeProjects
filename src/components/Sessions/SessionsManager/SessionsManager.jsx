@@ -18,14 +18,9 @@ import DeleteSessionForm from '../DeleteSessionForm/DeleteSessionForm'
 // - we assume duplicates (on same day) are separate entries 
 
 // to do :
-// - add end_time (stop a current open session)
-// - edit session
-// - delete session
-// - update UI w/ edited sessions (refresh UI to show changes)
-// - currently doesn't show up to current day - 
-//   we are starting on nearest sunday which may add no.s beyond size of grid array..
-// - SessionsManager panel is not updating on 'add a session'
-// - don't allow add a new session if one already open today?
+// - update UI w/ edited sessions (refresh UI to show changes) - SessionsManager not  updating on 'add a session'
+// - grid currently doesn't show up to current day - 
+//      we are starting on nearest sunday which may add no.s beyond size of grid array..
 //
 
 
@@ -151,7 +146,7 @@ const SessionsManager = props => {
 
 
    return (
-      <section className="border border-gray-300 rounded p-2 text-slate-500">
+      <section className="border border-gray-300 rounded p-2 text-slate-500 shadow-lg">
          <h5>Sessions</h5>
          {number_sessions} sessions / 
          total time: {total_duration} hours
