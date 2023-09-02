@@ -37,7 +37,8 @@ const TodosListItem = props => {
    }
 
 
-   // we use Todo.<EditTodoForm>
+   // we use Todo.<EditTodoForm> 
+   // to do : can remove this?
    const update_todo = async(formJson) => {
 
       // eslint-disable-next-line

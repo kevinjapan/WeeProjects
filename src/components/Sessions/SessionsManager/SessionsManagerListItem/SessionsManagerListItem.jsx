@@ -1,15 +1,16 @@
 import React, { useState,useEffect } from 'react'
-import get_ui_ready_date from '../../Utility/DateTime/DateTime'
+import get_ui_ready_date from '../../../Utility/DateTime/DateTime'
+import StyledButton from '../../../Utility/StyledButton/StyledButton'
 
 
 //
-// SessionManagerListItem
-// Display only - any calcs, in parent SessionManager
+// SessionsManagerListItem
+// Display only - any calcs, in parent SessionsManager
 // Sessions never extend beyond a single day
 // note : props.sessions will contain *all* sessions - including those w/ 'offset: null' - that's good!
 //
 
-const SessionManagerListItem = props => {
+const SessionsManagerListItem = props => {
 
    // we store as dates, although only time differs, to access existing Date methods
    const [start_datetime,setStartDateTime] = useState(null)
@@ -37,8 +38,11 @@ const SessionManagerListItem = props => {
          <div>{get_ui_ready_date(props.session.started_at)}</div>
          <div>{duration} hrs</div> 
          <div>{start_time}-{end_time}</div>
+         <StyledButton  aria-label="Edit.">
+            <div onClick={() => props.edit_session(props.session.id)}>edit</div>
+         </StyledButton>
       </li>
    )
 }
 
-export default SessionManagerListItem
+export default SessionsManagerListItem

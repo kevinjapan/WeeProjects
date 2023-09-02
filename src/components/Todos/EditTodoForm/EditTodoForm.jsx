@@ -24,7 +24,7 @@ const EditTodoForm = props => {
    const [pin,setPin] = useState(props.todo.pin ? true : false)
    const [is_on_going,setIsOnGoing] = useState(props.todo.on_going ? true : false)
 
-   
+
    const handleSubmit = e => {
       
       setTitleFeedback('')
@@ -79,6 +79,7 @@ const EditTodoForm = props => {
 
          <div className="flex justify-center w-full">
             <section className="w-full mt-1">
+
                <FormElement className="w-full">
                   <StyledInput 
                      name="title" 
@@ -86,10 +87,12 @@ const EditTodoForm = props => {
                      classes="text-2xl w-full text-center font-light border-none pl-0 ml-0"
                      onChanged={setTitle}></StyledInput>
                </FormElement>
+               
                <FormElementFeedback feedback_msg={title_feedback}/>
             </section>
          </div>
          <div className="flex">
+
 
             <section className="w-2/12">
 
@@ -105,6 +108,7 @@ const EditTodoForm = props => {
                      readonly></StyledInput>
                </FormElement>
                <FormElementFeedback /> 
+
 
                <FormElement>
                   <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>

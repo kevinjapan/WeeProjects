@@ -3,7 +3,7 @@ import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 import TaskCard from './TaskCard'
 import TodoCard from '../../Todos/Todo/TodoCard'
-import SessionManager from '../../Sessions/SessionManager/SessionManager'
+import SessionsManager from '../../Sessions/SessionsManager/SessionsManager'
 
 
 
@@ -179,9 +179,9 @@ const TasksList = props => {
                :  null
             }
 
-            {/* SessionManager */}
+            {/* SessionsManager */}
             {manage_task_sessions
-               ?  <SessionManager 
+               ?  <SessionsManager 
                      sessions={selected_task.sessions}
 
                      // to do : below required?
