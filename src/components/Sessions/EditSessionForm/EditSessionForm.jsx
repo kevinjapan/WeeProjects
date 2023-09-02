@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
-import { validate_int, validate_string } from '../../Utility/Validation/uiValidation'
+import { validate_int, validate_datetime_string } from '../../Utility/Validation/uiValidation'
 import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import StyledInput from '../../Utility/StyledInput/StyledInput'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 
-
-//
-// to do : copied of sessions - adapt -> sessions are much simpler data
-//
 
 
 const EditSessionForm = props => {
@@ -34,40 +30,18 @@ const EditSessionForm = props => {
 
       let validated = true
 
-      // to do : 
-      // validate started_at & ended_at
-      // - create validate_datetime() function?
-      // if(!validate_int(formJson['started_at'],{},setStartedAtFeedback)) {
-      //    validated = false
-      // }
-      // if(!validate_int(formJson['ended_at'],{},setEndedAtFeedback)) {
-      //    validated = false
-      // }
-
+      if(!validate_datetime_string(formJson['started_at'],{},setStartedAtFeedback)) {
+         validated = false
+      }
+      if(!validate_datetime_string(formJson['ended_at'],{},setEndedAtFeedback)) {
+         validated = false
+      }
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {
          validated = false
       }
       
       if(validated) props.onSubmit(formJson)
    }
-
-   
-{/* 
-
-to do :  
-- user can edit both start and end time?
-- user can edit date?
-
-author_id:1
-duration:1
-end_time:"12:30"
-ended_at:"2023-08-28 12:30:33"
-id:18
-offset:169
-start_time:"11:50"
-started_at:"2023-08-28 11:50:33"
-
-*/}
 
    return (
       <form onSubmit={handleSubmit} className="p-3 px-4">

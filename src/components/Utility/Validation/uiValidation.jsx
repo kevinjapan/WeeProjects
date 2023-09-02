@@ -46,3 +46,18 @@ export const validate_int = (value,tests,set_msg_callback) => {
     }
     return true
 }
+
+
+//
+// validate datetime_string
+// expects eg '2023-09-02 12:27:20'
+//
+export const validate_datetime_string = (value,tests,set_msg_callback) => {
+
+   const dateObject = new Date(value)
+   if(dateObject.toString() === 'Invalid Date') {
+      set_msg_callback('invalid date')
+      return false
+   }
+   return true
+}

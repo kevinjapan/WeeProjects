@@ -7,10 +7,6 @@ import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormEle
 import {get_db_ready_datetime} from '../../Utility/DateTime/DateTime'
 
 
-// to do :  
-// - initially, implement Session from 'now'
-// - presents a start time - user confirms or adjusts it.
-// - future, you can retrospectively add a Session
 
 
 const AddSessionForm = props => {
@@ -35,14 +31,11 @@ const AddSessionForm = props => {
 
       let validated = true
 
-      // to do : similar to checking 'title' is unique on titled artefacts,
-      //         do we want to check the current Sessionable item doesn't already have an open Session? does it matter?
-      //         see also EditSessionForm
+      // future : do we want to check current Sessionable item doesn't already have an open Session? does it matter?
 
-      // to do : check date/time is valid - add validate_date()
-      // if(!validate_int(formJson['started_at'],{},setAuthorIdFeedback)) {
-      //    validated = false
-      // }
+      if(!validate_datetime_string(formJson['started_at'],{},setStartedAtFeedback)) {
+         validated = false
+      }
 
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {
          validated = false
