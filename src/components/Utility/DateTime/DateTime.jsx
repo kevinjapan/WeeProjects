@@ -4,11 +4,15 @@ import truncate from '../Stringer/uiStringer'
 //
 //  Display on UI - '16 Mar 2023'
 //
-export default function get_ui_ready_date (d) {
+export default function get_ui_ready_date (d,inc_day = false) {
+
    if(d === undefined || d === null) return ''
+
    let ui_updated = new Date(d)
+
    const months = {0:'Jan',1:'Feb',2:'Mar',3:'Apr',4:'May',5:'Jun',6:'Jul',7:'Aug',8:'Sep',9:'Oct',10:'Nov',11:'Dec'}
-   return ui_updated.getDate() + " " + months[ui_updated.getMonth()] + " " + ui_updated.getFullYear()
+
+   return get_day(ui_updated.getDay()) + " " + ui_updated.getDate() + " " + months[ui_updated.getMonth()] + " " + ui_updated.getFullYear()
 }
 
 //
@@ -46,9 +50,9 @@ export const get_db_ready_datetime = (d) => {
 //
 export const get_day = (days_index,num_chars = 3) => {
    const days = [
-      "Sun","Mon","Tues","Wed","Thu","Fri","Sat"
+      "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
    ]
-   return truncate(days[days_index],num_chars)
+   return truncate(days[days_index],num_chars,false)
 }
 
 

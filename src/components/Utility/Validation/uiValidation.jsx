@@ -56,7 +56,7 @@ export const validate_datetime_string = (value,tests,set_msg_callback) => {
 
    const dateObject = new Date(value)
    if(dateObject.toString() === 'Invalid Date') {
-      set_msg_callback('invalid date')
+      set_msg_callback('invalid datetime')
       return false
    }
    return true
