@@ -41,18 +41,11 @@ const EditTodoForm = props => {
       formJson.pin = pin
       formJson.on_going = is_on_going
 
-      // resolve - is done_at new or unchanging..
+      // done_at - null / existing / new datetimestamp
+      formJson.done_at = null
       if(done_at) {
-         if(props.todo.done_at){
-            formJson.done_at = props.todo.done_at
-         } 
-         else {
-            formJson.done_at = datetimestamp()
-         }
+         formJson.done_at = props.todo.done_at ? props.todo.done_at : datetimestamp()
       } 
-      else {
-         formJson.done_at = null
-      }
 
       let validated = true
       
@@ -82,7 +75,6 @@ const EditTodoForm = props => {
       if(validated) props.onSubmit(formJson)
    }
 
-   // to do : somewhere , we have to translate 'done_at' (a date) into a boolean-equivalent..
    const toggle_done_at = () => {
       setDoneAt(!done_at)
    }
@@ -144,7 +136,7 @@ const EditTodoForm = props => {
 
             <section className="w-10/12 pl-12">
                <FormElement>
-                     <label htmlFor="outline" className="italic pt-1 w-12/12 md:w-1/12">Outline</label>
+                     <label htmlFor="outline" className="italic pt-1 w-12/12 md:w-1/12">Pitch, Outline</label>
                      <StyledTextArea 
                         name="outline" 
                         value={outline || ''}
