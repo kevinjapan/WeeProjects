@@ -6,6 +6,7 @@ import StyledInput from '../../Utility/StyledInput/StyledInput'
 import StyledTextArea from '../../Utility/StyledTextArea/StyledTextArea'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 import { generate_slug } from '../../Utility/Stringer/uiStringer'
+import { datetimestamp } from '../../Utility/DateTime/DateTime'
 
 
 
@@ -21,6 +22,7 @@ const EditTodoForm = props => {
    const [author_id_feedback,setAuthorIdFeedback] = useState('')
    const [outline_feedback,setOutlineFeedback] = useState('')
    const [solution_feedback,setSolutionFeedback] = useState('')
+   const [done_at,setDoneAt] = useState(props.todo.done_at ? true : false)
    const [pin,setPin] = useState(props.todo.pin ? true : false)
    const [is_on_going,setIsOnGoing] = useState(props.todo.on_going ? true : false)
 
@@ -38,6 +40,19 @@ const EditTodoForm = props => {
       const formJson = Object.fromEntries(formData.entries());
       formJson.pin = pin
       formJson.on_going = is_on_going
+
+      // resolve - is done_at new or unchanging..
+      if(done_at) {
+         if(props.todo.done_at){
+            formJson.done_at = props.todo.done_at
+         } 
+         else {
+            formJson.done_at = datetimestamp()
+         }
+      } 
+      else {
+         formJson.done_at = null
+      }
 
       let validated = true
       
@@ -67,6 +82,10 @@ const EditTodoForm = props => {
       if(validated) props.onSubmit(formJson)
    }
 
+   // to do : somewhere , we have to translate 'done_at' (a date) into a boolean-equivalent..
+   const toggle_done_at = () => {
+      setDoneAt(!done_at)
+   }
    const toggle_pin = () => {
       setPin(!pin)
    } 
@@ -150,6 +169,16 @@ const EditTodoForm = props => {
          </div>
 
          <div className="flex justify-end gap-1">
+
+            <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
+               <input 
+                  name="done_at"
+                  type="checkbox" 
+                  checked={done_at || false}
+                  value=''
+                  onChange={e => {toggle_done_at(e.target.checked)}} 
+               />done
+            </div>
 
             <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
                <input 

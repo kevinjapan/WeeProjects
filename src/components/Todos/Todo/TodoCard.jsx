@@ -24,7 +24,6 @@ const TodoCard = props => {
    const [show_delete_modal,setShowDeleteModal] = useState(false)
 
    useEffect(() => { 
-      console.log(props.todo)
       setTodo(props.todo)
    },[props.todo])
 
@@ -41,7 +40,9 @@ const TodoCard = props => {
       try {
          setLocalStatus(Notifications.UPDATING)
 
-         // to do : any way to make endpoints clearer here? (rather than trying to match a url route each time)
+         // future : 
+         // make endpoints clearer here? (rather than trying to match a url route each time - open to errors)
+
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/todos/${todo.slug}`,reqInit("PUT",bearer_token,formJson))
          const jsonData = await data.json()
          await new Promise(resolve => setTimeout(resolve, 1000))
@@ -77,12 +78,14 @@ const TodoCard = props => {
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/${todo.slug}`,reqInit("DELETE",bearer_token,todo))
          const jsonData = await data.json()
          await new Promise(resolve => setTimeout(resolve, 1000))
+
          if(jsonData.outcome === Notifications.SUCCESS) {
             
             // update local copy of parent Task
             props.remove_deleted_todo(todo.id)
 
          }
+
          setLocalStatus(Notifications.DONE)
          await new Promise(resolve => setTimeout(resolve, 1000))
          setLocalStatus('')
