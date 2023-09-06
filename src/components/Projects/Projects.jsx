@@ -5,7 +5,6 @@ import reqInit from '../Utility/RequestInit/RequestInit'
 import ProjectsList from './ProjectsList/ProjectsList'
 import ProjectContainer from './ProjectContainer/ProjectContainer'
 import TaskContainer from '../Tasks/Task/TaskContainer'
-import TodoContainer from '../Todos/Todo/TodoContainer'
 
 
 const Projects = () => {
@@ -105,10 +104,7 @@ const Projects = () => {
             element={<ProjectContainer is_unique={is_unique} update_project_in_list={update_project_in_list} />} /> 
 
          <Route path="/:project_slug/:task_slug" 
-            element={<TaskContainer />} /> 
-
-         <Route path="/:project_slug/:task_slug/:todo_slug" 
-            element={<TodoContainer />} /> 
+            element={<TaskContainer />} />
 
       </Routes>
    )
