@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react'
+import React, { useState,useEffect,useContext } from 'react'
 import { AppContext } from '../App/AppContext/AppContext'
 import reqInit from '../Utility/RequestInit/RequestInit'
 import Modal from '../Utility/Modal/Modal'
@@ -8,6 +8,7 @@ import Calendar from '../Calendar/Calendar'
 import AddSessionForm from './AddSessionForm/AddSessionForm'
 
 
+// SessionsPanel on TaskCard
 
 const SessionsPanel = props => {
 
@@ -15,14 +16,16 @@ const SessionsPanel = props => {
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
    const [show_add_modal,setShowAddModal] = useState(false)
 
+   useEffect(() => {
+      setSessions(props.sessions)
+   },[props.sessions])
+
    const remove_deleted_session = deleted_session_id => {
       setSessions(sessions.filter((session) => session.id !== deleted_session_id))
    }
 
    const add_session = async(formJson) => {
       try {
-
-         // to do : verify matches session API
          const data = await fetch(`${api}/sessions`,reqInit("POST",bearer_token,formJson))
 
          const jsonData = await data.json()
@@ -35,6 +38,10 @@ const SessionsPanel = props => {
                modified_sessions.push(formJson)
             }
             setSessions(modified_sessions)
+
+            // refresh dataset
+            props.update_session() 
+
          }
          else {
             setStatusMsg("Server couldn't create a new session")

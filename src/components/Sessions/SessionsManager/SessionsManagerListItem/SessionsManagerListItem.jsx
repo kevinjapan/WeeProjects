@@ -13,7 +13,7 @@ import StyledButton from '../../../Utility/StyledButton/StyledButton'
 const SessionsManagerListItem = props => {
 
    return (
-      <li className={`grid grid-cols-4 border rounded m-1`}>
+      <li className={`grid grid-cols-4 items-center border rounded m-1 px-1`}>
          <div>{get_ui_ready_date(props.session.started_at)}</div>
          <div>{props.session.duration} hrs</div> 
          <div>{props.session.start_time}-{props.session.end_time}</div>

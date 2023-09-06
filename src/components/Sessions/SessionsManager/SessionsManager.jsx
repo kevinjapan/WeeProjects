@@ -17,11 +17,7 @@ import DeleteSessionForm from '../DeleteSessionForm/DeleteSessionForm'
 // note : props.sessions will contain *all* sessions - including those w/ 'offset: null' - that's good!
 // - we assume duplicates (on same day) are separate entries 
 
-// to do :
-// - update UI w/ edited sessions (refresh UI to show changes) - SessionsManager not  updating on 'add a session'
-// - grid currently doesn't show up to current day - 
-//      we are starting on nearest sunday which may add no.s beyond size of grid array..
-//
+
 
 
 const SessionsManager = props => {
@@ -78,7 +74,6 @@ const SessionsManager = props => {
    
    const edit_session = (session_id) => {
       const target_session = hydrated_sessions.find((session) => parseInt(session.id) === parseInt(session_id))
-      console.log(target_session)
       setSelectedSession(target_session)
       setShowEditModal(true)
    }
@@ -99,9 +94,9 @@ const SessionsManager = props => {
 
             // update local copy of Session
             setSelectedSession(formJson) 
-
-            // to do : update local copy of parent Task
-            //props.update_session(session.task_id,session.id,formJson)    // session.task_id ?  - use 'sessionable_id'
+            
+            // refresh dataset
+            props.update_session()
          }
 
          setLocalStatus(Notifications.DONE)
@@ -123,6 +118,7 @@ const SessionsManager = props => {
 
 
    const delete_session = async (formJson) => {
+      
       try {
          setLocalStatus(Notifications.UPDATING)
          const data = await fetch(`${api}/sessions`,reqInit("DELETE",bearer_token,formJson))
@@ -130,8 +126,8 @@ const SessionsManager = props => {
          await new Promise(resolve => setTimeout(resolve, 1000))
          if(jsonData.outcome === Notifications.SUCCESS) {
             
-            // to do : update local copy of parent Task
-            // props.remove_deleted_session(session.id)
+            // refresh dataset
+            props.remove_deleted_session()
 
          }
          setLocalStatus(Notifications.DONE)
