@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { get_day,get_month,extract_db_date_month } from '../../Utility/DateTime/DateTime'
+import { get_month,extract_db_date_month } from '../../Utility/DateTime/DateTime'
 
 
 
@@ -8,16 +8,16 @@ import { get_day,get_month,extract_db_date_month } from '../../Utility/DateTime/
 // and then insert sessions into the grid array at offset index position.
 
 
-// to do : 
-// - mouseover - tooltip details for session? 
-// - deal w/ user not ending a session
-// - verify 'props.num_days' is valid.
-
-
-
 const CalendarGrid = props => {
+ 
+   // We know we will have 24 x 7 columns => 168
+   // but we need to show those cols + days in current week -
+   // so we add 'num_days_this_week' elements to grid array.
 
-   const [grid,setGrid] = useState(Array(props.num_days + 2).fill(0))
+   const today = new Date()
+   let num_days_this_week = today.getDay() + 1 
+
+   const [grid,setGrid] = useState(Array(props.num_days + num_days_this_week).fill(0))
 
    useEffect(() => {
    
@@ -28,7 +28,7 @@ const CalendarGrid = props => {
       if(props.sessions) {
          props.sessions.forEach(session => {
 
-            // to do : try alternative of re-assigning date to same Date object here... quicker? (scope new Date outside this loop)
+            // future : try alternative of re-assigning date to same Date object here... (scope new Date() outside this loop)
             temp_date = new Date(session.started_at) 
 
             // add grid offset to the Session - excluding Sessions before start_date
@@ -46,53 +46,78 @@ const CalendarGrid = props => {
          })
          setGrid(modified)
       }
-   },[props.session])
+   },[props.sessions])
+
+   const number_of_days = (year,month) => {
+      // passing 0 for day returns the previous day - so last day of previous month - hence, increment month
+      return new Date(year, month + 1, 0).getDate()
+   }
+
+   const days_remaining = (start_date,current_month_day_count) => {
+      // calc no. of days remaining in this month
+      return current_month_day_count - start_date.getDate()
+   }
 
 
+   // 
+   // month_labels
+   // future - there is a slight mis-alignment - possible cumulative as we calc. later injection indexes - but good enough
+   //
    const month_labels = (start_date) => {
 
-      // we maintain grid alignment by using same <li> dimensions
+      // array aligns labels w/ calendar grid
+      let grid_months_slots = Array(24).fill('')
 
-      // to do : 
-      // - align 'month' labels - calc spacing - calc index of array to insert label into..
-      //  since cells in the grid don't know their corresponding date, we can't check against them..
-      //  so try stepping backwards from known today's date (and it's position in current month) (or forwards from start_date?)
-  
-      let month_label_key = 0
-      let grid_months_labels =  Array(6)
+      // initialize
+      let year = start_date.getFullYear()
+      let month_index = start_date.getMonth()
+      let current_month_day_count = number_of_days(2023,month_index)
+      let inject_at = 0
+      let num_days_remaining = days_remaining(start_date,current_month_day_count)
+      grid_months_slots[inject_at] = start_date.getMonth()
 
-      const start_month_index = start_date.getMonth()
-      for(let i = start_month_index ; i < start_month_index + 6; i++) {
-         grid_months_labels[i] = get_month(i,1)
+      // step through successive months
+      for(let count = 1; count <= 6;count++) {
+
+         inject_at = inject_at + Math.round(num_days_remaining / 7)
+         month_index++
+         grid_months_slots[inject_at] = month_index
+         num_days_remaining = number_of_days(year,month_index)
+
+         // handle cross-over into a new year
+         if(month_index >= 11) {
+            month_index = -1 // resets to zero on above increment
+            year++
+         }
       }
+
+      let unique_key = 0
 
       return (
          <ul className="grid grid-flow-col text-xs text-gray-900">
-            <li key={month_label_key++} className="bg-blue-100 w-4 h-4 m-px "></li>
-            {grid_months_labels.map((label) => (
-               <React.Fragment key={month_label_key++}>
-                  <li key={month_label_key++} className="bg-blue-100 w-4 h-4 m-px ">{label}</li>
-                  <li key={month_label_key++} className="bg-blue-100 w-4 h-4 m-px "></li>
-                  <li key={month_label_key++} className="bg-blue-100 w-4 h-4 m-px "></li>
-                  <li key={month_label_key++} className="bg-blue-100 w-4 h-4 m-px "></li>
+            <li key={unique_key++} className="bg-blue-100 w-4 h-4 m-px "></li>
+            {grid_months_slots.map((label) => (
+               <React.Fragment key={unique_key++}>
+                  <li key={unique_key++} className="bg-blue-100 w-4 h-4 m-px ">{label}</li>
                </React.Fragment>
             ))}
-            <li key={month_label_key++} className="bg-blue-100 w-4 h-4 m-px "></li>
+            <li key={unique_key++} className="bg-blue-100 w-4 h-4 m-px "></li>
          </ul>
       )
    }
 
+
    const day_labels = () => {
-      let day_label_key = 0
+      let unique_key = 0
       return (
-         <React.Fragment key={day_label_key++}>
-            <li key={day_label_key++} className=" w-4 h-4 rounded">s</li>
-            <li key={day_label_key++} className=" w-4 h-4 rounded">m</li>
-            <li key={day_label_key++} className=" w-4 h-4 rounded">t</li>
-            <li key={day_label_key++} className=" w-4 h-4 rounded">w</li>
-            <li key={day_label_key++} className=" w-4 h-4 rounded">t</li>
-            <li key={day_label_key++} className=" w-4 h-4 rounded">f</li>
-            <li key={day_label_key++} className=" w-4 h-4 rounded">s</li>
+         <React.Fragment key={unique_key++}>
+            <li key={unique_key++} className=" w-4 h-4 rounded">s</li>
+            <li key={unique_key++} className=" w-4 h-4 rounded">m</li>
+            <li key={unique_key++} className=" w-4 h-4 rounded">t</li>
+            <li key={unique_key++} className=" w-4 h-4 rounded">w</li>
+            <li key={unique_key++} className=" w-4 h-4 rounded">t</li>
+            <li key={unique_key++} className=" w-4 h-4 rounded">f</li>
+            <li key={unique_key++} className=" w-4 h-4 rounded">s</li>
          </React.Fragment>
       )
    }
