@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
-import { validate_int, validate_string } from '../../Utility/Validation/uiValidation'
+import { validate_int, validate_datetime_string } from '../../Utility/Validation/uiValidation'
 import StyledInput from '../../Utility/StyledInput/StyledInput'
 import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
@@ -17,6 +17,7 @@ const AddSessionForm = props => {
    const [author_id,setAuthorId] = useState('')
    const [started_at_feedback,setStartedAtFeedback] = useState('')
    const [author_id_feedback,setAuthorIdFeedback] = useState('')
+
 
    const handleSubmit = e => {
 
@@ -43,6 +44,7 @@ const AddSessionForm = props => {
 
       if(validated) props.onSubmit(formJson)
    }
+
 
    return (
       <form onSubmit={handleSubmit}>
