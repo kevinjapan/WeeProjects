@@ -32,7 +32,7 @@ const TasksList = props => {
 
 
    //
-   //    get_tasks
+   //    Tasks
    //
    const get_tasks = async() => {
       try {
@@ -63,48 +63,61 @@ const TasksList = props => {
       get_tasks()
    }
 
+
    //
-   //    update_todo
+   //    Todos
+   //    TodoCard requests update, then calls TasksList here to refresh list
    //
-   const update_todo = (task_id,todo_id,updated_todo) => {
+   const update_todo = (updated_todo) => {
       
-      // get parent task
-      const task_index = tasks.findIndex(task => parseInt(task.id) === parseInt(task_id))
-      const task = tasks[task_index]
-
-      // get index of updated Todo in existing tasks dataset
-      const todo_index = task.todos.findIndex(element => parseInt(element.id) === parseInt(todo_id))
-
-      let modified_tasks = tasks
-
       // we are modifying deep so useEffect in TaskCard doesn't detect the change - so we flush it to ensure it does.
       setSelectedTask({})
 
       // currently we just reload entire updated Tasks for project
+      // future : review -  retrieving all tasks - ok while number is low
       get_tasks()
-
-      // future : 
-      // currently we retrieve all tasks - ok while no. is low - 
-      // investigate alternative of injecting 'updated_todo' into existing tasks (and refresh that if required.)
-      // so we maintain local copy of updated dataset.
 
       setSelectedTodo(updated_todo)
    }
 
-   const remove_deleted_todo = () => {
 
-      // flush Task it to ensure it does.
-      setSelectedTask({})
+   const remove_deleted_todo = () => {
 
       // reload updated Tasks for project
       get_tasks()
+
    }
 
+
+   //
+   //    Sessions
+   //    SessionsManager requests update, then calls TasksList here to refresh list
+   //
+   const update_session = () => {
+
+      // currently we just reload entire updated Tasks for project
+      get_tasks()
+
+
+   }
+
+   const remove_deleted_session = () => {
+
+      // reload updated Tasks for project
+      get_tasks()
+
+   }
+
+   // to do : refactor is_unique - worked for 'titles' - sessions etc?
    const is_unique = (item_id,item_field,value) => {
       //if(tasks) return true
       //const tasks = tasks.filter(task => parseInt(task.id) !== parseInt(item_id))
       //return tasks ? !tasks.some(task => task[item_field] === value) : true
       return true
+   }
+
+   const is_unique_session = () => {
+
    }
 
    const select_task = task => {
@@ -155,11 +168,13 @@ const TasksList = props => {
                      project_slug={props.project_slug} 
                      task_updated={task_updated}
                      task={selected_task} 
+                     sessions={selected_task.sessions}
                      is_unique={is_unique}
                      update_list={update_list}
                      remove_deleted_task={remove_deleted_task}
                      view_todo_details={view_todo_details}
                      manage_sessions={manage_sessions}
+                     update_session={update_session}
                   /> 
                :  null
             }
@@ -183,12 +198,9 @@ const TasksList = props => {
             {manage_task_sessions
                ?  <SessionsManager 
                      sessions={selected_task.sessions}
-
-                     // to do : below required?
-                     todo={selected_todo} 
-                     is_unique={is_unique} 
-                     update_todo={update_todo} 
-                     remove_deleted_todo={remove_deleted_todo}
+                     is_unique_session={is_unique_session}   
+                     update_session={update_session} 
+                     remove_deleted_session={remove_deleted_session}
                      />
                :  null
             }

@@ -8,16 +8,9 @@ const TodosListItem = props => {
    const [todo] = useState(props.todo)
    const [checked,setChecked] = useState(false)
 
-
    useEffect(() => { 
       props.todo.done_at === null ? setChecked(false) : setChecked(props.todo.done_at)
    },[props.todo.done_at])
-
-
-   // 
-   // to do :  Refactor TaskCard.TodosList to display-only functionality
-   //          commit to github desktop once completed.
-   //
 
    const view_todo_details = () => {
       props.view_todo_details(todo)

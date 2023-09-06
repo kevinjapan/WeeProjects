@@ -1,5 +1,4 @@
 import React, { useState,useEffect,useContext } from 'react'
-import { useParams } from 'react-router-dom'
 import { AppContext } from '../../App/AppContext/AppContext'
 import truncate from '../../Utility/Stringer/uiStringer'
 import { Notifications } from '../../Utility/utilities/enums'
@@ -13,8 +12,6 @@ import get_ui_ready_date from '../../Utility/DateTime/DateTime'
 
 
 const TodoCard = props => {
-
-   let params = useParams()
    
    const [todo,setTodo] = useState(props.todo)
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
@@ -53,7 +50,7 @@ const TodoCard = props => {
             setTodo(formJson) 
 
             // update local copy of parent Task
-            props.update_todo(todo.task_id,todo.id,formJson)
+            props.update_todo(formJson)
          }
 
          setLocalStatus(Notifications.DONE)
@@ -100,8 +97,6 @@ const TodoCard = props => {
       setTodo({})
    }
 
-
-   const item_classes = 'w-full border rounded px-1 py-0.5 '
    const title_classes = 'p-0.5 cursor-pointer text-slate-600 hover:text-slate-800 leading-tight'
    const border_color = 'border-blue-200'
 
@@ -134,7 +129,6 @@ const TodoCard = props => {
                </section>
             :  null
          }
-
 
          <section className={`flex flex-col gap-2 border border-gray-300 rounded m-2 p-2 ${border_color}`}>
 

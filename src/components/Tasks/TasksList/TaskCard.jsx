@@ -112,15 +112,13 @@ const TaskCard = props => {
                </ul>
             </NavBar>
 
-            one
             <SessionsPanel 
                sessionable_type="task"
                sessionable_id={props.task.id}
-               sessions={props.task.sessions}
+               sessions={props.sessions}
                manage_sessions={props.manage_sessions}
-               />
-               two
-
+               update_session={props.update_session}
+            />
 
             <div className="flex justify-between pt-2 px-2">
                {get_ui_ready_date(task.created_at)}
