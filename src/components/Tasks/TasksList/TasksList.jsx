@@ -108,7 +108,7 @@ const TasksList = props => {
 
    }
 
-   // to do : refactor is_unique - worked for 'titles' - sessions etc?
+   // future : refactor is_unique - worked for 'titles' - sessions etc?
    const is_unique = (item_id,item_field,value) => {
       //if(tasks) return true
       //const tasks = tasks.filter(task => parseInt(task.id) !== parseInt(item_id))

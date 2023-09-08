@@ -79,6 +79,9 @@ const SessionsManager = props => {
    }
 
 
+   // to do : prevent addition of end_at date not the same date as started_at date
+   //         perhaps just allow an ended_at time - not a complete date?
+
    const update_session = async(formJson) => {
 
       // eslint-disable-next-line

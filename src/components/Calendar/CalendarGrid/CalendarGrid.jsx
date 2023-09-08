@@ -61,7 +61,7 @@ const CalendarGrid = props => {
 
    // 
    // month_labels
-   // future - there is a slight mis-alignment - possible cumulative as we calc. later injection indexes - but good enough
+   // future - there is a slight mis-alignment - possible cumulative - but good enough
    //
    const month_labels = (start_date) => {
 
@@ -74,14 +74,17 @@ const CalendarGrid = props => {
       let current_month_day_count = number_of_days(2023,month_index)
       let inject_at = 0
       let num_days_remaining = days_remaining(start_date,current_month_day_count)
-      grid_months_slots[inject_at] = start_date.getMonth()
+      grid_months_slots[inject_at] = get_month(start_date.getMonth())
 
       // step through successive months
       for(let count = 1; count <= 6;count++) {
 
+         // calc next label insertion index as no. of weeks (columns) remaing in current month
          inject_at = inject_at + Math.round(num_days_remaining / 7)
          month_index++
-         grid_months_slots[inject_at] = month_index
+         grid_months_slots[inject_at] = get_month(month_index)
+
+         // days in this month
          num_days_remaining = number_of_days(year,month_index)
 
          // handle cross-over into a new year
@@ -95,13 +98,13 @@ const CalendarGrid = props => {
 
       return (
          <ul className="grid grid-flow-col text-xs text-gray-900">
-            <li key={unique_key++} className="bg-blue-100 w-4 h-4 m-px "></li>
+            <li key={unique_key++} className=" w-4 h-4 m-px "></li>
             {grid_months_slots.map((label) => (
                <React.Fragment key={unique_key++}>
-                  <li key={unique_key++} className="bg-blue-100 w-4 h-4 m-px ">{label}</li>
+                  <li key={unique_key++} className=" w-4 h-4 m-px ">{label}</li>
                </React.Fragment>
             ))}
-            <li key={unique_key++} className="bg-blue-100 w-4 h-4 m-px "></li>
+            <li key={unique_key++} className=" w-4 h-4 m-px "></li>
          </ul>
       )
    }
@@ -111,13 +114,13 @@ const CalendarGrid = props => {
       let unique_key = 0
       return (
          <React.Fragment key={unique_key++}>
-            <li key={unique_key++} className=" w-4 h-4 rounded">s</li>
-            <li key={unique_key++} className=" w-4 h-4 rounded">m</li>
-            <li key={unique_key++} className=" w-4 h-4 rounded">t</li>
-            <li key={unique_key++} className=" w-4 h-4 rounded">w</li>
-            <li key={unique_key++} className=" w-4 h-4 rounded">t</li>
-            <li key={unique_key++} className=" w-4 h-4 rounded">f</li>
-            <li key={unique_key++} className=" w-4 h-4 rounded">s</li>
+            <li key={unique_key++} className=" w-4 h-4 m-px rounded">s</li>
+            <li key={unique_key++} className=" w-4 h-4 m-px rounded">m</li>
+            <li key={unique_key++} className=" w-4 h-4 m-px rounded">t</li>
+            <li key={unique_key++} className=" w-4 h-4 m-px rounded">w</li>
+            <li key={unique_key++} className=" w-4 h-4 m-px rounded">t</li>
+            <li key={unique_key++} className=" w-4 h-4 m-px rounded">f</li>
+            <li key={unique_key++} className=" w-4 h-4 m-px rounded">s</li>
          </React.Fragment>
       )
    }
