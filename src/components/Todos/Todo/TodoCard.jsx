@@ -8,6 +8,7 @@ import StyledButton from '../../Utility/StyledButton/StyledButton'
 import EditTodoForm from '../EditTodoForm/EditTodoForm'
 import DeleteTodoForm from '../DeleteTodoForm/DeleteTodoForm'
 import get_ui_ready_date from '../../Utility/DateTime/DateTime'
+import CheckList from '../../CheckList/CheckList'
 
 
 
@@ -145,6 +146,19 @@ const TodoCard = props => {
             {/* <div>task id:{props.todo.task_id}</div> */}
 
          </section>
+
+
+         {todo.has_checklist
+            ?  <CheckList 
+                  todo_id={todo.id}
+                  project_slug={props.project_slug}
+                  task_slug={props.task_slug}
+                  todo_slug={todo.slug}
+               />
+            :  null
+         }
+
+
 
          {/* <CommentsList 
             commentable_type="todo"

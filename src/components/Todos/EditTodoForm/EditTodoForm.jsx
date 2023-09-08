@@ -14,17 +14,24 @@ const EditTodoForm = props => {
 
    const [id] = useState(props.todo.id)
    const [task_id] = useState(props.todo.task_id)
+
+   // Todo properties : validated inputs
    const [title,setTitle] = useState(props.todo.title || '')
    const [author_id,setAuthorId] = useState(props.todo.author_id || 0)
    const [outline,setOutline] = useState(props.todo.outline || '')
    const [solution,setSolution] = useState(props.todo.solution || '')
+
+   // - validated input UI feedback
    const [title_feedback,setTitleFeedback] = useState('')
    const [author_id_feedback,setAuthorIdFeedback] = useState('')
    const [outline_feedback,setOutlineFeedback] = useState('')
    const [solution_feedback,setSolutionFeedback] = useState('')
+
+   // Todo properties : flags
    const [done_at,setDoneAt] = useState(props.todo.done_at ? true : false)
    const [pin,setPin] = useState(props.todo.pin ? true : false)
    const [is_on_going,setIsOnGoing] = useState(props.todo.on_going ? true : false)
+   const [has_checklist,setHasCheckList] = useState(props.todo.has_checklist ? true : false)
 
 
    const handleSubmit = e => {
@@ -40,8 +47,9 @@ const EditTodoForm = props => {
       const formJson = Object.fromEntries(formData.entries());
       formJson.pin = pin
       formJson.on_going = is_on_going
+      formJson.has_checklist = has_checklist
 
-      // done_at - null / existing / new datetimestamp
+      // done_at - can be either : null/existing/datetimestamp
       formJson.done_at = null
       if(done_at) {
          formJson.done_at = props.todo.done_at ? props.todo.done_at : datetimestamp()
@@ -83,6 +91,9 @@ const EditTodoForm = props => {
    } 
    const toggle_ongoing = () => {
       setIsOnGoing(!is_on_going)
+   }
+   const toggle_has_checklist = () => {
+      setHasCheckList(!has_checklist)
    }
 
    return (
@@ -161,6 +172,16 @@ const EditTodoForm = props => {
          </div>
 
          <div className="flex justify-end gap-1">
+
+            <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
+               <input 
+                  name="has_checklist"
+                  type="checkbox" 
+                  checked={has_checklist || false}
+                  value=''
+                  onChange={e => {toggle_has_checklist(e.target.checked)}} 
+               />CheckList
+            </div>
 
             <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
                <input 
