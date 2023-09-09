@@ -54,34 +54,43 @@ const AddSessionForm = props => {
          <input type="hidden" name="sessionable_type" value={props.sessionable_type} />
          <input type="hidden" name="sessionable_id" value={props.sessionable_id} />
 
-         <FormElement>
-            <label htmlFor="author_id" className="w-12/12 md:w-2/12">started_at</label>
-            <StyledInput 
-               name="started_at" 
-               value={started_at}
-               placeholder="enter the started_at datetime here"
-               classes="grow"
-               onChanged={setStartedAt}></StyledInput>
-         </FormElement>
-         <FormElementFeedback feedback_msg={started_at_feedback}/>
+         <div className="flex">
+
+            <section className="w-4/12">
+               <FormElement>
+                  <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-4/12">Started At</label>
+                  <StyledInput 
+                     name="started_at" 
+                     value={started_at}
+                     placeholder="enter the started_at datetime here"
+                     classes="w-8/12"
+                     onChanged={setStartedAt}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={started_at_feedback}/>
 
 
-         <FormElement>
-            <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
-            <StyledInput 
-               name="author_id" 
-               value={author_id || 1}
-               placeholder="enter the author id here"
-               classes="grow"
-               onChanged={setAuthorId}></StyledInput>
-         </FormElement>
-         <FormElementFeedback feedback_msg={author_id_feedback}/>
+               <FormElement>
+                  <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-4/12">Author Id</label>
+                  <StyledInput 
+                     name="author_id" 
+                     value={author_id || 1}
+                     placeholder="enter the author id here"
+                     classes="w-8/12"
+                     onChanged={setAuthorId}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={author_id_feedback}/>
 
+            </section>
+
+            <section className="w-8/12 pl-12"></section>
+
+         </div>
 
          <div className="flex justify-end gap-1 my-1">
                <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>
                <StyledButton aria-label="Cancel." type="button" onClicked={props.close_modal}>Cancel</StyledButton>
          </div>
+
       </form>
    )
 }

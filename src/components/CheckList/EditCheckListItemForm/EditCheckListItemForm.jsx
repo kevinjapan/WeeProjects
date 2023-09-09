@@ -78,7 +78,7 @@ const EditCheckListItemForm = props => {
                   <StyledInput 
                      name="title" 
                      value={title || ''} 
-                     classes="text-2xl w-full text-center font-light border-none pl-0 ml-0"
+                     classes="text-2xl w-full font-light border-none pl-0 ml-0"
                      onChanged={setTitle}></StyledInput>
                </FormElement>
                

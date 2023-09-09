@@ -58,38 +58,54 @@ const AddTaskForm = props => {
 
          <h5 className="text-2xl mb-5">Add Task</h5>
          
-         <FormElement>
-            <label htmlFor="title" className="w-12/12 md:w-2/12">Title</label> 
-            <StyledInput 
-               name="title" 
-               value={title}
-               placeholder="enter the title here"
-               onChanged={setTitle}></StyledInput>
-         </FormElement>
 
-         <FormElementFeedback feedback_msg={title_feedback}/>
+         <div className="flex">
 
-         <FormElement>
-            <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
-            <StyledInput 
-               name="author_id" 
-               value={author_id}
-               placeholder="enter the author id here"
-               onChanged={setAuthorId}></StyledInput>
-         </FormElement>
+            <section className="w-2/12">
 
-         <FormElementFeedback feedback_msg={author_id_feedback}/>
 
-         <FormElement>
-               <label htmlFor="outline" className="w-12/12 md:w-2/12">Outline</label>
-               <StyledTextArea 
-                  name="outline" 
-                  value={outline}
-                  placeholder=""
-                  onChanged={setOutline}></StyledTextArea>
-         </FormElement>
 
-         <FormElementFeedback feedback_msg={outline_feedback}/>
+               <FormElement>
+                  <label htmlFor="author_id"  className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
+                  <StyledInput 
+                     name="author_id" 
+                     value={author_id}
+                     placeholder="enter the author id here"
+                     onChanged={setAuthorId}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={author_id_feedback}/>
+
+            </section>
+
+            
+            <section className="w-10/12 pl-12">
+
+               <FormElement>
+                  <label htmlFor="title" className="italic pt-1 w-12/12 md:w-1/12">Title</label> 
+                  <StyledInput 
+                     name="title" 
+                     value={title}
+                     placeholder="enter the title here"
+                     onChanged={setTitle}
+                        classes="w-11/12"></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={title_feedback}/>
+
+               <FormElement>
+                     <label htmlFor="outline" className="italic pt-1 w-12/12 md:w-1/12">Outline</label>
+                     <StyledTextArea 
+                        name="outline" 
+                        value={outline}
+                        placeholder=""
+                        onChanged={setOutline}
+                        classes="w-11/12"></StyledTextArea>
+               </FormElement>
+               <FormElementFeedback feedback_msg={outline_feedback}/>
+
+            </section>
+
+         </div>
+
 
          <div className="flex justify-end gap-1 my-1">
                <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>

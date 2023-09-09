@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 const Modal = props => {
 
    const modal_bg_classes = "fixed top-0 left-0 z-40 flex justify-center items-center w-full h-full bg-black"
-   const modal_classes    = "z-50 flex flex-col w-12/12 sm:w-12/12 md:w-12/12 lg:w-full h-11/12 bg-transparent h-fit border rounded shadow px-10 py-3"
+   const modal_classes = "z-50 flex flex-col w-12/12 sm:w-12/12 md:w-12/12 lg:w-full h-11/12 bg-white mx-5 text-slate-700 h-fit border rounded shadow px-10 py-3"
 
    // prevent body scroll when we are active
    useEffect(() => {

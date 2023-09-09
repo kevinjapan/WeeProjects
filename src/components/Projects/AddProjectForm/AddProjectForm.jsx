@@ -51,28 +51,40 @@ const AddProjectForm = props => {
       <form onSubmit={handleSubmit}>
 
          <h5 className="text-2xl mb-5">Add Project</h5>
+
+
+         <div className="flex">
    
-         <FormElement>
-            <label htmlFor="title" className="w-12/12 md:w-2/12">Title</label>
-            <StyledInput 
-               name="title" 
-               value={title}
-               placeholder="enter the title here"
-               onChanged={setTitle}></StyledInput>
-         </FormElement>
+            <section className="w-2/12">
 
-         <FormElementFeedback feedback_msg={title_feedback}/>
+               <FormElement>
+                  <label htmlFor="author_id" className="w-12/12 md:w-6/12">Author Id</label>
+                  <StyledInput 
+                     name="author_id" 
+                     value={author_id}
+                     placeholder="enter the author id here"
+                     classes="w-6/12"
+                     onChanged={setAuthorId}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={author_id_feedback}/>
+            </section>
 
-         <FormElement>
-            <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
-            <StyledInput 
-               name="author_id" 
-               value={author_id}
-               placeholder="enter the author id here"
-               onChanged={setAuthorId}></StyledInput>
-         </FormElement>
+            
+            <section className="w-10/12 pl-12">
+               <FormElement>
+                  <label htmlFor="title" className="w-12/12 md:w-1/12">Title</label>
+                  <StyledInput 
+                     name="title" 
+                     value={title}
+                     placeholder="enter the title here"
+                     classes="w-11/12" 
+                     onChanged={setTitle}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={title_feedback}/>
+            </section>
 
-         <FormElementFeedback feedback_msg={author_id_feedback}/>
+         </div>
+
 
          <div className="flex justify-end gap-1 my-1">
                <StyledButton aria-label="Apply." type="submit" >Apply</StyledButton>

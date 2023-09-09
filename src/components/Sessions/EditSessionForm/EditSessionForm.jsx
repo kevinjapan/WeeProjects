@@ -56,35 +56,46 @@ const EditSessionForm = props => {
          <input type="hidden" name="id" value={id || 0} />
 
 
-         <FormElement>
-            <label htmlFor="started_at" className="w-12/12 md:w-2/12">Started At</label>
-            <StyledInput 
-               name="started_at" 
-               value={started_at || ''} 
-               onChanged={setStartedAt}></StyledInput>
-         </FormElement>
-         <FormElementFeedback feedback_msg={started_at_feedback}/>
+         <div className="flex">
+         
+            <section className="w-4/12">
+               <FormElement>
+                  <label htmlFor="started_at" className="italic pt-1 w-12/12 md:w-4/12">Started At</label>
+                  <StyledInput 
+                     name="started_at" 
+                     value={started_at || ''} 
+                     onChanged={setStartedAt}
+                     classes="w-8/12"></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={started_at_feedback}/>
 
 
-         <FormElement>
-            <label htmlFor="ended_at" className="w-12/12 md:w-2/12">Ended At</label>
-            <StyledInput 
-               name="ended_at" 
-               value={ended_at || ''} 
-               onChanged={setEndedAt}></StyledInput>
-         </FormElement>
-         <FormElementFeedback feedback_msg={ended_at_feedback}/>
+               <FormElement>
+                  <label htmlFor="ended_at" className="italic pt-1 w-12/12 md:w-4/12">Ended At</label>
+                  <StyledInput 
+                     name="ended_at" 
+                     value={ended_at || ''} 
+                     onChanged={setEndedAt}
+                     classes="w-8/12"></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={ended_at_feedback}/>
 
 
-         <FormElement>
-            <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
-            <StyledInput 
-               name="author_id" 
-               value={author_id || ''} 
-               onChanged={setAuthorId}></StyledInput>
-         </FormElement>
-         <FormElementFeedback feedback_msg={author_id_feedback}/>
+               <FormElement>
+                  <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-4/12">Author Id</label>
+                  <StyledInput 
+                     name="author_id" 
+                     value={author_id || ''} 
+                     onChanged={setAuthorId}
+                     classes="w-8/12"></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={author_id_feedback}/>
 
+               </section>
+
+               <section className="w-8/12 pl-12"></section>
+
+         </div>
 
          <div className="flex justify-end gap-1">
             <StyledButton aria-label="Apply." type="submit" >Apply</StyledButton>

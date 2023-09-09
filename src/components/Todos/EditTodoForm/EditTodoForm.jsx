@@ -106,13 +106,14 @@ const EditTodoForm = props => {
                   <StyledInput 
                      name="title" 
                      value={title || ''} 
-                     classes="text-2xl w-full text-center font-light border-none pl-0 ml-0"
+                     classes="text-2xl w-full font-light border-none pl-0 ml-0"
                      onChanged={setTitle}></StyledInput>
                </FormElement>
                
                <FormElementFeedback feedback_msg={title_feedback}/>
             </section>
          </div>
+
          <div className="flex">
 
             <section className="w-2/12">
@@ -170,7 +171,7 @@ const EditTodoForm = props => {
 
          <div className="flex justify-end gap-1">
 
-            <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
+            <div className="flex gap-2 items-center mr-7">
                <input 
                   name="has_checklist"
                   type="checkbox" 
@@ -180,34 +181,34 @@ const EditTodoForm = props => {
                />CheckList
             </div>
 
-            <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
+            <div className="flex gap-2 items-center mr-7">
                <input 
                   name="done_at"
                   type="checkbox" 
                   checked={done_at || false}
                   value=''
                   onChange={e => {toggle_done_at(e.target.checked)}} 
-               />done
+               />Done
             </div>
 
-            <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
+            <div className="flex gap-2 items-center mr-7">
                <input 
                   name="on_going"
                   type="checkbox" 
                   checked={is_on_going || false}
                   value=''
                   onChange={e => {toggle_ongoing(e.target.checked)}} 
-               />mark as on-going
+               />Mark as on-going
             </div>
             
-            <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
+            <div className="flex gap-2 items-center mr-7">
                <input 
                   name="pin"
                   type="checkbox" 
                   checked={pin || false}
                   value=''
                   onChange={e => {toggle_pin(e.target.checked)}} 
-               />pin to start of todo list
+               />Pin to start of list
             </div>
 
             <StyledButton aria-label="Apply" type="submit">Apply</StyledButton>
