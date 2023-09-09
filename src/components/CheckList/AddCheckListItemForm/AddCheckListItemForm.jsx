@@ -29,12 +29,10 @@ const AddCheckListItemForm = props => {
       let validated = true
 
       formJson['title'] = formJson['title'].trim()
-
       if(!props.is_unique(0,'title',formJson['title'])) {
          setTitleFeedback('This title already exists, please enter a different title.')
          validated = false
       }
-
       if(!validate_string(formJson['title'],{'min_length':10,'max_length':80},setTitleFeedback)) {
          validated = false
       } else {
@@ -67,7 +65,6 @@ const AddCheckListItemForm = props => {
          </FormElement>
          <FormElementFeedback feedback_msg={title_feedback}/>
 
-
          <FormElement>
             <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
             <StyledInput 
@@ -78,7 +75,6 @@ const AddCheckListItemForm = props => {
                onChanged={setAuthorId}></StyledInput>
          </FormElement>
          <FormElementFeedback feedback_msg={author_id_feedback}/>
-   
    
          <div className="flex justify-end gap-1 my-1">
                <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>

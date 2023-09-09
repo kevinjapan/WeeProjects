@@ -115,7 +115,6 @@ const EditTodoForm = props => {
          </div>
          <div className="flex">
 
-
             <section className="w-2/12">
 
                <input type="hidden" name="task_id" value={task_id || 0} />
@@ -131,7 +130,6 @@ const EditTodoForm = props => {
                </FormElement>
                <FormElementFeedback /> 
 
-
                <FormElement>
                   <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
@@ -143,7 +141,6 @@ const EditTodoForm = props => {
                </FormElement>
                <FormElementFeedback feedback_msg={author_id_feedback}/>
             </section>
-
 
             <section className="w-10/12 pl-12">
                <FormElement>

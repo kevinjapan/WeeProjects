@@ -10,7 +10,6 @@ import { BookmarkIcon } from '@heroicons/react/24/outline'
 
 
 
-
 const CheckListItem = props => {
 
    const [checklistitem,setCheckListItems] = useState(props.checklistitem)
@@ -25,19 +24,14 @@ const CheckListItem = props => {
    },[props.checklistitem.done_at])
 
    const check_checklistitem = async(modified_checklistitem) => {
-      setLocalStatus(Notifications.UPDATING)
 
-      // we could update on-the-fly - but if server fails, costly to preserve prev. done_at 
-      // so we wait and let props.update_list() call refresh the list
-      // props.check_checklistitem(modified_checklistitem)
+      setLocalStatus(Notifications.UPDATING)
 
       // update server
       update_checklistitem(modified_checklistitem)
    }
 
    const update_checklistitem = async(formJson) => {
-
-      console.log(formJson)
 
       // eslint-disable-next-line
       let clear_message // prev. comment prevents warning ("clear_message not used.."")
@@ -56,7 +50,6 @@ const CheckListItem = props => {
 
             // update local copy of parent Task
             props.update_list()
-
          }
 
          setLocalStatus(Notifications.DONE)
@@ -76,6 +69,7 @@ const CheckListItem = props => {
    }
 
    const delete_checklistitem = async (formJson) => {
+
       try {
          setLocalStatus(Notifications.UPDATING)
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/${props.todo_slug}/checklistitems/${checklistitem.id}`,reqInit("DELETE",bearer_token,checklistitem))
@@ -120,7 +114,9 @@ const CheckListItem = props => {
                   :  <BookmarkIcon style={{width:'16px',height:'16px',opacity:'.3'}}/> 
                }
             
+
                {/* list_item checkbox */}
+
                <input type="checkbox" checked={checked || false}
                   onChange={e => {
                      check_checklistitem({
@@ -132,7 +128,9 @@ const CheckListItem = props => {
                   }}
                />
 
+
                {/* title */}
+
                <div className="w-full">
                   <div className={`${title_classes} ${checked ? 'line-through text-zinc-400 hover:text-zinc-600' : ''} `} 
                      onClick={() => view_checklistitem_details()}>{checklistitem.title}</div>
@@ -143,7 +141,7 @@ const CheckListItem = props => {
                   <BookOpenIcon style={{width:'16px',height:'16px'}}/>View
                </StyledButton> */}
 
-               {/* retain for option to open in separate window..
+               {/* open in separate window..
                 <div>
                   <Link to={`/projects/${props.project_slug}/${props.task_slug}/${checklistitem.slug}`}>
                      <StyledButton aria-label="Open checklistitem.">
@@ -154,8 +152,9 @@ const CheckListItem = props => {
             <div className={`${title_classes} ${checked ? 'text-zinc-400 hover:text-zinc-600' : ''} `} 
                onClick={() => setShowEditModal(true)}>edit</div>
             </div>
-               
+
             {/* status dropdown */}
+
             {local_status ? <div className="w-full text-slate-400 text-sm">{local_status}</div> : <div></div>}
 
          </li>
@@ -168,7 +167,6 @@ const CheckListItem = props => {
                   close_modal={() => setShowDeleteModal(false)}/>
             </Modal>
          )}
-
 
          {show_edit_modal && (
             <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>

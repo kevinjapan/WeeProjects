@@ -9,6 +9,7 @@ import EditSessionForm from '../EditSessionForm/EditSessionForm'
 import DeleteSessionForm from '../DeleteSessionForm/DeleteSessionForm'
 
 
+
 //
 // SessionsManager
 //
@@ -16,8 +17,7 @@ import DeleteSessionForm from '../DeleteSessionForm/DeleteSessionForm'
 // {id: 19, author_id: 1, started_at: '2023-08-28 12:07:20', ended_at: '2023-08-28 15:47:20', offset: 169}
 // note : props.sessions will contain *all* sessions - including those w/ 'offset: null' - that's good!
 // - we assume duplicates (on same day) are separate entries 
-
-
+//
 
 
 const SessionsManager = props => {
@@ -71,7 +71,6 @@ const SessionsManager = props => {
 
    },[props.sessions])
 
-   
    const edit_session = (session_id) => {
       const target_session = hydrated_sessions.find((session) => parseInt(session.id) === parseInt(session_id))
       setSelectedSession(target_session)
@@ -81,6 +80,7 @@ const SessionsManager = props => {
 
    // to do : prevent addition of end_at date not the same date as started_at date
    //         perhaps just allow an ended_at time - not a complete date?
+
 
    const update_session = async(formJson) => {
 
@@ -118,7 +118,6 @@ const SessionsManager = props => {
       setShowEditModal(false)
       setShowDeleteModal(true)
    }
-
 
    const delete_session = async (formJson) => {
       
@@ -167,16 +166,17 @@ const SessionsManager = props => {
                   session={selected_session} 
                   is_unique={props.is_unique}
                   close_modal={() => setShowEditModal(false)}/>
-            </Modal>)}
+            </Modal>
+         )}
 
          {show_delete_modal && (
-         <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
-            <DeleteSessionForm 
-               onSubmit={delete_session} 
-               session_id={selected_session.id} 
-               close_modal={() => setShowDeleteModal(false)}/>
-         </Modal>)}
-
+            <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
+               <DeleteSessionForm 
+                  onSubmit={delete_session} 
+                  session_id={selected_session.id} 
+                  close_modal={() => setShowDeleteModal(false)}/>
+            </Modal>
+         )}
 
       </section>
    )

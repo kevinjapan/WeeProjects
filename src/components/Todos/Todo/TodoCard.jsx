@@ -78,10 +78,8 @@ const TodoCard = props => {
          await new Promise(resolve => setTimeout(resolve, 1000))
 
          if(jsonData.outcome === Notifications.SUCCESS) {
-            
             // update local copy of parent Task
             props.remove_deleted_todo(todo.id)
-
          }
 
          setLocalStatus(Notifications.DONE)
@@ -103,92 +101,79 @@ const TodoCard = props => {
 
    return (
       todo.title ?
-      <section className="border border-gray-300 rounded p-1 shadow-lg">
-   
-         <section className="flex justify-between w-full mb-0 pb-0 ">
-            <h5 className="mb-0 pb-0">{truncate(props.todo.title,38)}</h5>
-            <div onClick={() => close_todo()} className="float-right mr-2 p-2 cursor-pointer text-lg" >X</div>
+         <section className="border border-gray-300 rounded p-1 shadow-lg">
+      
+            <section className="flex justify-between w-full mb-0 pb-0 ">
+               <h5 className="mb-0 pb-0">{truncate(props.todo.title,38)}</h5>
+               <div onClick={() => close_todo()} className="float-right mr-2 p-2 cursor-pointer text-lg" >X</div>
+            </section>
+
+            <section>
+               <span className="italic px-2 text-gray-300">task id: {todo.task_id}</span>
+            </section>
+
+            <section className={`flex flex-col gap-2 m-2 mt-0 p-2 `}>
+               {props.todo.outline
+                  ? <p className="text-gray-700">{props.todo.outline}</p>
+                     : <p className="italic text-gray-500">This todo has no description.</p>}
+            </section>
+
+            {/* only show solution if populated (if relevant) */}
+            {props.todo.solution
+               ?  <section className={`flex flex-col gap-2 border border-gray-300 rounded m-2 p-2 ${border_color}`}>
+                     <label>Solution</label>
+                     <p className="text-gray-700">{props.todo.solution}</p>
+                  </section>
+               :  null
+            }
+
+            <section className={`flex flex-col gap-2 border border-gray-300 rounded m-2 p-2 ${border_color}`}>
+               <div>created: {get_ui_ready_date(props.todo.created_at)}</div>
+               <div>last updated:{get_ui_ready_date(props.todo.updated_at)}</div>
+               <div>author:{props.todo.author_id}</div>
+            </section>
+
+            {todo.has_checklist
+               ?  <CheckList 
+                     todo_id={todo.id}
+                     project_slug={props.project_slug}
+                     task_slug={props.task_slug}
+                     todo_slug={todo.slug}
+                  />
+               :  null
+            }
+
+            {/* <CommentsList 
+               commentable_type="todo"
+               commentable_id={props.todo.id}
+               comments={props.todo.comments} /> */}
+
+            <StyledButton  aria-label="Edit.">
+               <div className={`${title_classes} ${checked ? 'text-zinc-400 hover:text-zinc-600' : ''} `} 
+                  onClick={() => setShowEditModal(true)}>edit</div>
+            </StyledButton>
+
+            {show_edit_modal && (
+               <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
+                  <EditTodoForm 
+                     onSubmit={update_todo} 
+                     onDelete={confirm_delete_todo} 
+                     todo={todo} 
+                     is_unique={props.is_unique}
+                     close_modal={() => setShowEditModal(false)}/>
+               </Modal>
+            )}
+
+            {show_delete_modal && (
+               <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
+                  <DeleteTodoForm 
+                     onSubmit={delete_todo} 
+                     todo_id={todo.id} 
+                     close_modal={() => setShowDeleteModal(false)}/>
+               </Modal>
+            )}
+
          </section>
-
-         <section>
-            <span className="italic px-2 text-gray-300">task id: {todo.task_id}</span>
-         </section>
-
-
-         <section className={`flex flex-col gap-2 m-2 mt-0 p-2 `}>
-            {props.todo.outline
-               ? <p className="text-gray-700">{props.todo.outline}</p>
-                  : <p className="italic text-gray-500">This todo has no description.</p>}
-         </section>
-
-
-         {/* only show solution if populated (if relevant) */}
-         {props.todo.solution
-            ?  <section className={`flex flex-col gap-2 border border-gray-300 rounded m-2 p-2 ${border_color}`}>
-                  <label>Solution</label>
-                  <p className="text-gray-700">{props.todo.solution}</p>
-               </section>
-            :  null
-         }
-
-         <section className={`flex flex-col gap-2 border border-gray-300 rounded m-2 p-2 ${border_color}`}>
-
-            <div>
-               created: {get_ui_ready_date(props.todo.created_at)}
-            </div>
-
-            <div>
-               last updated:{get_ui_ready_date(props.todo.updated_at)}
-            </div>
-
-            <div>author:{props.todo.author_id}</div>
-
-            {/* <div>task id:{props.todo.task_id}</div> */}
-
-         </section>
-
-
-         {todo.has_checklist
-            ?  <CheckList 
-                  todo_id={todo.id}
-                  project_slug={props.project_slug}
-                  task_slug={props.task_slug}
-                  todo_slug={todo.slug}
-               />
-            :  null
-         }
-
-
-
-         {/* <CommentsList 
-            commentable_type="todo"
-            commentable_id={props.todo.id}
-            comments={props.todo.comments} /> */}
-
-         <StyledButton  aria-label="Edit.">
-            <div className={`${title_classes} ${checked ? 'text-zinc-400 hover:text-zinc-600' : ''} `} 
-               onClick={() => setShowEditModal(true)}>edit</div>
-         </StyledButton>
-
-         {show_edit_modal && (
-            <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
-               <EditTodoForm 
-                  onSubmit={update_todo} 
-                  onDelete={confirm_delete_todo} 
-                  todo={todo} 
-                  is_unique={props.is_unique}
-                  close_modal={() => setShowEditModal(false)}/>
-            </Modal>)}
-
-         {show_delete_modal && (
-         <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
-            <DeleteTodoForm 
-               onSubmit={delete_todo} 
-               todo_id={todo.id} 
-               close_modal={() => setShowDeleteModal(false)}/>
-         </Modal>)}
-
-      </section>
       : null
    )
 }

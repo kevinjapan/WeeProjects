@@ -9,11 +9,8 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 
 
 
-//
 // we retrieve checklists when user opens parent TodoCard
-//
-
-
+// future : review : currently reloads every time we open a TodoCard
 
 const CheckList = props => {
 
@@ -24,15 +21,12 @@ const CheckList = props => {
    const [adding_checklistitem,setAddingCheckListItem] = useState(false)
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
 
-
    useEffect(() => {
       get_checklistitems()
    },[props.todo_id])
-   
-
-   // future : review : currently reloads every time we open a TodoCard
 
    const get_checklistitems = async() => {
+
       try {
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/${props.todo_slug}/checklistitems/${todo_id}`,reqInit("GET",bearer_token))
          const jsonData = await data.json()
@@ -48,7 +42,6 @@ const CheckList = props => {
       }
    }
 
-
    const check_checklistitem = modified_checklistitem => {
       console.log(modified_checklistitem)
       let modified_checklistitems = checklistitems.map(checklistitem => {
@@ -63,14 +56,11 @@ const CheckList = props => {
    const remove_deleted_checklistitem = deleted_checklistitem_id => {
       let modified = checklistitems.filter((checklistitem) => checklistitem.id !== deleted_checklistitem_id)
       setCheckListItems(modified)
-      //props.update_checklistitems(modified)
    }
 
-   // an updated CheckListItem can affect list order (eg 'pin to start'), so requests refresh from server
    const update_list = () => {
       get_checklistitems()
    }
-
 
    const add_checklistitem = async(formJson) => {
 
@@ -101,12 +91,10 @@ const CheckList = props => {
    }
 
    const is_unique = (item_id,item_field,value) => {
-      // to do : copied from Todo - review & verify..
       if(!checklistitems) return true
       const filtered_checklistitems = checklistitems.filter(setAddingCheckListItem => parseInt(setAddingCheckListItem.id) !== parseInt(item_id))
       return filtered_checklistitems ? !filtered_checklistitems.some(setAddingCheckListItem => setAddingCheckListItem[item_field] === value) : true
    }
-
 
    return (
       <>

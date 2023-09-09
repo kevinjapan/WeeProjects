@@ -3,7 +3,6 @@ import StyledButton from '../../Utility/StyledButton/StyledButton'
 import { validate_int, validate_string } from '../../Utility/Validation/uiValidation'
 import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import StyledInput from '../../Utility/StyledInput/StyledInput'
-import StyledTextArea from '../../Utility/StyledTextArea/StyledTextArea'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 import { generate_slug } from '../../Utility/Stringer/uiStringer'
 import { datetimestamp } from '../../Utility/DateTime/DateTime'
@@ -41,7 +40,6 @@ const EditCheckListItemForm = props => {
       
       formJson['title'] = formJson['title'].trim()
 
-      // to do : how important is this? not really.. just helpful perhaps.. 
       // if(!props.is_unique(formJson['id'],'title',formJson['title'])) {
       //    setTitleFeedback('This title already exists, please enter a different title.')
       //    validated = false
@@ -89,9 +87,7 @@ const EditCheckListItemForm = props => {
 
          </div>
 
-
          <div className="flex">
-
 
             <section className="w-2/12">
 
@@ -108,7 +104,6 @@ const EditCheckListItemForm = props => {
                </FormElement>
                <FormElementFeedback /> 
 
-
                <FormElement>
                   <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
@@ -119,14 +114,12 @@ const EditCheckListItemForm = props => {
                      ></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={author_id_feedback}/>
+
             </section>
 
-
-            <section className="w-10/12 pl-12">
-            </section>
+            <section className="w-10/12 pl-12"></section>
 
          </div>
-
 
          <div className="flex justify-end gap-1">
 

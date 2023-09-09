@@ -11,13 +11,10 @@ const TasksList = props => {
 
    const [tasks,setTasks] = useState([])
    const [selected_task,setSelectedTask] = useState({})
+   const [selected_todo,setSelectedTodo] = useState({})
+   const [task_updated,setTaskUpdated] = useState(0)
    const [manage_task_sessions,setManageTaskSessions] = useState(false)
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
-
-   // selected todo
-   const [selected_todo,setSelectedTodo] = useState({})
-
-   const [task_updated,setTaskUpdated] = useState(0)
 
    useEffect(() => {
       if(props.project.tasks) {
@@ -25,20 +22,12 @@ const TasksList = props => {
       }
    },[props.project,props.refreshed])
 
-   const remove_deleted_task = deleted_task_id => {
-      let modified_tasks = tasks.filter((task) => task.id !== deleted_task_id)
-      setTasks(modified_tasks)
-   }
 
-
-   //
-   //    Tasks
-   //
    const get_tasks = async() => {
+
       try {
          const data = await fetch(`${api}/${props.project_slug}/tasks`,reqInit("GET",bearer_token))
          const jsonData = await data.json()
-         // await new Promise(resolve => setTimeout(resolve, 1000))
          if(jsonData.outcome === 'success') {
             
             setTasks(jsonData.data)
@@ -63,11 +52,13 @@ const TasksList = props => {
       get_tasks()
    }
 
+   const remove_deleted_task = deleted_task_id => {
+      let modified_tasks = tasks.filter((task) => task.id !== deleted_task_id)
+      setTasks(modified_tasks)
+   }
 
-   //
-   //    Todos
-   //    TodoCard requests update, then calls TasksList here to refresh list
-   //
+
+   // TodoCard requests update, then calls TasksList here to refresh list..
    const update_todo = (updated_todo) => {
       
       // we are modifying deep so useEffect in TaskCard doesn't detect the change - so we flush it to ensure it does.
@@ -80,35 +71,23 @@ const TasksList = props => {
       setSelectedTodo(updated_todo)
    }
 
-
    const remove_deleted_todo = () => {
-
       // reload updated Tasks for project
       get_tasks()
-
    }
 
-
-   //
-   //    Sessions
-   //    SessionsManager requests update, then calls TasksList here to refresh list
-   //
+   // SessionsManager requests update, then calls TasksList here to refresh list..
    const update_session = () => {
-
       // currently we just reload entire updated Tasks for project
       get_tasks()
-
-
    }
 
    const remove_deleted_session = () => {
-
       // reload updated Tasks for project
       get_tasks()
-
    }
 
-   // future : refactor is_unique - worked for 'titles' - sessions etc?
+   // future : refactor is_unique - worked for 'titles' - for sessions etc?
    const is_unique = (item_id,item_field,value) => {
       //if(tasks) return true
       //const tasks = tasks.filter(task => parseInt(task.id) !== parseInt(item_id))
@@ -184,6 +163,7 @@ const TasksList = props => {
          <section style={{width:'44%',marginRight:'.5rem'}}>
          
             {/* TodoCard */}
+
             {selected_todo 
                ?  <TodoCard 
                      todo={selected_todo} 
@@ -194,7 +174,9 @@ const TasksList = props => {
                :  null
             }
 
+
             {/* SessionsManager */}
+
             {manage_task_sessions
                ?  <SessionsManager 
                      sessions={selected_task.sessions}
