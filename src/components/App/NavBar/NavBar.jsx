@@ -4,6 +4,7 @@ import { NavBarProvider } from '../NavBar/NavBarContext'
 import NavBarLg from '../NavBar/NavBarLg'
 import NavBarSm from '../NavBar/NavBarSm'
 import NavBarToggler from './NavBarToggler'
+import truncate from '../../Utility/Stringer/uiStringer'
 
 
 
@@ -18,7 +19,7 @@ const NavBar = props => {
    const HeadingTag = props.title_tag || "h4"
 
    // client can append or override styles
-   let classes = "" 
+   let classes = " pt-3 " 
    if(props.classes) classes += " " + props.classes
 
    return (
@@ -27,8 +28,10 @@ const NavBar = props => {
                <div className="navbar_topbar ">
                   <div className="navbar_title ">
                      {props.title_link 
-                        ?  <HeadingTag className={classes}><Link to={`${props.title_link}`}>{props.title}</Link></HeadingTag>
-                        :  <HeadingTag className={classes}>{props.title}</HeadingTag>}
+                        ?  <HeadingTag className={classes}>
+                              <Link to={`${props.title_link}`}>{truncate(props.title,28)}</Link>
+                           </HeadingTag>
+                        :  <HeadingTag className={classes}>{truncate(props.title,28)}</HeadingTag>}
                   </div>
                   {props.children && (
                      <NavBarToggler />)}

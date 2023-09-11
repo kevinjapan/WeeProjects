@@ -8,7 +8,7 @@ import StyledButton from '../../Utility/StyledButton/StyledButton'
 import get_ui_ready_date from '../../Utility/DateTime/DateTime'
 import EditTaskForm from '../EditTaskForm/EditTaskForm'
 import DeleteTaskForm from '../DeleteTaskForm/DeleteTaskForm'
-import { PencilIcon,TrashIcon } from '@heroicons/react/24/solid'
+import { PencilIcon } from '@heroicons/react/24/solid'
 import { BookmarkIcon } from '@heroicons/react/24/outline'
 import SessionsPanel from '../../Sessions/SessionsPanel'
 

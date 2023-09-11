@@ -1,10 +1,11 @@
 import React, { useState,useEffect,useContext } from 'react'
 import { AppContext } from '../../App/AppContext/AppContext'
-import truncate from '../../Utility/Stringer/uiStringer'
 import { Notifications } from '../../Utility/utilities/enums'
 import reqInit from '../../Utility/RequestInit/RequestInit'
+import NavBar from '../../App/NavBar/NavBar'
 import Modal from '../../Utility/Modal/Modal'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
+import { PencilIcon } from '@heroicons/react/24/solid'
 import EditTodoForm from '../EditTodoForm/EditTodoForm'
 import DeleteTodoForm from '../DeleteTodoForm/DeleteTodoForm'
 import get_ui_ready_date from '../../Utility/DateTime/DateTime'
@@ -103,12 +104,23 @@ const TodoCard = props => {
 
    return (
       todo.title ?
+
          <section className="border border-gray-300 rounded p-1 shadow-lg">
       
-            <section className="flex justify-between w-full mb-0 pb-0 ">
-               <h5 className="mb-0 pb-0">{truncate(props.todo.title,38)}</h5>
-               <div onClick={() => close_todo()} className="float-right mr-2 p-2 cursor-pointer text-lg" >X</div>
-            </section>
+            <NavBar title={props.todo.title} >
+               <ul className="flex flex-row w-full">
+                  <li>
+                     <StyledButton aria-label="Edit this task." onClicked={() => setShowEditModal(true)}>
+                        <PencilIcon style={{width:'16px',height:'16px'}}/>Edit
+                     </StyledButton>
+                  </li>
+                  {/* 
+                  <li>
+                     <div onClick={() => close_todo()} className="float-right mr-2 p-2 cursor-pointer text-lg" >X</div>
+                  </li> 
+                  */}
+               </ul>
+            </NavBar>
 
             <section>
                <span className="italic px-2 text-gray-300">task id: {todo.task_id}</span>
@@ -150,10 +162,6 @@ const TodoCard = props => {
                commentable_id={props.todo.id}
                comments={props.todo.comments} /> */}
 
-            <StyledButton  aria-label="Edit.">
-               <div className={`${title_classes} ${checked ? 'text-zinc-400 hover:text-zinc-600' : ''} `} 
-                  onClick={() => setShowEditModal(true)}>edit</div>
-            </StyledButton>
 
             {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
