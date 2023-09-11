@@ -71,6 +71,7 @@ const TodoCard = props => {
    }
 
    const delete_todo = async (formJson) => {
+
       try {
          setLocalStatus(Notifications.UPDATING)
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/${todo.slug}`,reqInit("DELETE",bearer_token,todo))
@@ -80,6 +81,7 @@ const TodoCard = props => {
          if(jsonData.outcome === Notifications.SUCCESS) {
             // update local copy of parent Task
             props.remove_deleted_todo(todo.id)
+            close_todo()
          }
 
          setLocalStatus(Notifications.DONE)

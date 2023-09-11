@@ -72,6 +72,10 @@ const TasksList = props => {
    }
 
    const remove_deleted_todo = () => {
+
+      // flush Task to ensure UI reflects changes..
+      setSelectedTask({})
+      
       // reload updated Tasks for project
       get_tasks()
    }
@@ -99,9 +103,10 @@ const TasksList = props => {
 
    }
 
-   const select_task = task => {
+   const select_task = task_id => {
       setSelectedTodo({})
-      setSelectedTask(task)
+      // we find with 'task_id' since we may have refreshed dataset from server..
+      setSelectedTask(tasks.find((task) => parseInt(task.id) === parseInt(task_id)))
    }
 
    const view_todo_details = todo => {
@@ -131,7 +136,7 @@ const TasksList = props => {
                {tasks ? 
                   tasks.map(task => (
                      <li key={task.id} className={"w-full px-1 " + is_selected_task(task.id)} >
-                        <a className="w-full block cursor-pointer" onClick={() => select_task(task)}>{task.title}</a>
+                        <a className="w-full block cursor-pointer" onClick={() => select_task(task.id)}>{task.title}</a>
                      </li>
                   ))
                :null}
