@@ -44,7 +44,7 @@ const CalendarGrid = props => {
 
             }
          })
-         setGrid(modified)
+         setGrid([...modified])
       }
    },[props.sessions])
 
