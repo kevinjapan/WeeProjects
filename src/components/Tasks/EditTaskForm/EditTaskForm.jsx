@@ -73,22 +73,22 @@ const UpdateTaskForm = props => {
             <section className="w-2/12">
 
                <FormElement>
-                  <label htmlFor="id" className="italic pt-1 w-12/12 md:w-1/12">Id</label>  
+                  <label htmlFor="id" className="italic pt-1 w-12/12 md:w-6/12">Id</label>  
                   <StyledInput 
                      name="id" 
                      value={id || ''}
                      readonly
-                        classes="w-11/12"></StyledInput>
+                        classes="w-6/12"></StyledInput>
                </FormElement>
                <FormElementFeedback />
 
                <FormElement>
-                  <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-1/12">Author Id</label>
+                  <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
                      name="author_id" 
                      value={author_id || ''}
                      onChanged={setAuthorId}
-                        classes="w-10/12"></StyledInput>
+                        classes="w-6/12"></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={author_id_feedback}/>
 

@@ -73,14 +73,13 @@ const AddCheckListItemForm = props => {
             
             <section className="w-10/12 pl-12">
 
-            <FormElement>
+               <FormElement>
                   <label htmlFor="title" className="italic pt-1 w-12/12 md:w-1/12">Title</label>
                   <StyledInput 
                      name="title" 
                      value={title}
                      placeholder="enter the title here"
-                     classes="grow" 
-                        classes="w-11/12"
+                     classes="w-11/12"
                      onChanged={setTitle}></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={title_feedback}/>
