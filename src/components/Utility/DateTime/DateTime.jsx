@@ -102,7 +102,7 @@ export const datetimestamp = () => {
     // - server should convert and save all as UTC datetime
     // - client should provide local timezone code for server to convert
     // - server converts for display to client? or client converts on-the-fly itself?
-    var d = new Date()
+    const d = new Date()
     return get_db_ready_datetime(d)
 }
 

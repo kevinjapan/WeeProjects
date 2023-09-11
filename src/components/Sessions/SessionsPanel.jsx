@@ -20,9 +20,9 @@ const SessionsPanel = props => {
       setSessions(props.sessions)
    },[props.sessions])
 
-   const remove_deleted_session = deleted_session_id => {
-      setSessions(sessions.filter((session) => session.id !== deleted_session_id))
-   }
+   // const remove_deleted_session = deleted_session_id => {
+   //    setSessions(sessions.filter((session) => session.id !== deleted_session_id))
+   // }
 
    const add_session = async(formJson) => {
       try {
@@ -67,7 +67,7 @@ const SessionsPanel = props => {
    return (
       <section className=" my-2 max-w-3xl mx-auto">
 
-         <Calendar sessions={sessions}/>         
+         <Calendar sessions={sessions} />         
          
          <div className="flex justify-end">
             <StyledButton aria-label="Add a session." onClicked={() => manage_sessions()} classes="flex gap-1">

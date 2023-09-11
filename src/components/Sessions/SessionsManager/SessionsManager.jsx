@@ -2,7 +2,7 @@ import React, { useState,useEffect,useContext } from 'react'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 import SessionsManagerListItem from './SessionsManagerListItem/SessionsManagerListItem'
-import { get_ui_ready_time } from '../../Utility/DateTime/DateTime'
+import { get_ui_ready_time,get_db_ready_datetime } from '../../Utility/DateTime/DateTime'
 import { Notifications } from '../../Utility/utilities/enums'
 import Modal from '../../Utility/Modal/Modal'
 import EditSessionForm from '../EditSessionForm/EditSessionForm'
@@ -75,6 +75,17 @@ const SessionsManager = props => {
       const target_session = hydrated_sessions.find((session) => parseInt(session.id) === parseInt(session_id))
       setSelectedSession(target_session)
       setShowEditModal(true)
+   }
+
+   const end_session = (session_id) => {
+
+      // we know UI only provides 'end now' option on valid today sessions
+
+      let date = new Date()
+      let selected_session = hydrated_sessions.find((session) => parseInt(session.id) === parseInt(session_id))
+      selected_session.ended_at = get_db_ready_datetime(date)
+
+      update_session(selected_session)
    }
 
 
@@ -152,8 +163,9 @@ const SessionsManager = props => {
             {hydrated_sessions.map((session,index) => (
                <SessionsManagerListItem 
                   key={index}
-                  session={session} 
+                  session={session}
                   edit_session={edit_session}
+                  end_session={end_session}
                />
             ))}
          </ul>
