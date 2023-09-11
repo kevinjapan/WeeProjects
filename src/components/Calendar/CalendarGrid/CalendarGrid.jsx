@@ -74,7 +74,11 @@ const CalendarGrid = props => {
       let current_month_day_count = number_of_days(2023,month_index)
       let inject_at = 0
       let num_days_remaining = days_remaining(start_date,current_month_day_count)
-      grid_months_slots[inject_at] = get_month(start_date.getMonth())
+
+      // show first month label if we have col space
+      if(num_days_remaining > 14) {
+         grid_months_slots[inject_at] = get_month(start_date.getMonth())
+      }
 
       // step through successive months
       for(let count = 1; count <= 6;count++) {
