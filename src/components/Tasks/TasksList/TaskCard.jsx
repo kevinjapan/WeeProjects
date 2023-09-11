@@ -1,7 +1,6 @@
 import React, { useState,useEffect,useReducer,useContext } from 'react'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
-import taskcardReducer from './taskcardReducer'
 import TodosList from '../../Todos/TodosList/TodosList'
 import NavBar from '../../App/NavBar/NavBar'
 import Modal from '../../Utility/Modal/Modal'
@@ -17,52 +16,35 @@ import SessionsPanel from '../../Sessions/SessionsPanel'
 
 const TaskCard = props => {
 
-   const [task, dispatch] = useReducer(taskcardReducer, {})
+   const [task, setTask] = useState(props.task)
    const [show_edit_modal,setShowEditModal] = useState(false)
    const [show_delete_modal,setShowDeleteModal] = useState(false)
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
 
    useEffect(() => {
-      dispatch({
-         type: 'load',
-         task: props.task
-      })
-   })   
-
-   useEffect(() => {
-      dispatch({
-         type: 'update_task',
-         task: props.task
-      })
+      setTask(props.task)
    },[props.task])
-
-   const check_todo = () => {
-      dispatch({
-         type: 'check_todo'
-      })
-   }
 
    const update_todos = updated_todos => {
      let modified = {...task}
      modified.todos = updated_todos
-     dispatch ({
-         type:'load',
-         task: modified
-     })
+     setTask(modified)
    }
 
-   const delete_task = async () => {
+   const delete_task = async (formJson) => {
       try {
          const data = await fetch(`${api}/${props.project_slug}/tasks`,reqInit("DELETE",bearer_token,task))
          const jsonData = await data.json()
          await new Promise(resolve => setTimeout(resolve, 1000))
          if(jsonData.outcome === 'success') {
-               props.remove_deleted_task(task.id)
+            props.remove_deleted_task(task.id)
+            close_task()
          }
       }
       catch(error) {
          setStatusMsg('Sorry, we are unable to update data on the server at this time.' + error)
       }
+      setShowDeleteModal(false)
    }
 
    const update_task = async(formJson) => {
@@ -86,6 +68,10 @@ const TaskCard = props => {
          setStatusMsg('Sorry, we are unable to update data on the server at this time. ' + err)
       }
       setShowEditModal(false)
+   }
+
+   const close_task = () => {
+      setTask({})
    }
    
    return (
@@ -130,7 +116,6 @@ const TaskCard = props => {
                task_slug={props.task.slug} 
                task_id={props.task.id}
                todos={task.todos}
-               check_todo={check_todo}
                update_todos={update_todos}
                view_todo_details={props.view_todo_details}
                />
