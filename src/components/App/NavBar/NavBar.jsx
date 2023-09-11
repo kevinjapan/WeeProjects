@@ -36,7 +36,7 @@ const NavBar = props => {
 
                {/* links / dropdown */}
                {props.children && (
-                  <div className="w-full px-12">
+                  <div className="w-fit px-4">
                      <NavBarLg>{props.children}</NavBarLg>
                      <NavBarSm>{props.children}</NavBarSm>
                   </div>
