@@ -158,20 +158,22 @@ const TodoCard = props => {
             {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
                   <EditTodoForm 
-                     onSubmit={update_todo} 
-                     onDelete={confirm_delete_todo} 
                      todo={todo} 
                      is_unique={props.is_unique}
-                     close_modal={() => setShowEditModal(false)}/>
+                     close_modal={() => setShowEditModal(false)}
+                     onSubmit={update_todo} 
+                     onDelete={confirm_delete_todo}
+                  />
                </Modal>
             )}
 
             {show_delete_modal && (
                <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
                   <DeleteTodoForm 
-                     onSubmit={delete_todo} 
                      todo_id={todo.id} 
-                     close_modal={() => setShowDeleteModal(false)}/>
+                     onSubmit={delete_todo} 
+                     close_modal={() => setShowDeleteModal(false)}
+                  />
                </Modal>
             )}
 

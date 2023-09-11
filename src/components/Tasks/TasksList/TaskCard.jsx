@@ -31,21 +31,6 @@ const TaskCard = props => {
      setTask(modified)
    }
 
-   const delete_task = async (formJson) => {
-      try {
-         const data = await fetch(`${api}/${props.project_slug}/tasks`,reqInit("DELETE",bearer_token,task))
-         const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
-         if(jsonData.outcome === 'success') {
-            props.remove_deleted_task(task.id)
-            close_task()
-         }
-      }
-      catch(error) {
-         setStatusMsg('Sorry, we are unable to update data on the server at this time.' + error)
-      }
-      setShowDeleteModal(false)
-   }
 
    const update_task = async(formJson) => {
       try {
@@ -70,6 +55,28 @@ const TaskCard = props => {
       setShowEditModal(false)
    }
 
+   
+   const confirm_delete_task = () => {
+      setShowEditModal(false)
+      setShowDeleteModal(true)
+   }
+
+   const delete_task = async (formJson) => {
+      try {
+         const data = await fetch(`${api}/${props.project_slug}/tasks`,reqInit("DELETE",bearer_token,task))
+         const jsonData = await data.json()
+         await new Promise(resolve => setTimeout(resolve, 1000))
+         if(jsonData.outcome === 'success') {
+            props.remove_deleted_task(task.id)
+            close_task()
+         }
+      }
+      catch(error) {
+         setStatusMsg('Sorry, we are unable to update data on the server at this time.' + error)
+      }
+      setShowDeleteModal(false)
+   }
+
    const close_task = () => {
       setTask({})
    }
@@ -85,11 +92,6 @@ const TaskCard = props => {
 
             <NavBar title={task.title} >
                <ul className="flex flex-row w-full">
-                  <li>
-                     <StyledButton aria-label="Delete this task." onClicked={() => setShowDeleteModal(true)}>
-                        <TrashIcon style={{width:'16px',height:'16px'}}/>Delete
-                     </StyledButton>
-                  </li>
                   <li>
                      <StyledButton aria-label="Edit this task." onClicked={() => setShowEditModal(true)}>
                         <PencilIcon style={{width:'16px',height:'16px'}}/>Edit
@@ -123,17 +125,24 @@ const TaskCard = props => {
             {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
                   <EditTaskForm 
-                     onSubmit={update_task} 
                      task={task} 
                      is_unique={props.is_unique} 
-                     close_modal={() => setShowEditModal(false)}/>
+                     onSubmit={update_task} 
+                     onDelete={confirm_delete_task}
+                     close_modal={() => setShowEditModal(false)}
+                  />
                </Modal>
             )}
+
             {show_delete_modal && (
                <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
-                  <DeleteTaskForm onSubmit={delete_task} close_modal={() => setShowDeleteModal(false)}/>
+                  <DeleteTaskForm 
+                     onSubmit={delete_task} 
+                     close_modal={() => setShowDeleteModal(false)}
+                  />
                </Modal>
             )}
+
          </li>
       </>
       : null

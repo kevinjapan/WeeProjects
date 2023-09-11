@@ -132,8 +132,9 @@ const UpdateTaskForm = props => {
          </div>
 
          <div className="flex justify-end gap-1 my-1">
-               <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>
-               <StyledButton aria-label="Cancel." onClicked={props.close_modal} >Cancel</StyledButton>
+            <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>
+            <StyledButton aria-label="Delete" onClicked={props.onDelete}>Delete</StyledButton>
+            <StyledButton aria-label="Cancel." onClicked={props.close_modal} >Cancel</StyledButton>
          </div>
       </form>
    )

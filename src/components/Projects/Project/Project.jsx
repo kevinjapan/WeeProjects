@@ -8,8 +8,8 @@ import Modal from '../../Utility/Modal/Modal'
 import EditProjectForm from '../EditProjectForm/EditProjectForm'
 import DeleteProjectForm from '../DeleteProjectForm/DeleteProjectForm'
 import AddTaskForm from '../../Tasks/AddTaskForm/AddTaskForm'
-import { PencilIcon,TrashIcon,PlusIcon } from '@heroicons/react/24/solid'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
+import { PencilIcon,TrashIcon } from '@heroicons/react/24/solid'
 import CommentsList from '../../Comments/CommentsList'
 
 
@@ -44,21 +44,6 @@ const Project = props => {
       setShowAddTaskModal(false)
    }
 
-   const delete_project = async () => {
-      try {
-         const data = await fetch(`${api}/projects`,reqInit("DELETE",bearer_token,project))
-         const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
-         if(jsonData.outcome === 'success') {
-               dispatch({
-                  type: 'delete_project_local_copy'
-               })
-         }
-      } catch(error) {
-         setStatusMsg('Sorry, we are unable to update data on the server at this time.' + error)
-      }
-   }
-
    const update_project = async(formJson) => {
       try {
          const data = await fetch(`${api}/projects/${project.slug}`,reqInit("PUT",bearer_token,formJson))
@@ -81,6 +66,27 @@ const Project = props => {
       setShowEditModal(false)
    }
 
+   const confirm_delete_project = () => {
+      console.log("woohoo")
+      setShowEditModal(false)
+      setShowDeleteModal(true)
+   }
+   
+   const delete_project = async () => {
+      try {
+         const data = await fetch(`${api}/projects`,reqInit("DELETE",bearer_token,project))
+         const jsonData = await data.json()
+         await new Promise(resolve => setTimeout(resolve, 1000))
+         if(jsonData.outcome === 'success') {
+               dispatch({
+                  type: 'delete_project_local_copy'
+               })
+         }
+      } catch(error) {
+         setStatusMsg('Sorry, we are unable to update data on the server at this time.' + error)
+      }
+   }
+
    const is_unique = (item_id,item_field,value) => {
       if(!project.tasks) return true
       const filtered_tasks = project.tasks.filter(task => parseInt(task.id) !== parseInt(item_id))
@@ -91,20 +97,10 @@ const Project = props => {
       project && project.id ?
          <>
             <NavBar title={project.title} title_tag="h1" classes="">
-               <ul  className="flex flex-row">                        
-                  <li>
-                     <StyledButton aria-label="Delete this project." onClicked={() => setShowDeleteModal(true)}>
-                        <TrashIcon style={{width:'16px',height:'16px'}}/>Delete
-                     </StyledButton>
-                  </li>
+               <ul  className="flex flex-row">
                   <li>
                      <StyledButton aria-label="Edit this project." onClicked={() => setShowEditModal(true)}>
                         <PencilIcon style={{width:'16px',height:'16px'}}/>Edit
-                     </StyledButton>
-                  </li>
-                  <li>
-                     <StyledButton aria-label="Add a new task." onClicked={() => setShowAddTaskModal(true)}>
-                        <PlusIcon style={{width:'16px',height:'16px'}}/>Add
                      </StyledButton>
                   </li>
                </ul>
@@ -113,21 +109,36 @@ const Project = props => {
             <TasksList 
                project_slug={project.slug} 
                project={project}
-               refresh_project={props.refresh_project} />
+               refresh_project={props.refresh_project}
+               setShowAddTaskModal={setShowAddTaskModal} />
 
             {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
-                  <EditProjectForm onSubmit={update_project} is_unique={props.is_unique} project={project} close_modal={() => setShowEditModal(false)}/>
+                  <EditProjectForm 
+                     onSubmit={update_project} 
+                     is_unique={props.is_unique} 
+                     project={project} 
+                     setShowDeleteModal={setShowDeleteModal}
+                     onDelete={confirm_delete_project} 
+                     close_modal={() => setShowEditModal(false)}
+                  />
                </Modal>)}
 
             {show_delete_modal && (
                <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
-                  <DeleteProjectForm onSubmit={delete_project} close_modal={() => setShowDeleteModal(false)} />
+                  <DeleteProjectForm 
+                     onSubmit={delete_project} 
+                     close_modal={() => setShowDeleteModal(false)} 
+                  />
                </Modal>)}
                
             {show_add_task_modal && (
                <Modal show={show_add_task_modal} close_modal={() => setShowAddTaskModal(false)}>
-                  <AddTaskForm onSubmit={add_task} is_unique={is_unique} close_modal={() => setShowAddTaskModal(false)} />
+                  <AddTaskForm 
+                     onSubmit={add_task} 
+                     is_unique={is_unique} 
+                     close_modal={() => setShowAddTaskModal(false)}  
+                  />
                </Modal>)}    
 
             <CommentsList 

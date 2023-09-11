@@ -4,6 +4,8 @@ import reqInit from '../../Utility/RequestInit/RequestInit'
 import TaskCard from './TaskCard'
 import TodoCard from '../../Todos/Todo/TodoCard'
 import SessionsManager from '../../Sessions/SessionsManager/SessionsManager'
+import StyledButton from '../../Utility/StyledButton/StyledButton'
+import { PlusIcon } from '@heroicons/react/24/solid'
 
 
 
@@ -140,7 +142,12 @@ const TasksList = props => {
                      </li>
                   ))
                :null}
+            <StyledButton aria-label="Add a new task." onClicked={() => props.setShowAddTaskModal(true)}>
+               <PlusIcon style={{width:'16px',height:'16px'}}/>Add A Task
+            </StyledButton>
             </ul>
+            
+
          </section>
 
 
