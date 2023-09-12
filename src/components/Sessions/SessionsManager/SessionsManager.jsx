@@ -50,6 +50,7 @@ const SessionsManager = props => {
          const started_datetime = new Date(session.started_at)
          const ended_datetime = session.ended_at ? new Date(session.ended_at) : null
 
+         // future : validate times
          let start_datetime = started_datetime.getTime()
          let end_datetime = ended_datetime ? ended_datetime.getTime() : null
 
@@ -89,9 +90,8 @@ const SessionsManager = props => {
    }
 
 
-   // to do : prevent addition of end_at date not the same date as started_at date
-   //         perhaps just allow an ended_at time - not a complete date?
-
+   // future : 
+   // - validate ended_at against started_at dates
 
    const update_session = async(formJson) => {
 

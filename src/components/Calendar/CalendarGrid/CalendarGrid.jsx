@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { get_month,extract_db_date_month } from '../../Utility/DateTime/DateTime'
+import get_ui_ready_date, { add_days,get_month,extract_db_date_month,days_elapsed_this_week } from '../../Utility/DateTime/DateTime'
 
 
 
@@ -9,15 +9,12 @@ import { get_month,extract_db_date_month } from '../../Utility/DateTime/DateTime
 
 
 const CalendarGrid = props => {
- 
-   // We know we will have 24 x 7 columns => 168
-   // but we need to show those cols + days in current week -
-   // so we add 'num_days_this_week' elements to grid array.
+  
+   const [start_date,setStartDate] = useState(new Date(props.start_date))
 
-   const today = new Date()
-   let num_days_this_week = today.getDay() + 1 
-
-   const [grid,setGrid] = useState(Array(props.num_days + num_days_this_week).fill(0))
+   // We know we will have approx 24 x 7 columns => 168, but we need to accomodate position in current week -
+   // so we add 'days_elapsed_this_week' elements to grid array.
+   const [grid,setGrid] = useState(Array(props.num_days + days_elapsed_this_week()).fill(0))
 
    useEffect(() => {
    
@@ -41,12 +38,17 @@ const CalendarGrid = props => {
          props.sessions.forEach(session => {
             if(session.offset) {
                modified[session.offset] = session
-
             }
          })
          setGrid([...modified])
       }
-   },[props.sessions])
+
+      setStartDate(props.start_date)
+
+   },[props.sessions,props.start_date])
+
+   
+
 
    const number_of_days = (year,month) => {
       // passing 0 for day returns the previous day - so last day of previous month - hence, increment month
@@ -56,6 +58,21 @@ const CalendarGrid = props => {
    const days_remaining = (start_date,current_month_day_count) => {
       // calc no. of days remaining in this month
       return current_month_day_count - start_date.getDate()
+   }
+
+   const get_duration = slot => {
+
+      const started_datetime = new Date(slot.started_at)
+      const ended_datetime = slot.ended_at ? new Date(slot.ended_at) : null
+
+      if(ended_datetime) {
+         // future : validate times
+         let start_datetime = started_datetime.getTime()
+         let end_datetime = ended_datetime ? ended_datetime.getTime() : null
+
+         return Math.round((((end_datetime - start_datetime) / 1000) / 60) / 60)
+      }
+      return 0
    }
 
 
@@ -129,6 +146,13 @@ const CalendarGrid = props => {
       )
    }
 
+   // we calc slot date on the fly for tooltips since slots don't hold their own dates
+   const slot_date = slot_index => {
+      let slot_date = add_days(start_date,slot_index)
+      return get_ui_ready_date(slot_date)
+   }
+
+
    // we inc. 'grid-template-rows' inline - tailwind's max is 'grid-rows-6'
    return (
       <>
@@ -136,8 +160,9 @@ const CalendarGrid = props => {
          <ul className="grid grid-flow-col text-xs text-gray-400 text-center" style={{gridTemplateRows:'repeat(7,1fr)'}}>
             {day_labels()}
             {grid.map((slot,index) => (
-               <li key={index} className={`m-px w-4 h-4 rounded ${slot.id ? ' bg-gray-300 ' : ' bg-gray-100 '}`}>
+               <li key={index} className={`m-px w-4 h-4 rounded ${slot.id ? ' bg-gray-300 ' : ' bg-gray-200 '} tooltipped`}>
                   {slot.started_at ? extract_db_date_month(slot.started_at) : ''}
+                  <span className="tooltip">{get_duration(slot)} hours on {slot_date(index)}</span>
                </li>
             ))}
          </ul>

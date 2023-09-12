@@ -22,13 +22,15 @@ export const get_ui_ready_time = (d,inc_secs = false) => {
 
    if(d === undefined || d === null) return ''
 
-   let time_part = d.getHours() + ':'
+   let the_date = new Date(d)
+
+   let time_part = the_date.getHours() + ':'
 
    // prepend with '0' as required
-   time_part += parseInt(d.getMinutes()) < 10 ? '0' + d.getMinutes() : d.getMinutes()
+   time_part += parseInt(the_date.getMinutes()) < 10 ? '0' + the_date.getMinutes() : the_date.getMinutes()
    
    if(inc_secs) {
-      time_part += ':' + d.getSeconds()
+      time_part += ':' + the_date.getSeconds()
    }
    return time_part
 }
@@ -121,4 +123,12 @@ export const add_days = (date,days) => {
       date.getSeconds(),
       date.getMilliseconds()
    )
+}
+
+//
+// number of days elapsed this week so far..
+//
+export const days_elapsed_this_week = () => {
+   const today = new Date()
+   return today.getDay() + 1
 }

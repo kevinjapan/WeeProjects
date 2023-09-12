@@ -6,9 +6,7 @@ import StyledButton from '../../../Utility/StyledButton/StyledButton'
 
 //
 // SessionsManagerListItem
-//
 // Sessions never extend beyond a single day
-// note : props.sessions will contain *all* sessions - including those w/ 'offset: null' - that's good!
 //
 
 const SessionsManagerListItem = props => {
@@ -27,11 +25,7 @@ const SessionsManagerListItem = props => {
                <div onClick={() => props.edit_session(props.session.id)}>edit</div>
             </StyledButton>
       
-      {/* to do :
-            - 'end now' is a convenience for the current open sesssion.
-            - we can only 'end' if session date is same date as today and start time is before today - otherwise we have to 'edit' and enter manually.
-            - 
-      */}
+            {/* 'end now' is a convenience for ending the current open sesssion.*/}
             {
                !props.session.end_time && is_valid_today_session(props.session.started_at)
                   ?  <StyledButton  aria-label="Edit.">
