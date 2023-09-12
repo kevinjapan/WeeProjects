@@ -162,7 +162,7 @@ const EditTodoForm = props => {
                         value={solution || ''}
                         placeholder=""
                         onChanged={setSolution}
-                        classes="w-10/12"></StyledTextArea>
+                        classes="w-11/12"></StyledTextArea>
                </FormElement>
                <FormElementFeedback feedback_msg={solution_feedback}/>
             </section>
