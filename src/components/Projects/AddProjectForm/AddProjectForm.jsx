@@ -61,7 +61,8 @@ const AddProjectForm = props => {
                   <label htmlFor="author_id" className="w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
                      name="author_id" 
-                     value={author_id}
+                     // future - currently all author_id's default to 1 for convenience (ok with 1 user!)
+                     value={author_id || 1}
                      placeholder="enter the author id here"
                      classes="w-6/12"
                      onChanged={setAuthorId}></StyledInput>

@@ -62,7 +62,7 @@ const AddCheckListItemForm = props => {
                   <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
                      name="author_id" 
-                     value={author_id}
+                     value={author_id || 1}
                      placeholder="enter the author id here"
                         classes="w-6/12"
                      onChanged={setAuthorId}></StyledInput>

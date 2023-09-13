@@ -86,7 +86,7 @@ const UpdateTaskForm = props => {
                   <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
                      name="author_id" 
-                     value={author_id || ''}
+                     value={author_id || 1}
                      onChanged={setAuthorId}
                         classes="w-6/12"></StyledInput>
                </FormElement>
@@ -114,7 +114,7 @@ const UpdateTaskForm = props => {
                      name="outline" 
                      value={outline || ''}
                      onChanged={setOutline}
-                        classes="w-11/12"></StyledTextArea>
+                     classes="w-11/12"></StyledTextArea>
                </FormElement>
                <FormElementFeedback feedback_msg={outline_feedback}/>
 
