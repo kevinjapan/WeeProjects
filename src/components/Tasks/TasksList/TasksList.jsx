@@ -133,7 +133,7 @@ const TasksList = props => {
          {/* TasksList */}
 
          <section style={{width:'15%',marginLeft:'.5rem'}}>
-            <ul className="flex flex-col gap-3 p-1 border border-gray-300 rounded shadow-lg">
+            <ul className="flex flex-col gap-3 p-1 border border-gray-400 rounded shadow-lg">
                <label className="text-gray-400">Tasks</label>
                {tasks ? 
                   tasks.map(task => (

@@ -62,41 +62,51 @@ const AddCommentForm = props => {
          <input type="hidden" name="commentable_type" value={props.commentable_type} />
          <input type="hidden" name="commentable_id" value={props.commentable_id} />
 
-         <FormElement>
-            <label htmlFor="title" className="w-12/12 md:w-2/12">Title</label>
-            <StyledInput 
-               name="title" 
-               value={title}
-               placeholder="enter the title here"
-               classes="grow"
-               onChanged={setTitle}></StyledInput>
-         </FormElement>
+         <div className="flex">
+               
+            <section className="w-2/12">
+         
 
-         <FormElementFeedback feedback_msg={title_feedback}/>
+               <FormElement>
+                  <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
+                  <StyledInput 
+                     name="author_id" 
+                     value={author_id || 1}
+                     placeholder="enter the author id here"
+                     classes="w-6/12"
+                     onChanged={setAuthorId}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={author_id_feedback}/>
 
-         <FormElement>
-            <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
-            <StyledInput 
-               name="author_id" 
-               value={author_id}
-               placeholder="enter the author id here"
-               classes="grow"
-               onChanged={setAuthorId}></StyledInput>
-         </FormElement>
+            </section>
 
-         <FormElementFeedback feedback_msg={author_id_feedback}/>
+            <section className="w-10/12 pl-12">
 
-         <FormElement>
-            <label htmlFor="body" className="w-12/12 md:w-2/12">Body</label>
-            <StyledTextArea 
-               name="body" 
-               value={body}
-               placeholder="enter your comment body here"
-               classes="grow"
-               onChanged={setBody}></StyledTextArea>
-         </FormElement>
+               <FormElement>
+                  <label htmlFor="title" className="italic pt-1 w-12/12 md:w-1/12">Title</label>
+                  <StyledInput 
+                     name="title" 
+                     value={title}
+                     placeholder="enter the title here"
+                     classes="w-11/12"
+                     onChanged={setTitle}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={title_feedback}/>
 
-         <FormElementFeedback feedback_msg={body_feedback}/>
+               <FormElement>
+                  <label htmlFor="body" className="italic pt-1 w-12/12 md:w-1/12">Body</label>
+                  <StyledTextArea 
+                     name="body" 
+                     value={body}
+                     placeholder="enter your comment body here"
+                     classes="w-11/12"
+                     onChanged={setBody}></StyledTextArea>
+               </FormElement>
+               <FormElementFeedback feedback_msg={body_feedback}/>
+
+            </section>
+
+         </div>
 
          <div className="flex justify-end gap-1 my-1">
                <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>

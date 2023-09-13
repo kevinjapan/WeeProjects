@@ -11,6 +11,7 @@ import DeleteTaskForm from '../DeleteTaskForm/DeleteTaskForm'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import { BookmarkIcon } from '@heroicons/react/24/outline'
 import SessionsPanel from '../../Sessions/SessionsPanel'
+import CommentsList from '../../Comments/CommentsList'
 
 
 
@@ -85,7 +86,7 @@ const TaskCard = props => {
       task.title ?
       <>
          <li key={task.id}
-            className="flex-1 border border-gray-300 rounded p-1 px-2 min-h-screen list-none  shadow-lg"
+            className="flex-1 border border-gray-400 rounded p-1 px-2 min-h-screen list-none  shadow-lg"
             >
 
             {/* <h5 className="text-2xl mb-5">{task.title}</h5> */}
@@ -120,8 +121,17 @@ const TaskCard = props => {
                todos={task.todos}
                update_todos={update_todos}
                view_todo_details={props.view_todo_details}
-               />
+            />
                
+
+            
+            <CommentsList 
+               commentable_type="task"
+               commentable_id={task.id}
+               comments={task.comments} 
+            />
+
+
             {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
                   <EditTaskForm 

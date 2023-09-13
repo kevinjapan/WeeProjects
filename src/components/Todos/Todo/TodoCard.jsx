@@ -10,6 +10,7 @@ import EditTodoForm from '../EditTodoForm/EditTodoForm'
 import DeleteTodoForm from '../DeleteTodoForm/DeleteTodoForm'
 import get_ui_ready_date from '../../Utility/DateTime/DateTime'
 import CheckList from '../../CheckList/CheckList'
+import CommentsList from '../../Comments/CommentsList'
 
 
 
@@ -105,7 +106,7 @@ const TodoCard = props => {
    return (
       todo.title ?
 
-         <section className="border border-gray-300 rounded p-1 shadow-lg">
+         <section className="border border-gray-400 rounded p-1 shadow-lg">
       
             <NavBar title={props.todo.title} >
                <ul className="flex flex-row w-full">
@@ -134,14 +135,14 @@ const TodoCard = props => {
 
             {/* only show solution if populated (if relevant) */}
             {props.todo.solution
-               ?  <section className={`flex flex-col gap-2 border border-gray-300 rounded m-2 p-2 ${border_color}`}>
+               ?  <section className={`flex flex-col gap-2 border border-gray-400 rounded m-2 p-2 ${border_color}`}>
                      <label>Solution</label>
                      <p className="text-gray-700">{props.todo.solution}</p>
                   </section>
                :  null
             }
 
-            <section className={`flex flex-col gap-2 border border-gray-300 rounded m-2 p-2 ${border_color}`}>
+            <section className={`flex flex-col gap-2 border border-gray-400 rounded m-2 p-2 ${border_color}`}>
                <div>created: {get_ui_ready_date(props.todo.created_at)}</div>
                <div>last updated:{get_ui_ready_date(props.todo.updated_at)}</div>
                <div>author:{props.todo.author_id}</div>
@@ -157,10 +158,10 @@ const TodoCard = props => {
                :  null
             }
 
-            {/* <CommentsList 
+            <CommentsList 
                commentable_type="todo"
                commentable_id={props.todo.id}
-               comments={props.todo.comments} /> */}
+               comments={props.todo.comments} />
 
 
             {show_edit_modal && (

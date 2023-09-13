@@ -110,7 +110,17 @@ const Project = props => {
                project_slug={project.slug} 
                project={project}
                refresh_project={props.refresh_project}
-               setShowAddTaskModal={setShowAddTaskModal} />
+               setShowAddTaskModal={setShowAddTaskModal} 
+            />
+
+            <section className="my-16 mx-auto w-fit border border-gray-400 rounded p-1 pt-0 shadow-lg"> 
+               <CommentsList 
+                  title_tag="h1"
+                  commentable_type="project"
+                  commentable_id={props.project.id}
+                  comments={props.project.comments} 
+               />
+            </section>
 
             {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
@@ -122,7 +132,8 @@ const Project = props => {
                      onDelete={confirm_delete_project} 
                      close_modal={() => setShowEditModal(false)}
                   />
-               </Modal>)}
+               </Modal>
+            )}
 
             {show_delete_modal && (
                <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
@@ -130,7 +141,8 @@ const Project = props => {
                      onSubmit={delete_project} 
                      close_modal={() => setShowDeleteModal(false)} 
                   />
-               </Modal>)}
+               </Modal>
+            )}
                
             {show_add_task_modal && (
                <Modal show={show_add_task_modal} close_modal={() => setShowAddTaskModal(false)}>
@@ -139,12 +151,8 @@ const Project = props => {
                      is_unique={is_unique} 
                      close_modal={() => setShowAddTaskModal(false)}  
                   />
-               </Modal>)}    
-
-            <CommentsList 
-               commentable_type="project"
-               commentable_id={props.project.id}
-               comments={props.project.comments} />
+               </Modal>
+            )}   
 
          </>
       :   <div className="m-3">

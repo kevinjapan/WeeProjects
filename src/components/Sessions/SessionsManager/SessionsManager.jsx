@@ -155,7 +155,7 @@ const SessionsManager = props => {
 
 
    return (
-      <section className="border border-gray-300 rounded p-2 text-slate-500 shadow-lg">
+      <section className="border border-gray-400 rounded p-2 text-slate-500 shadow-lg">
          <h5>Sessions</h5>
          {number_sessions} sessions / 
          total time: {total_duration} hours

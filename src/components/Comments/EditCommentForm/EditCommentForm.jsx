@@ -62,35 +62,49 @@ const EditCommentForm = props => {
 
          <input type="hidden" name="id" value={id || 0} />
 
-         <FormElement>
-            <label htmlFor="title" className="w-12/12 md:w-2/12">Title</label>
-            <StyledInput 
-               name="title" 
-               value={title || ''} 
-               onChanged={setTitle}></StyledInput>
-         </FormElement>
+         <div className="flex">
 
-         <FormElementFeedback feedback_msg={title_feedback}/>
+            <section className="w-2/12">
 
-         <FormElement>
-            <label htmlFor="author_id" className="w-12/12 md:w-2/12">Author Id</label>
-            <StyledInput 
-               name="author_id" 
-               value={author_id || ''} 
-               onChanged={setAuthorId}></StyledInput>
-         </FormElement>
 
-         <FormElementFeedback feedback_msg={author_id_feedback}/>
+               <FormElement>
+                  <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
+                  <StyledInput 
+                     name="author_id" 
+                     value={author_id || 1} 
+                     classes="w-6/12"
+                     onChanged={setAuthorId}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={author_id_feedback}/>
 
-         <FormElement>
-            <label htmlFor="body" className="w-12/12 md:w-2/12">Body</label>
-            <StyledTextArea 
-               name="body" 
-               value={body || ''} 
-               onChanged={setBody}></StyledTextArea>
-         </FormElement>
+            </section>
 
-         <FormElementFeedback feedback_msg={body_feedback}/>
+
+            <section className="w-10/12 pl-12">
+
+               <FormElement>
+                  <label htmlFor="title" className="italic pt-1 w-12/12 md:w-1/12">Title</label>
+                  <StyledInput 
+                     name="title" 
+                     value={title || ''} 
+                     classes="w-11/12"
+                     onChanged={setTitle}></StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={title_feedback}/>
+
+               <FormElement>
+                  <label htmlFor="body" className="italic pt-1 w-12/12 md:w-1/12">Body</label>
+                  <StyledTextArea 
+                     name="body" 
+                     value={body || ''} 
+                     classes="w-11/12"
+                     onChanged={setBody}></StyledTextArea>
+               </FormElement>
+               <FormElementFeedback feedback_msg={body_feedback}/>
+
+            </section>
+
+         </div>
 
          <div className="flex justify-end gap-1">
             <StyledButton aria-label="Apply." type="submit" >Apply</StyledButton>

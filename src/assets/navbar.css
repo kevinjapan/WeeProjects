@@ -23,7 +23,7 @@ NavBar - simple, responsive, generic navigation bar
 .navbar_title {
    width:fit-content;
    min-width:70%;
-   white-space:nowrap;
+   /* white-space:nowrap; -  if client doesn't disable trunctate_title, we should wrap */
 }
 
 /* 

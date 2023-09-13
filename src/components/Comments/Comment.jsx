@@ -3,6 +3,7 @@ import { AppContext } from '../App/AppContext/AppContext'
 import reqInit from '../Utility/RequestInit/RequestInit'
 import get_ui_ready_date from '../Utility/DateTime/DateTime'
 import { Notifications } from '../Utility/utilities/enums'
+import NavBar from '../App/NavBar/NavBar'
 import Modal from '../Utility/Modal/Modal'
 import StyledButton from '../Utility/StyledButton/StyledButton'
 import EditCommentForm from './EditCommentForm/EditCommentForm'
@@ -64,20 +65,34 @@ const Comment = props => {
    }
 
    return (
-      <section className="border rounded p-2 text-slate-500">
-         <h4 className="text-lg text-slate-700">{comment.title}</h4>
-         <p className="leading-relaxed">{comment.body}</p>
-         <p className="text-sm">{comment.author_id}</p>
-         <p className="text-sm">{get_ui_ready_date(comment.created_at)}</p>
 
-         <div className="flex gap-1 justify-end">
-            <StyledButton aria-label="Edit comment." onClicked={() => setShowEditModal(true)}>
-               <PencilIcon style={{width:'16px',height:'16px'}}/>Edit
-            </StyledButton>
-            <StyledButton aria-label="Delete comment." onClicked={() => setShowDeleteModal(true)}>
-               <TrashIcon style={{width:'16px',height:'16px'}}/>Delete
-            </StyledButton>
-         </div>
+      <section className="border rounded p-2 text-slate-700">
+
+         <NavBar title={comment.title} truncate_title="false" title_tag="h6">
+            <ul className="flex flex-row w-full">
+               <li>
+                  <StyledButton aria-label="Edit comment." onClicked={() => setShowEditModal(true)}>
+                     <PencilIcon style={{width:'16px',height:'16px'}}/>Edit
+                  </StyledButton>
+               </li>
+               <li>
+                  <StyledButton aria-label="Delete comment." onClicked={() => setShowDeleteModal(true)}>
+                     <TrashIcon style={{width:'16px',height:'16px'}}/>Delete
+                  </StyledButton>
+               </li>
+               {/* 
+               <li>
+                  <div onClick={() => close_todo()} className="float-right mr-2 p-2 cursor-pointer text-lg" >X</div>
+               </li> 
+               */}
+            </ul>
+         </NavBar>
+
+         <p className="italic text-sm  font-extralight text-slate-400 pl-4">Posted by {comment.author_id} on {get_ui_ready_date(comment.created_at)}</p>
+
+         <p className="leading-relaxed pt-4 pl-4">{comment.body}</p>
+
+
 
          {show_edit_modal && (
             <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
@@ -86,7 +101,8 @@ const Comment = props => {
                   comment={comment} 
                   is_unique={props.is_unique}
                   close_modal={() => setShowEditModal(false)}/>
-            </Modal>)}
+            </Modal>
+         )}
 
          {show_delete_modal && (
             <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
@@ -94,7 +110,9 @@ const Comment = props => {
                   onSubmit={delete_comment} 
                   comment_id={comment.id} 
                   close_modal={() => setShowDeleteModal(false)}/>
-            </Modal>)}
+            </Modal>
+         )}
+
       </section>
    )
 }
