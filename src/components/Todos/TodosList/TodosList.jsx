@@ -60,6 +60,11 @@ const TodosList = props => {
    }
 
    const add_todo = async(formJson) => {
+
+      if(formJson['task_id'] === null || formJson['task_id'] === '' || formJson['task_id'] === 0) {
+         setStatusMsg("The task_id was invalid, please refresh and try again.")
+      }
+
       try {
          let project_slug = props.project_slug
          setAddingTodo(true)
