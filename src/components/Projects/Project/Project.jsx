@@ -96,8 +96,8 @@ const Project = props => {
    return (
       project && project.id ?
          <>
-            <NavBar title={project.title} title_tag="h1" classes="">
-               <ul  className="flex flex-row">
+            <NavBar title={project.title} title_tag="h1" title_link={`/projects/${project.title}`} classes="">
+               <ul className="flex flex-row">
                   <li>
                      <StyledButton aria-label="Edit this project." onClicked={() => setShowEditModal(true)}>
                         <PencilIcon style={{width:'16px',height:'16px'}}/>Edit
