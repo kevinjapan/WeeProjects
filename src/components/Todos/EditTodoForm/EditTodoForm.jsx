@@ -73,10 +73,10 @@ const EditTodoForm = props => {
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {
          validated = false
       }
-      if(!validate_string(formJson['outline'],{'min_length':10,'max_length':500},setOutlineFeedback)) {
+      if(!validate_string(formJson['outline'],{'min_length':10,'max_length':1000},setOutlineFeedback)) {
          validated = false
       }
-      if(!validate_string(formJson['solution'],{'min_length':0,'max_length':500},setSolutionFeedback,false)) {
+      if(!validate_string(formJson['solution'],{'min_length':0,'max_length':1000},setSolutionFeedback,false)) {
          validated = false
       }
       
