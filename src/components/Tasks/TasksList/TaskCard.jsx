@@ -4,6 +4,7 @@ import reqInit from '../../Utility/RequestInit/RequestInit'
 import TodosList from '../../Todos/TodosList/TodosList'
 import NavBar from '../../App/NavBar/NavBar'
 import Modal from '../../Utility/Modal/Modal'
+import {get_db_ready_datetime} from '../../Utility/DateTime/DateTime'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
 import get_ui_ready_date from '../../Utility/DateTime/DateTime'
 import EditTaskForm from '../EditTaskForm/EditTaskForm'
@@ -63,6 +64,13 @@ const TaskCard = props => {
    }
 
    const delete_task = async (formJson) => {
+      
+      // to do : formJson required?
+      // to do : we don't need to send whole task
+
+      let date = new Date()                                    
+      task['deleted_at'] = get_db_ready_datetime(date)
+
       try {
          const data = await fetch(`${api}/${props.project_slug}/tasks`,reqInit("DELETE",bearer_token,task))
          const jsonData = await data.json()

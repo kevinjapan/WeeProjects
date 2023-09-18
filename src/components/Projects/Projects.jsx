@@ -81,6 +81,11 @@ const Projects = () => {
       projects.splice(index, 1, updated_project);
    }
 
+   const removed_deleted_project = deleted_project_id => {
+      let modified = projects.filter(project => parseInt(project.id) !== parseInt(deleted_project_id))
+      setProjects([...modified])
+   }
+
    const is_unique = (item_id,item_field,value) => {
       if(!projects) return true
       const filtered_projects = projects.filter(project => parseInt(project.id) !== parseInt(item_id))
@@ -97,11 +102,20 @@ const Projects = () => {
                   adding_project={adding_project}
                   order_by={order_by}
                   add_project={add_project} 
-                  is_unique={is_unique} />
-            }/> 
+                  is_unique={is_unique} 
+               />
+            }
+         /> 
 
          <Route path="/:project_slug" 
-            element={<ProjectContainer is_unique={is_unique} update_project_in_list={update_project_in_list} />} /> 
+            element={
+               <ProjectContainer 
+                  is_unique={is_unique} 
+                  update_project_in_list={update_project_in_list}
+                  removed_deleted_project={removed_deleted_project}
+               />
+            } 
+         /> 
 
          <Route path="/:project_slug/:task_slug" 
             element={<TaskContainer />} />

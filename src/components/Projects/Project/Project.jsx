@@ -1,15 +1,16 @@
-import React, { useState,useEffect,useContext,useReducer } from 'react'
+import React, { useState,useContext,useReducer } from 'react'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 import NavBar from '../../App/NavBar/NavBar'
 import projectReducer from './projectReducer'
 import TasksList from '../../Tasks/TasksList/TasksList'
 import Modal from '../../Utility/Modal/Modal'
+import {get_db_ready_datetime} from '../../Utility/DateTime/DateTime'
 import EditProjectForm from '../EditProjectForm/EditProjectForm'
 import DeleteProjectForm from '../DeleteProjectForm/DeleteProjectForm'
 import AddTaskForm from '../../Tasks/AddTaskForm/AddTaskForm'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
-import { PencilIcon,TrashIcon } from '@heroicons/react/24/solid'
+import { PencilIcon } from '@heroicons/react/24/solid'
 import CommentsList from '../../Comments/CommentsList'
 
 
@@ -67,20 +68,35 @@ const Project = props => {
    }
 
    const confirm_delete_project = () => {
-      console.log("woohoo")
       setShowEditModal(false)
       setShowDeleteModal(true)
    }
    
    const delete_project = async () => {
+
+      // currently, we simply provide a datetimestamp from client for 'deleted_at'
+      // - there are no requirements for synchronizing multiple users / UTC etc.
+
+      // to do : create a utility function for this (we have multiple client components)
+      //          see also : TaskCard.delete_task() / TodoCard.delete_todo()
+
+      let date = new Date()                                    
+      project['deleted_at'] = get_db_ready_datetime(date)
+
       try {
          const data = await fetch(`${api}/projects`,reqInit("DELETE",bearer_token,project))
          const jsonData = await data.json()
          await new Promise(resolve => setTimeout(resolve, 1000))
+
          if(jsonData.outcome === 'success') {
-               dispatch({
-                  type: 'delete_project_local_copy'
-               })
+
+            const deleted_project_id = project.id
+            dispatch({
+               type: 'delete_project_local_copy'
+            })
+            
+            // refresh list in Projects component once project is deleted
+            props.removed_deleted_project(deleted_project_id)
          }
       } catch(error) {
          setStatusMsg('Sorry, we are unable to update data on the server at this time.' + error)
@@ -106,7 +122,7 @@ const Project = props => {
                </ul>
             </NavBar>
 
-            <TasksList 
+            <TasksList
                project_slug={project.slug} 
                project={project}
                refresh_project={props.refresh_project}

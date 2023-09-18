@@ -35,11 +35,12 @@ const ProjectContainer = props => {
 
 
    return (
-      Object.keys(project).length !== 0  ?
-         <Project 
-            project={project} 
-            is_unique={props.is_unique} 
-            update_project_in_list={props.update_project_in_list}
+      Object.keys(project).length !== 0
+         ?  <Project 
+               project={project} 
+               is_unique={props.is_unique} 
+               update_project_in_list={props.update_project_in_list}
+               removed_deleted_project={props.removed_deleted_project}
             />
          :  <h6 className="text-center text-slate-300 mt-24">Loading...</h6>
    )
