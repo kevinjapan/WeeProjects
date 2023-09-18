@@ -17,7 +17,10 @@ const DeleteCheckListItemForm = props => {
    return (
       <form onSubmit={handleSubmit}>
          <h5 className="text-2xl mb-5">Delete CheckListItem</h5>
-         <p>Are you sure you wish to delete this CheckList Item?</p>
+         <p>
+            Are you sure you wish to permantently delete this CheckList Item? 
+            This data will be permanently deleted and is not recoverable.
+         </p>
          <input name="id" type="hidden" value={props.todo_id} />
          <div className="flex justify-end gap-1 my-1">
                <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>

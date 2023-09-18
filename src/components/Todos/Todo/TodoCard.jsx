@@ -4,6 +4,7 @@ import { Notifications } from '../../Utility/utilities/enums'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 import NavBar from '../../App/NavBar/NavBar'
 import Modal from '../../Utility/Modal/Modal'
+import {get_db_ready_datetime} from '../../Utility/DateTime/DateTime'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import EditTodoForm from '../EditTodoForm/EditTodoForm'
@@ -73,6 +74,12 @@ const TodoCard = props => {
    }
 
    const delete_todo = async (formJson) => {
+      
+      // to do : formJson required?
+      // to do : we don't need to send whole task
+
+      let date = new Date()                                    
+      todo['deleted_at'] = get_db_ready_datetime(date)
 
       try {
          setLocalStatus(Notifications.UPDATING)
@@ -129,8 +136,8 @@ const TodoCard = props => {
 
             <section className={`flex flex-col gap-2 m-2 mt-0 p-2 `}>
                {props.todo.outline
-                  ? <p className="text-gray-700">{props.todo.outline}</p>
-                     : <p className="italic text-gray-500">This todo has no description.</p>}
+                  ? <p className="text-gray-700 whitespacing-pre">{props.todo.outline}</p>
+                     : <p className="italic text-gray-500" >This todo has no description.</p>}
             </section>
 
             {/* only show solution if populated (if relevant) */}

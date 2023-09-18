@@ -17,7 +17,10 @@ const DeleteSessionForm = props => {
    return (
       <form onSubmit={handleSubmit}>
          <h5 className="text-2xl mb-5">Delete session</h5>
-         <p>Are you sure you wish to delete this session?</p>
+         <p>
+            Are you sure you wish to permantently delete this session? 
+            This data will be permanently deleted and is not recoverable.
+         </p>
          <input name="id" type="hidden" value={props.session_id} />
          <div className="flex justify-end gap-1 my-1">
             <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>

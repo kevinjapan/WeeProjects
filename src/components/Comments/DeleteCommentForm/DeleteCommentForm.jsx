@@ -18,7 +18,10 @@ const DeleteCommentForm = props => {
    return (
       <form onSubmit={handleSubmit}>
          <h5 className="text-2xl mb-5">Delete Comment</h5>
-         <p>Are you sure you wish to delete this Comment?</p>
+         <p>
+            Are you sure you wish to permantently delete this Comment?
+            This data will be permanently deleted and is not recoverable.
+         </p>
          <input name="comment_id" type="hidden" value={props.comment_id} />
          <div className="flex justify-end gap-1 my-1">
             <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>
