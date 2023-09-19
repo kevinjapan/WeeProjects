@@ -8,17 +8,21 @@ const StyledTextArea = props => {
    // client may provide additional / override styling
    if(props.classes) classes += " " + props.classes
     
+   let readonly = props.readonly ? true : false
+
    return (
       props.onChanged
          ?  <textarea 
                name={props.name} 
                value={props.value || ''}  
                className={classes}
-               onChange={e => props.onChanged(e.target.value)} />
+               onChange={e => props.onChanged(e.target.value)} 
+               readOnly={readonly} />
          :  <textarea 
                name={props.name} 
                defaultValue={props.value || ''}  
-               className={classes} />
+               className={classes}  
+               readOnly={readonly} />
    )
 }
 

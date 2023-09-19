@@ -8,7 +8,7 @@ const StyledInput = props => {
    // client may provide additional / override styling
    if(props.classes) classes += " " + props.classes
 
-   // let readonly = props.readonly ? 'readOnly' : ''
+
    let readonly = props.readonly ? true : false
    
 
@@ -21,8 +21,6 @@ const StyledInput = props => {
          props.onChanged(valid_string)
       }
    }
-
-   // {...{readonly}} 
 
    return (
       props.onChanged ?  
