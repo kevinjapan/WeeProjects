@@ -1,7 +1,7 @@
 import React, { lazy,Suspense } from 'react'
 import { Routes,Route,Outlet } from 'react-router-dom'
 import Home from '../../Home/Home'
-import Dashboard from '../../Admin/Dashboard/Dashboard'
+import Dashboard from '../../Dashboard/Dashboard/Dashboard'
 
 
 const Projects = lazy(() => import("../../Projects/Projects"))   
