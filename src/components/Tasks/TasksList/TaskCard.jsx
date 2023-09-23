@@ -65,8 +65,7 @@ const TaskCard = props => {
 
    const delete_task = async (formJson) => {
       
-      // to do : formJson required?
-      // to do : we don't need to send whole task
+      // for future : retain 'formJson' and 'task' - no benefit to throw the data away
 
       let date = new Date()                                    
       task['deleted_at'] = get_db_ready_datetime(date)
@@ -94,7 +93,7 @@ const TaskCard = props => {
       task.title ?
       <>
          <li key={task.id}
-            className="flex-1 border border-gray-400 rounded p-1 px-2 min-h-screen list-none  shadow-lg"
+            className="flex-1 border border-gray-400 rounded-lg p-1 px-2 min-h-screen list-none  shadow-lg"
             >
 
             {/* <h5 className="text-2xl mb-5">{task.title}</h5> */}

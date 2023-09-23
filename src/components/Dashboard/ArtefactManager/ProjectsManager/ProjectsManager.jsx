@@ -50,8 +50,7 @@ const ProjectsManager = () => {
 
       try {
          setLocalStatus(Notifications.UPDATING)
-         
-         // to do : verify this..
+   
          const data = await fetch(`${api}/projects/delete_permanently`,reqInit("DELETE",bearer_token,selected_project))
 
          const jsonData = await data.json()
@@ -85,11 +84,6 @@ const ProjectsManager = () => {
 
    return (
       <>
-
-         {/* <Link to={`projects`}>Projects</Link>   to do : provide links into TasksManager for current project */}
-
-         
-
          <h6 className="text-slate-500">{projects.length} project{projects.length !== 1 ? 's' : ''}</h6>
 
          <section className="w-11/12 m-2 mx-10 p-5 border rounded">

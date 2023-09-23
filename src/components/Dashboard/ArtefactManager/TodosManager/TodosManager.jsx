@@ -51,8 +51,7 @@ const TodosManager = () => {
 
       try {
          setLocalStatus(Notifications.UPDATING)
-                  
-         // to do : verify this..
+
          const data = await fetch(`${api}/${params.project_slug}/${params.task_slug}/${selected_todo.slug}/delete_permanently`,reqInit("DELETE",bearer_token,selected_todo))
          
          const jsonData = await data.json()
@@ -97,8 +96,6 @@ const TodosManager = () => {
 
          <h6 className="text-slate-500">{todos.length} todo{todos.length !== 1 ? 's' : ''}</h6>
 
-         {/* <Link to={`todos`}>todos</Link>   to do : provide links into todosManager for current project */}
-
          <section className="m-5">
             <table className="w-full my-5">
                <thead className="text-slate-400 font-thin">
@@ -117,8 +114,6 @@ const TodosManager = () => {
                         <td className="pt-1">{todo.title}</td>
                         <td className="pt-1">{get_ui_ready_date(todo.created_at)}</td>
                         <td className="pt-1">{get_ui_ready_date(todo.updated_at)}</td>
-
-                        {/* to do : todo.deleted_at status */}
                         <td className="pt-1">{get_ui_ready_date(todo.deleted_at)}</td>
 
                         <td>

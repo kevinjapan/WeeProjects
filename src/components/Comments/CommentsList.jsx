@@ -97,13 +97,13 @@ const CommentsList = props => {
          
          {retrieval_attempted
             ?  comments 
-                  ?  <h6 className="text-center text-slate-300 mt-4">
+                  ?  <h6 className="text-center text-slate-500 mt-4 text-lg">
                         There { comments.length > 1 ? 'are' : 'is' } {comments ? comments.length : '0'} comment{ comments.length > 1 ? 's' : '' }
                      </h6>
-                  :  <h6 className="text-center text-slate-300 mt-4">
+                  :  <h6 className="text-center text-slate-500 mt-4 text-lg">
                         There are 0 comments
                      </h6>
-            :  <h6 className="text-center text-slate-300 mt-4">'Checking for Comments...'</h6>
+            :  <h6 className="text-center text-slate-500 mt-4 text-lg">Checking for Comments...</h6>
          }
          
          <ul className="flex flex-col gap-5 list-none mt-7 p-2">

@@ -74,9 +74,8 @@ const TodoCard = props => {
    }
 
    const delete_todo = async (formJson) => {
-      
-      // to do : formJson required?
-      // to do : we don't need to send whole task
+
+      // for future : retain 'formJson' and 'todo' - no benefit to throw the data away
 
       let date = new Date()                                    
       todo['deleted_at'] = get_db_ready_datetime(date)
@@ -113,7 +112,7 @@ const TodoCard = props => {
    return (
       todo.title ?
 
-         <section className="border border-gray-400 rounded p-1 shadow-lg">
+         <section className="border border-gray-400 rounded-lg p-1 shadow-lg">
       
             <NavBar title={props.todo.title} >
                <ul className="flex flex-row w-full">

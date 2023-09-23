@@ -31,7 +31,7 @@ const TasksManager = () => {
                setTasks(jsonData.data)
             } else {
                await new Promise(resolve => setTimeout(resolve, 1000))
-               // setLoadingStatus(jsonData.message)  to do : ?
+               // setLoadingStatus(jsonData.message)
                }
          } catch {
             setStatusMsg('Sorry, unable to fetch data from the server.')
@@ -50,8 +50,7 @@ const TasksManager = () => {
       
       try {
          setLocalStatus(Notifications.UPDATING)
-         
-         // to do : verify this..
+
          const data = await fetch(`${api}/${params.project_slug}/${selected_task.slug}/delete_permanently`,reqInit("DELETE",bearer_token,selected_task))
          
          const jsonData = await data.json()
@@ -92,8 +91,6 @@ const TasksManager = () => {
          </h5>
 
          <h6 className="text-slate-500">{tasks.length} task{tasks.length !== 1 ? 's' : ''}</h6>
-
-         {/* <Link to={`tasks`}>tasks</Link>   to do : provide links into TasksManager for current project */}
 
          <section className="m-5">
             <table className="w-full my-5">
