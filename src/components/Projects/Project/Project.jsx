@@ -22,6 +22,7 @@ const Project = props => {
    const [show_add_task_modal,setShowAddTaskModal] = useState(false)
    const [show_delete_modal,setShowDeleteModal] = useState(false)
    const [show_edit_modal,setShowEditModal] = useState(false)
+   const [show_welcome,setShowWelcome] = useState(true)
 
    const add_task = async (formJson) => {
       try {
@@ -77,9 +78,6 @@ const Project = props => {
       // currently, we simply provide a datetimestamp from client for 'deleted_at'
       // - there are no requirements for synchronizing multiple users / UTC etc.
 
-      // to do : create a utility function for this (we have multiple client components)
-      //          see also : TaskCard.delete_task() / TodoCard.delete_todo()
-
       let date = new Date()                                    
       project['deleted_at'] = get_db_ready_datetime(date)
 
@@ -109,10 +107,13 @@ const Project = props => {
       return filtered_tasks ? !filtered_tasks.some(task => task[item_field] === value) : true
    }
 
+      
+   
+
    return (
       project && project.id ?
          <>
-            <NavBar title={project.title} title_tag="h1" title_link={`/projects/${project.title}`} classes="">
+            <NavBar title={project.title} title_tag="h1" title_link={`/projects/${project.slug}`} title_callback={() => setShowWelcome(true)} classes="">
                <ul className="flex flex-row">
                   <li>
                      <StyledButton aria-label="Edit this project." onClicked={() => setShowEditModal(true)}>
@@ -123,13 +124,15 @@ const Project = props => {
             </NavBar>
 
             <TasksList
+               show_welcome={show_welcome}
                project_slug={project.slug} 
                project={project}
                refresh_project={props.refresh_project}
                setShowAddTaskModal={setShowAddTaskModal} 
+               setShowWelcome={setShowWelcome}
             />
 
-            <section className="my-16 mx-auto w-fit border border-gray-400 rounded p-1 pt-0 shadow-lg"> 
+            <section className="my-16 mx-auto w-fit border border-gray-400 rounded-lg p-1 pt-0 shadow-lg"> 
                <CommentsList 
                   title_tag="h1"
                   commentable_type="project"

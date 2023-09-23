@@ -15,6 +15,7 @@ const TasksList = props => {
    const [selected_task,setSelectedTask] = useState({})
    const [selected_todo,setSelectedTodo] = useState({})
    const [task_updated,setTaskUpdated] = useState(0)
+   const [show_welcome,setShowWelcome] = useState(props.show_welcome)
    const [manage_task_sessions,setManageTaskSessions] = useState(false)
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
 
@@ -23,6 +24,10 @@ const TasksList = props => {
          setTasks([...props.project.tasks])
       }
    },[props.project,props.refreshed])
+
+   useEffect(() => {
+      setShowWelcome(props.show_welcome)
+   },[props.show_welcome])
 
 
    const get_tasks = async() => {
@@ -109,6 +114,8 @@ const TasksList = props => {
       setSelectedTodo({})
       // we find with 'task_id' since we may have refreshed dataset from server..
       setSelectedTask(tasks.find((task) => parseInt(task.id) === parseInt(task_id)))
+      setShowWelcome(false)
+      props.setShowWelcome(false)
    }
 
    const view_todo_details = todo => {
@@ -116,9 +123,12 @@ const TasksList = props => {
       setManageTaskSessions(false)
    }
    const is_selected_task = id => {
-      return parseInt(id) === parseInt(selected_task.id)
-         ? ' rounded bg-yellow-200'
-         : ' '
+      if(selected_task.id) {
+         return parseInt(id) === parseInt(selected_task.id)
+            ? ' rounded bg-yellow-200'
+            : ' '
+         }
+      return ''
    }
 
    const manage_sessions = () => {
@@ -128,12 +138,11 @@ const TasksList = props => {
 
    return (
       <div className="flex gap-2 mt-4">
-   
 
          {/* TasksList */}
 
          <section style={{width:'15%',marginLeft:'.5rem'}}>
-            <ul className="flex flex-col gap-3 p-1 border border-gray-400 rounded shadow-lg">
+            <ul className="flex flex-col gap-3 p-1 border border-gray-400 rounded-lg shadow-lg">
                <label className="text-gray-400">Tasks</label>
                {tasks ? 
                   tasks.map(task => (
@@ -154,7 +163,7 @@ const TasksList = props => {
          {/* TaskCard */}
 
          <section style={{width:'42%',marginRight:'.35rem'}}>
-            {selected_task 
+            {selected_task.id && !show_welcome
                ?  <TaskCard
                      project_slug={props.project_slug} 
                      task_updated={task_updated}
@@ -167,7 +176,17 @@ const TasksList = props => {
                      manage_sessions={manage_sessions}
                      update_session={update_session}
                   /> 
-               :  null
+               :  <div>
+               
+                     {/* to do : create component ProjectStartPage or similar name.. */}
+                     
+                     <h3>welcome to the project page</h3>
+
+                     <ul>
+                        <li>- select a Task to view project details & progress</li>
+                        <li></li>
+                     </ul>
+                  </div>
             }
          </section>
 

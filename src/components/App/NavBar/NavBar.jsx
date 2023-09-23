@@ -33,9 +33,15 @@ const NavBar = props => {
                   <div className="navbar_title">
                      {props.title_link 
                         ?  <HeadingTag className={classes}>
-                              <Link to={`${props.title_link}`}>{title}</Link>
+                              <Link 
+                                 to={`${props.title_link}`} 
+                                 onClick={props.title_callback ? () => props.title_callback() : null}
+                              >{title}
+                              </Link>
                            </HeadingTag>
-                        :  <HeadingTag className={classes}>{title}</HeadingTag>}
+                        :  <HeadingTag className={classes}>
+                              {title}
+                           </HeadingTag>}
                   </div>
                   {props.children && (
                      <NavBarToggler />)}
