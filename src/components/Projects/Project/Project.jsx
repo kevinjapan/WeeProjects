@@ -1,4 +1,5 @@
 import React, { useState,useContext,useReducer } from 'react'
+import { Routes,Route,Link } from 'react-router-dom'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 import NavBar from '../../App/NavBar/NavBar'
@@ -114,7 +115,10 @@ const Project = props => {
       project && project.id ?
          <>
             <NavBar title={project.title} title_tag="h1" title_link={`/projects/${project.slug}`} title_callback={() => setShowWelcome(true)} classes="">
-               <ul className="flex flex-row">
+               <ul className="flex flex-row items-center gap-5">
+                  <li>
+                     <Link to={`/projects/${project.slug}/messageboard`} className="text-blue-600">MessageBoard</Link>
+                  </li>
                   <li>
                      <StyledButton aria-label="Edit this project." onClicked={() => setShowEditModal(true)}>
                         <PencilIcon style={{width:'16px',height:'16px'}}/>Edit

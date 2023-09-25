@@ -5,7 +5,7 @@ import reqInit from '../Utility/RequestInit/RequestInit'
 import ProjectsList from './ProjectsList/ProjectsList'
 import ProjectContainer from './ProjectContainer/ProjectContainer'
 import TaskContainer from '../Tasks/Task/TaskContainer'
-
+import MessageBoard from '../MessageBoard/MessageBoard'
 
 const Projects = () => {
 
@@ -117,8 +117,13 @@ const Projects = () => {
             } 
          /> 
 
+         <Route path="/:project_slug/messageboard" 
+            element={<MessageBoard />}          
+         />
+            
          <Route path="/:project_slug/:task_slug" 
-            element={<TaskContainer />} />
+            element={<TaskContainer />}            
+         />
 
       </Routes>
    )
