@@ -8,7 +8,7 @@ const Dashboard = () => {
       <>
 
          <ul className="flex gap-5 p-2 px-5 items-end">
-            <li><Link to={`/dashboard`} className="text-blue-600 text-xl">Dashboard</Link></li>
+            <li><Link to={`/dashboard`} className="text-blue-600 text-2xl font-bold">DASHBOARD</Link></li>
             <li><Link to={`/dashboard/artefacts`} className="text-blue-600">Manage Artefacts</Link></li>
          </ul>
          
