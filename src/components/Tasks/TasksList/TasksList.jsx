@@ -9,6 +9,8 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 
 
 
+// to do : consider name - this is much more than the TasksList  ?
+
 const TasksList = props => {
 
    const [tasks,setTasks] = useState([])
@@ -151,9 +153,9 @@ const TasksList = props => {
                      </li>
                   ))
                :null}
-            <StyledButton aria-label="Add a new task." onClicked={() => props.setShowAddTaskModal(true)}>
-               <PlusIcon style={{width:'16px',height:'16px'}}/>Add A Task
-            </StyledButton>
+               <StyledButton aria-label="Add a new task." onClicked={() => props.setShowAddTaskModal(true)}>
+                  <PlusIcon style={{width:'16px',height:'16px'}}/>Add A Task
+               </StyledButton>
             </ul>
             
 
@@ -178,14 +180,17 @@ const TasksList = props => {
                   /> 
                :  <div>
                
-                     {/* to do : create component ProjectStartPage or similar name.. */}
+                     {/* to do : create component ProjectDashboard or similar name.. 
                      
+                              this is a mockup of features we would want..  */}
+
                      <h3>welcome to the project page</h3>
 
-                     <ul>
-                        <li>- select a Task to view project details & progress</li>
-                        <li></li>
-                     </ul>
+                     <p className="p-5">project statement here</p>
+
+                     <p className="p-5">
+                        {/* to do : initially - just list latest 5 items for each category */}
+                        new items here - messages.. </p>
                   </div>
             }
          </section>
@@ -195,7 +200,7 @@ const TasksList = props => {
          
             {/* TodoCard */}
 
-            {selected_todo 
+            {selected_todo && !show_welcome
                ?  <TodoCard 
                      todo={selected_todo} 
                      is_unique={is_unique} 

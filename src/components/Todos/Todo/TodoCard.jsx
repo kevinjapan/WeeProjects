@@ -167,8 +167,8 @@ const TodoCard = props => {
             <CommentsList 
                commentable_type="todo"
                commentable_id={props.todo.id}
-               comments={props.todo.comments} />
-
+               comments={props.todo.comments} 
+            />
 
             {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
