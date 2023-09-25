@@ -89,7 +89,7 @@ const CommentsList = props => {
    }
 
    return (
-      <section className="mx-0 my-7 max-w-4xl">
+      <section className="mx-0 my-7 w-full">
 
          <HeadingTag className="font-extralight pt-0 mt-0 pl-5 bg-blue-400 text-white rounded">
             {props.commentable_type} comments
