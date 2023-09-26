@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes,Route,Link } from 'react-router-dom'
 import ProjectsManager from './ProjectsManager/ProjectsManager'
 import TasksManager from './TasksManager/TasksManager'
+import MessagesManager from './MessagesManager/MessagesManager'
 import TodosManager from './TodosManager/TodosManager'
 
 
@@ -31,6 +32,14 @@ const ArtefactManager = () => {
             <Route path="/projects/:project_slug/tasks" 
                element={
                   <TasksManager 
+                  />
+               }
+            />
+
+
+            <Route path="/projects/:project_slug/messages" 
+               element={
+                  <MessagesManager 
                   />
                }
             />

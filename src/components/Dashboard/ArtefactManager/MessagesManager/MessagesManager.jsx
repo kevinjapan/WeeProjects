@@ -1,34 +1,36 @@
 import React, { useState,useEffect,useContext } from 'react'
-import { Routes,Route,Link,useParams } from 'react-router-dom'
+import { Link,useParams } from 'react-router-dom'
 import { AppContext } from '../../../App/AppContext/AppContext'
 import reqInit from '../../../Utility/RequestInit/RequestInit'
 import { Notifications } from '../../../Utility/utilities/enums'
 import get_ui_ready_date from '../../../Utility/DateTime/DateTime'
 import Modal from '../../../Utility/Modal/Modal'
-import EditTaskManagerForm from './EditTaskManagerForm/EditTaskManagerForm'
-import DeleteTaskManagerForm from './DeleteTaskManagerForm/DeleteTaskManagerForm'
-import StyledButton from '../../../Utility/StyledButton/StyledButton'
-import { TrashIcon } from '@heroicons/react/24/solid'
+import EditMessageManagerForm from './EditMessageManagerForm/EditMessageManagerForm'
+import DeleteMessageManagerForm from './DeleteMessageManagerForm/DeleteMessageManagerForm'
+// import StyledButton from '../../../Utility/StyledButton/StyledButton'
+// import { TrashIcon } from '@heroicons/react/24/solid'
 
-const TasksManager = () => {
+
+
+const MessagesManager = () => {
    
    let params = useParams()
    const {api,bearer_token,setStatusMsg} = useContext(AppContext)
    
-   const [tasks,setTasks] = useState([])
-   const [selected_task,setSelectedTask] = useState({})
+   const [messages,setMessages] = useState([])
+   const [selected_message,setSelectedmessage] = useState({})
    const [show_edit_modal,setShowEditModal] = useState(false)
    const [show_delete_modal,setShowDeleteModal] = useState(false)
    const [local_status,setLocalStatus] = useState('')
 
    
    useEffect(() => {
-      const get_tasks = async (api) => {
+      const get_messages = async (api) => {
          try {
-            const data = await fetch(`${api}/${params.project_slug}/tasks_inclusive`,reqInit())
+            const data = await fetch(`${api}/projects/${params.project_slug}/messageboard/messages_inclusive`,reqInit("GET",bearer_token))
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
-               setTasks(jsonData.data)
+               setMessages(jsonData.data)
             } else {
                await new Promise(resolve => setTimeout(resolve, 1000))
                // setLoadingStatus(jsonData.message)
@@ -37,21 +39,21 @@ const TasksManager = () => {
             setStatusMsg('Sorry, unable to fetch data from the server.')
          }
       }
-      get_tasks(api,params)
+      get_messages(api,params)
    },[api,params.project_slug])
 
    
-   const confirm_delete_task = () => {
+   const confirm_delete_message = () => {
       setShowEditModal(false)
       setShowDeleteModal(true)
    }
 
-   const delete_task = async (formJson) => {
+   const delete_message = async (formJson) => {
       
       try {
          setLocalStatus(Notifications.UPDATING)
 
-         const data = await fetch(`${api}/${params.project_slug}/${selected_task.slug}/delete_permanently`,reqInit("DELETE",bearer_token,selected_task))
+         const data = await fetch(`${api}/projects/${params.project_slug}/messageboard/messages/delete_permanently/${formJson.id}`,reqInit("DELETE",bearer_token,selected_message))
          
          const jsonData = await data.json()
          await new Promise(resolve => setTimeout(resolve, 1000))
@@ -59,11 +61,11 @@ const TasksManager = () => {
          if(jsonData.outcome === Notifications.SUCCESS) {
 
             // we don't reset this - we don't mind that form contains prev Todo - it's not accessible
-            // setSelectedTask({})
+            // setSelectedmessage({})
 
             // refresh UI list
-            let modified = tasks.filter((task) => task.id !== selected_task.id)
-            setTasks(modified)
+            let modified = messages.filter((message) => message.id !== selected_message.id)
+            setMessages(modified)
          }
 
          setLocalStatus(Notifications.DONE)
@@ -76,8 +78,8 @@ const TasksManager = () => {
       setShowDeleteModal(false)
    }
 
-   const edit_task = task => {
-      setSelectedTask(task)
+   const edit_message = message => {
+      setSelectedmessage(message)
       setShowEditModal(true)
    }
 
@@ -87,13 +89,11 @@ const TasksManager = () => {
       
          <h5>
             {params.project_slug} &nbsp;
-            <span className="font-bold">Tasks</span>&nbsp;&nbsp;
-            <Link to={`/dashboard/artefacts/projects/${params.project_slug}/messages`} className="text-blue-600">Messages</Link>   
+            <Link to={`/dashboard/artefacts/projects/${params.project_slug}/tasks`} className="text-blue-600">Tasks</Link>&nbsp;&nbsp;
+            <span className="font-bold">Messages</span>
          </h5>
 
-         <h6 className="w-fit text-slate-500 ml-5 mt-2 bg-yellow">{tasks.length} task{tasks.length !== 1 ? 's' : ''}</h6>
-
-
+         <h6 className="w-fit text-slate-500 ml-5 mt-2 bg-yellow">{messages.length} message{messages.length !== 1 ? 's' : ''}</h6>
 
          <section className="m-5">
             <table className="w-full my-5">
@@ -107,17 +107,17 @@ const TasksManager = () => {
                   </tr>
                </thead>
                <tbody>
-                  {tasks.map((task) => (
-                     <tr key={task.id} className="border-b hover:bg-yellow-100 cursor-default">
+                  {messages.map((message) => (
+                     <tr key={message.id} className="border-b hover:bg-yellow-100 cursor-default">
 
-                        <td className=""><Link to={`${task.slug}\\todos`} className="text-blue-600">{task.title}</Link></td>
-                        <td className="">{get_ui_ready_date(task.created_at)}</td>
-                        <td className="">{get_ui_ready_date(task.updated_at)}</td>
-                        <td className="">{get_ui_ready_date(task.deleted_at)}</td>
+                        <td className="">{message.title}</td>
+                        <td className="">{get_ui_ready_date(message.created_at)}</td>
+                        <td className="">{get_ui_ready_date(message.updated_at)}</td>
+                        <td className="">{get_ui_ready_date(message.deleted_at)}</td>
 
                         <td>
-                           <div onClick={() => edit_task(task)} className="text-blue-600 cursor-pointer">edit</div>
-                           {/* <StyledButton aria-label="Edit this task." onClicked={() => setShowEditModal(true)}>
+                           <div onClick={() => edit_message(message)} className="text-blue-600 cursor-pointer">edit</div>
+                           {/* <StyledButton aria-label="Edit this message." onClicked={() => setShowEditModal(true)}>
                               <TrashIcon style={{width:'16px',height:'16px'}}/>Permanently Delete
                            </StyledButton> */}
                         </td>
@@ -129,21 +129,21 @@ const TasksManager = () => {
          
          {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
-                  <EditTaskManagerForm 
-                     task={selected_task}
+                  <EditMessageManagerForm 
+                     message={selected_message}
                      // is_unique={props.is_unique}
                      close_modal={() => setShowEditModal(false)}
                      // onSubmit={update_todo} 
-                     onDelete={confirm_delete_task}
+                     onDelete={confirm_delete_message}
                   />
                </Modal>
          )}
 
          {show_delete_modal && (
                <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
-                  <DeleteTaskManagerForm 
-                     task_id={selected_task.id} 
-                     onSubmit={delete_task} 
+                  <DeleteMessageManagerForm 
+                     message_id={selected_message.id} 
+                     onSubmit={delete_message} 
                      // close_modal={() => setShowDeleteModal(false)}
                   />
                </Modal>
@@ -153,4 +153,4 @@ const TasksManager = () => {
    )
 }
 
-export default TasksManager
+export default MessagesManager
