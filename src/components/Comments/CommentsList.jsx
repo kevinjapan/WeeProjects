@@ -91,8 +91,8 @@ const CommentsList = props => {
    return (
       <section className="mx-0 my-7 w-full">
 
-         <HeadingTag className="font-extralight pt-0 mt-0 pl-5 bg-blue-400 text-white rounded">
-            {props.commentable_type} comments
+         <HeadingTag className="w-full text-center font-semibold text-gray-400 pt-0 mt-0 pl-5 ">
+            {props.no_type_in_heading ? '' : props.commentable_type} comments
          </HeadingTag>
          
          {retrieval_attempted
