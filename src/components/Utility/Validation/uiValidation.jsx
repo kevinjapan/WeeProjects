@@ -16,7 +16,7 @@ export const validate_string = (str,tests,set_msg_callback,required=true) => {
    }
    if(tests['max_length']) {
       if(str.length > tests['max_length']) {
-         set_msg_callback('The entered value is too long.')
+         set_msg_callback('The entered value is too long (' + str.length + '/' + tests['max_length'] + ')')
          return false
       }
    }
