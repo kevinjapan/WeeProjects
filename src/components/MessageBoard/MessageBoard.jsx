@@ -7,8 +7,6 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 import Message from './Message'
 import Modal from '../Utility/Modal/Modal'
 import AddMessageForm from './AddMessageForm/AddMessageForm'
-//import EditMessageForm from './EditMessageForm/EditMessageForm'
-//import DeleteMessageForm from './DeleteMessageForm/DeleteMessageForm'
 
 
 const MessageBoard = props => {
@@ -18,14 +16,14 @@ const MessageBoard = props => {
 
    const [project_id,setProjectId] = useState(0)
    const [messages,setMessages] = useState([])
-   const [show_edit_modal,setShowEditModal] = useState(false)
+   const [adding_message,setAddingMessage] = useState(false)
    const [show_add_modal,setShowAddModal] = useState(false)
-   const [show_delete_modal,setShowDeleteModal] = useState(false)
 
    
    useEffect (() => {
       get_messages()
    },[])
+
    const get_messages = async() => {
 
       try {
@@ -56,8 +54,63 @@ const MessageBoard = props => {
       }
    }
 
-   const add_message = () => {
-      console.log('to do : add a message then..')
+
+   const add_message = async(formJson) => {
+
+      if(formJson['project_id'] === null || formJson['project_id'] === '' || formJson['project_id'] === 0) {
+         setStatusMsg("The project_id was invalid, please refresh and try again.")
+      }
+
+      try {
+
+         setAddingMessage(true)
+
+         const data = await fetch(`${api}/projects/${params.project_slug}/messageboard/messages`,reqInit("POST",bearer_token,formJson))
+         const jsonData = await data.json()
+         await new Promise(resolve => setTimeout(resolve, 1000))
+         
+         if(jsonData.outcome === 'success') {
+            formJson['id'] = jsonData.id
+            let modified_messages = messages ? [...messages] : []
+            if(!modified_messages.some(message => message.id === formJson.id)) {
+               modified_messages.push(formJson)
+            }
+            setMessages(modified_messages)
+
+            //props.update_messages(modified_messages)
+         }
+         else {
+            setStatusMsg("Server couldn't create a new Message")
+         }
+      }
+      catch (err){
+         setStatusMsg('Sorry, we are unable to update data on the server at this time. ' + err)
+      }
+      setAddingMessage(false)
+      setShowAddModal(false)
+   }
+
+   const is_unique = (item_id,item_field,value) => {
+
+      if(!messages) return true
+      const filtered_messages = messages.filter(message => parseInt(message.id) !== parseInt(item_id))
+      return filtered_messages ? !filtered_messages.some(message => message[item_field] === value) : true
+
+   }
+
+   const update_messages = updated_message => {
+      
+      let index = messages.findIndex(message => parseInt(message.id) === parseInt(updated_message.id))
+      let modified = [...messages]
+      modified[index] = updated_message
+      setMessages(modified)
+
+   }
+
+
+   const remove_deleted_message = deleted_message_id => {
+      let modified = messages.filter((message) => message.id !== deleted_message_id)
+      setMessages(modified)
    }
 
 
@@ -65,17 +118,23 @@ const MessageBoard = props => {
       <>
          <section className="flex flex-col m-5">
 
-            <div>project id: {project_id}</div>
-
-            <Link to={`/projects/${params.project_slug}`} className="self-center text-blue-600">
-               <span className="text-slate-400 italic">Back to Project</span> {params.project_slug}</Link>
+            <Link to={`/projects/${params.project_slug}`} className="self-center border rounded-3xl px-3 text-blue-300">
+               {params.project_slug} <span className="text-slate-400 italic">- back to project</span></Link>
          
-            <div className="text-slate-400 italic self-center">{messages.length} message{messages.length === 1 ? '' : 's'}</div>
-
+            {messages 
+               ?  <div className="text-slate-400 italic self-center my-5">This project has {messages.length} message{messages.length === 1 ? '' : 's'}</div>
+               :  <div className="text-slate-400 italic self-center my-5">This project has no messages.</div>
+            }
             <ul className="flex flex-col gap-12 p-1">
                {messages ? 
                   messages.map(message => (
-                     <Message key={message.id} message={message}/>
+                     <Message 
+                        key={message.id} 
+                        message={message}
+                        is_unique={is_unique}
+                        update_messages={update_messages}
+                        remove_deleted_message={remove_deleted_message}
+                     />
                   ))
                :null}
                <StyledButton classes="self-center" aria-label="Add a new task." onClicked={() => setShowAddModal(true)}>
@@ -85,34 +144,14 @@ const MessageBoard = props => {
 
          </section>
 
-         {/* {show_edit_modal && (
-            <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
-               <EditMessageForm 
-                  onSubmit={update_message} 
-                  is_unique={props.is_unique} 
-                  message={message} 
-                  setShowDeleteModal={setShowDeleteModal}
-                  onDelete={confirm_delete_message} 
-                  close_modal={() => setShowEditModal(false)}
-               />
-            </Modal>
-         )} */}
-
-         {/* {show_delete_modal && (
-            <Modal show={show_delete_modal} close_modal={() => setShowDeleteModal(false)}>
-               <DeleteMessageForm 
-                  onSubmit={delete_message} 
-                  close_modal={() => setShowDeleteModal(false)} 
-               />
-            </Modal>
-         )} */}
+       
             
          {show_add_modal && (
             <Modal show={show_add_modal} close_modal={() => setShowAddModal(false)}>
                <AddMessageForm 
                   project_id={project_id}
                   onSubmit={add_message} 
-                  // is_unique={is_unique} 
+                  is_unique={is_unique} 
                   close_modal={() => setShowAddModal(false)}  
                />
             </Modal>

@@ -12,14 +12,13 @@ import { datetimestamp } from '../../Utility/DateTime/DateTime'
 
 const EditMessageForm = props => {
 
-   const [id] = useState(props.todo.id)
-   const [task_id] = useState(props.todo.task_id)
+   const [id] = useState(props.message.id)
+   const [project_id] = useState(props.message.project_id)
 
-   // Todo properties : validated inputs
-   const [title,setTitle] = useState(props.todo.title || '')
-   const [author_id,setAuthorId] = useState(props.todo.author_id || 0)
-   const [body,setBody] = useState(props.todo.body || '')
-   const [solution,setSolution] = useState(props.todo.solution || '')
+   // message properties : validated inputs
+   const [title,setTitle] = useState(props.message.title || '')
+   const [author_id,setAuthorId] = useState(props.message.author_id || 0)
+   const [body,setBody] = useState(props.message.body || '')
 
    // - validated input UI feedback
    const [title_feedback,setTitleFeedback] = useState('')
@@ -31,8 +30,7 @@ const EditMessageForm = props => {
       
       setTitleFeedback('')
       setAuthorIdFeedback('')
-      setOutlineFeedback('')
-      setSolutionFeedback('')
+      setBodyFeedback('')
       e.preventDefault()
 
       const form = e.target
@@ -57,7 +55,12 @@ const EditMessageForm = props => {
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {
          validated = false
       }
-      if(!validate_string(formJson['body'],{'min_length':10,'max_length':2000},setBodyFeedback)) {
+
+      // to do : review all form validation text lengths..
+      //         note these are used on different forms - eg cf EditMessageManagerForm
+      //         so we should share const vars across site..
+
+      if(!validate_string(formJson['body'],{'min_length':10,'max_length':5000},setBodyFeedback)) {
          validated = false
       }
       

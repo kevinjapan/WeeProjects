@@ -30,7 +30,7 @@ const AddMessageForm = props => {
    const handleSubmit = e => {
       
       setTitleFeedback('')
-      setTaskIdFeedback('')
+      setProjectIdFeedback('')
       setAuthorIdFeedback('')
       setBodyFeedback('')
 
