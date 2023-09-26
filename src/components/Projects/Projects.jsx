@@ -77,8 +77,12 @@ const Projects = () => {
    }
 
    const update_project_in_list = updated_project => {
-      let index = projects.findIndex(project => parseInt(project.id) === parseInt(updated_project.id))
-      projects.splice(index, 1, updated_project);
+      
+      let index = projects.findIndex(project => parseInt(project.id) === parseInt(updated_project.id))      
+      let modified = [...projects]
+      modified[index] = updated_project
+      setProjects(modified)
+   
    }
 
    const removed_deleted_project = deleted_project_id => {

@@ -136,7 +136,7 @@ const Project = props => {
                setShowWelcome={setShowWelcome}
             />
 
-            <section className="my-16 mx-auto w-fit border border-gray-400 rounded-lg p-1 pt-0 shadow-lg"> 
+            <section className="my-16 mx-auto w-11/12 border border-gray-400 rounded-lg p-1 pt-0 shadow-lg"> 
                <CommentsList 
                   title_tag="h1"
                   commentable_type="project"
