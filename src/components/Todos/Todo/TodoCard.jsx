@@ -135,7 +135,7 @@ const TodoCard = props => {
 
             <section className={`flex flex-col gap-2 m-2 mt-0 p-2 `}>
                {props.todo.outline
-                  ? <p className="text-gray-700 whitespacing-pre">{props.todo.outline}</p>
+                  ? <p className="text-gray-700 whitespacing-pre" style={{whiteSpace:'pre-line'}}>{props.todo.outline}</p>
                      : <p className="italic text-gray-500" >This todo has no description.</p>}
             </section>
 
@@ -143,7 +143,7 @@ const TodoCard = props => {
             {props.todo.solution
                ?  <section className={`flex flex-col gap-2 border border-gray-400 rounded m-2 p-2 ${border_color}`}>
                      <label>Solution</label>
-                     <p className="text-gray-700">{props.todo.solution}</p>
+                     <p className="text-gray-700" style={{whiteSpace:'pre-line'}}>{props.todo.solution}</p>
                   </section>
                :  null
             }

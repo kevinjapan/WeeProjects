@@ -90,7 +90,7 @@ const Comment = props => {
 
          <p className="italic text-sm  font-extralight text-slate-400 pl-4">Posted by {comment.author_id} on {get_ui_ready_date(comment.created_at)}</p>
 
-         <p className="leading-relaxed pt-4 pl-4">{comment.body}</p>
+         <p className="leading-relaxed pt-4 pl-4" style={{whiteSpace:'pre-line'}}>{comment.body}</p>
 
 
 

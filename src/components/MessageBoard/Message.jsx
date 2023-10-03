@@ -125,7 +125,8 @@ const Message = props => {
 
             {is_open
                ?  <>
-                     <div className="pt-6">{props.message.body}</div> 
+                     {/* to do : rollout - pre-line whitepace.. */}
+                     <div className="pt-6" style={{whiteSpace:'pre-line'}}>{props.message.body}</div> 
                      <section className="w-10/12 ml-auto mr-12">              
                         <CommentsList 
                            commentable_type="message"
@@ -136,7 +137,7 @@ const Message = props => {
                      </section>
                   </>
                :  <section>
-                     <div className="pt-6">{truncate(props.message.body,250)}</div>
+                     <div className="pt-6" >{truncate(props.message.body,250)}</div>
                   </section>
             }
          
