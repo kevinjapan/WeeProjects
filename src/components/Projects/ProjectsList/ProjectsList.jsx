@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { AppContext } from '../../App/AppContext/AppContext'      // to do : for dev..
 import get_ui_ready_date from '../../Utility/DateTime/DateTime'
 import Modal from '../../Utility/Modal/Modal'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
@@ -7,6 +8,8 @@ import AddProjectForm from '../AddProjectForm/AddProjectForm'
 
 
 const ProjectsList = props => {
+
+   const {bearer_token} = useContext(AppContext)    // to do : for dev...
 
    const [show_add_modal,setShowAddModal] = useState(false)
    const [adding_project] = useState(false)
@@ -19,6 +22,9 @@ const ProjectsList = props => {
    return (
       props.projects && (
          <section className="m-5">
+
+            <div style={{maxWidth:'32rem',overflow:'hidden',color:'lightgrey'}}>{bearer_token}</div> {/* to do : remove - dev only */}
+
             <table className="w-full my-5">
                <tbody>
                   <tr>

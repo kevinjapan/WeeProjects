@@ -19,13 +19,17 @@ const Projects = () => {
    useEffect(() => {
       const get_projects = async(api) => {
          try {
-               const data = await fetch(`${api}/`,reqInit())
+               const data = await fetch(`${api}/`,reqInit("GET",bearer_token))
                const jsonData = await data.json()
 
             if(jsonData.outcome === 'success') {
                setProjects(jsonData.data)
             } else {
-               setStatusMsg("Server couldn't retrieve Projects")
+               if(jsonData.message) {
+                  setStatusMsg(jsonData.message)
+               } else {                  
+                  setStatusMsg("Server couldn't retrieve Projects")
+               }
             }
          } catch(error) {
                setStatusMsg('Sorry, unable to fetch data from the server. ' + error)
