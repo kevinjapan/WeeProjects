@@ -104,7 +104,9 @@ const Project = props => {
 
    const is_unique = (item_id,item_field,value) => {
       if(!project.tasks) return true
+      // exclude selected Project from check (we may simply be renaming)
       const filtered_tasks = project.tasks.filter(task => parseInt(task.id) !== parseInt(item_id))
+      // check no other Project has that field value already
       return filtered_tasks ? !filtered_tasks.some(task => task[item_field] === value) : true
    }
 

@@ -95,7 +95,9 @@ const TodosList = props => {
 
    const is_unique = (item_id,item_field,value) => {
       if(!todos) return true
+      // exclude selected Todo from check
       const filtered_todos = todos.filter(todo => parseInt(todo.id) !== parseInt(item_id))
+      // check no other Todo has that field value already
       return filtered_todos ? !filtered_todos.some(todo => todo[item_field] === value) : true
    }
 
