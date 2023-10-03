@@ -1,6 +1,8 @@
 import React, { lazy,Suspense } from 'react'
 import { Routes,Route,Outlet } from 'react-router-dom'
 import Home from '../../Home/Home'
+import Login from '../Login/Login'
+import UserAccount from '../../UserAccount/UserAccount'
 import Dashboard from '../../Dashboard/Dashboard/Dashboard'
 
 
@@ -35,7 +37,9 @@ const AppLayout = () => {
                   <Route path="/" element={<Home />} />
                   <Route path="/projects/*" element={<Projects />} />
                   <Route path="/search" element={<Search />} />
+                  <Route path="/user_account/*" element={<UserAccount />} />
                   <Route path="/dashboard/*" element={<Dashboard />} />
+                  <Route path="/login/*" element={<Login />} />
                </Route>
             </Routes>
          </main>
