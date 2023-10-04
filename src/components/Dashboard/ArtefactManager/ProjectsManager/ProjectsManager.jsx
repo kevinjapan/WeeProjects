@@ -25,8 +25,8 @@ const ProjectsManager = () => {
    useEffect(() => {
       const get_projects = async(api) => {
          try {
-               const data = await fetch(`${api}/projects_inclusive`,reqInit())
-               const jsonData = await data.json()
+            const data = await fetch(`${api}/projects_inclusive`,reqInit("GET",bearer_token))
+            const jsonData = await data.json()
 
             if(jsonData.outcome === 'success') {
                setProjects(jsonData.data)

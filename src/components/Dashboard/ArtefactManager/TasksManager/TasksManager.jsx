@@ -25,7 +25,7 @@ const TasksManager = () => {
    useEffect(() => {
       const get_tasks = async (api) => {
          try {
-            const data = await fetch(`${api}/${params.project_slug}/tasks_inclusive`,reqInit())
+            const data = await fetch(`${api}/${params.project_slug}/tasks_inclusive`,reqInit("GET",bearer_token))
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setTasks(jsonData.data)

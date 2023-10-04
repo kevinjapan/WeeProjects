@@ -26,7 +26,7 @@ const TodosManager = () => {
    useEffect(() => {
       const get_todos = async (api) => {
          try {
-            const data = await fetch(`${api}/${params.project_slug}/${params.task_slug}/todos_inclusive`,reqInit())
+            const data = await fetch(`${api}/${params.project_slug}/${params.task_slug}/todos_inclusive`,reqInit("GET",bearer_token))
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setTodos(jsonData.data)

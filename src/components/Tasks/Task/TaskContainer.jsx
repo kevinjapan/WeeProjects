@@ -9,13 +9,13 @@ import Task from './Task'
 const TaskContainer = () => {
 
    const [task,setTask] = useState({})
-   const {api,setStatusMsg} = useContext(AppContext)
+   const {api,bearer_token,setStatusMsg} = useContext(AppContext)
    let params = useParams()
 
    useEffect(() => {
       const get_task = async (api) => {
          try {
-            const data = await fetch(`${api}/${params.project_slug}/${params.task_slug}`,reqInit())
+            const data = await fetch(`${api}/${params.project_slug}/${params.task_slug}`,reqInit("GET",bearer_token))
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setTask(jsonData.data)

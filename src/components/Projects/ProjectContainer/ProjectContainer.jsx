@@ -9,7 +9,7 @@ import Project from '../Project/Project'
 const ProjectContainer = props => {
 
    const [project,setProject] = useState({})
-   const {api,setStatusMsg} = useContext(AppContext)
+   const {api,bearer_token,setStatusMsg} = useContext(AppContext)
    const [loading_status,setLoadingStatus] = useState('loading..')
    let params = useParams()
 
@@ -18,7 +18,7 @@ const ProjectContainer = props => {
    useEffect(() => {
       const get_project = async (api,slug) => {
          try {
-            const data = await fetch(`${api}/projects/${slug}`,reqInit())
+            const data = await fetch(`${api}/projects/${slug}`,reqInit("GET",bearer_token))
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setProject(jsonData.data)
