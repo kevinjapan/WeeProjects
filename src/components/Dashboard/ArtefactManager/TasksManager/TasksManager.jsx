@@ -30,8 +30,7 @@ const TasksManager = () => {
             if(jsonData.outcome === 'success') {
                setTasks(jsonData.data)
             } else {
-               await new Promise(resolve => setTimeout(resolve, 1000))
-               // setLoadingStatus(jsonData.message)
+               setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve Tasks.")
                }
          } catch {
             setStatusMsg('Sorry, unable to fetch data from the server.')

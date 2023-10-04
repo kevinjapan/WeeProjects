@@ -31,7 +31,7 @@ const ProjectsManager = () => {
             if(jsonData.outcome === 'success') {
                setProjects(jsonData.data)
             } else {
-               setStatusMsg("Server couldn't retrieve Projects")
+               setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve Projects.")
             }
          } catch(error) {
                setStatusMsg('Sorry, unable to fetch data from the server. ' + error)

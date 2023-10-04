@@ -20,9 +20,8 @@ const TaskContainer = () => {
             if(jsonData.outcome === 'success') {
                setTask(jsonData.data)
             } else {
-               await new Promise(resolve => setTimeout(resolve, 1000))
-               setLoadingStatus(jsonData.message)
-               }
+               setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve the Task.")
+            }
          } catch {
             setStatusMsg('Sorry, unable to fetch data from the server.')
          }

@@ -23,8 +23,7 @@ const ProjectContainer = props => {
             if(jsonData.outcome === 'success') {
                setProject(jsonData.data)
             } else {
-               await new Promise(resolve => setTimeout(resolve, 1000))
-               setLoadingStatus(jsonData.message)
+               setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve Project.")
             }
          } catch {
                setStatusMsg('Sorry, unable to fetch data from the server.')
