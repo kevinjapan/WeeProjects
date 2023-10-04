@@ -45,7 +45,7 @@
    opacity:.95;
    -webkit-transition:opacity .35s ease-in;   
    -o-transition:opacity .35s ease-in;  
-   transform:translateY(30%); 
+   transform:translateY(130%); 
    transition:opacity 1s ease-in-out,transform 1s ease-in-out;
 
 }

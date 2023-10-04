@@ -19,8 +19,8 @@ const AppStatus = props => {
         let clear_message,clear_lingering_message // prev. comment prevents warning ("clear_message not used.."")
         if(status_msg !== "") {
             setLingeringStatusMsg(status_msg)
-            clear_message = setTimeout(() => setStatusMsg(""),3000)
-            clear_lingering_message = setTimeout(() => setLingeringStatusMsg(""),4000)
+            clear_message = setTimeout(() => setStatusMsg(""),4000)
+            clear_lingering_message = setTimeout(() => setLingeringStatusMsg(""),5000)
         }
         return (clear_message) => {
             clearTimeout(clear_message)
@@ -29,7 +29,7 @@ const AppStatus = props => {
     },[status_msg,setStatusMsg,setLingeringStatusMsg])
 
     return (
-        <div className={`app_status h-fit text-left p-5 border rounded bg-slate-200 shadow ${status_msg !== "" ? 'app_status_bg' : ''}`}>
+        <div className={`app_status h-fit text-left p-8 border border-slate-300 shadow-lg rounded-xl bg-white  ${status_msg !== "" ? 'app_status_bg' : ''}`}>
             {lingering_status_msg}
         </div>
     )
