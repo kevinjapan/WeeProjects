@@ -19,8 +19,9 @@ const TaskContainer = () => {
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setTask(jsonData.data)
-            } else {
-               setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve the Task.")
+            } 
+            else {
+               setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve the Task.")  // to do : rollout this pattern..
             }
          } catch {
             setStatusMsg('Sorry, unable to fetch data from the server.')
