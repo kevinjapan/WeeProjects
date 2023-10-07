@@ -145,7 +145,7 @@ const TasksList = props => {
 
          <section style={{width:'15%',marginLeft:'.5rem'}}>
             <ul className="flex flex-col gap-3 p-1 border border-gray-400 rounded-lg shadow-lg">
-               <label className="text-gray-400">Tasks</label>
+               <div className="text-gray-400">Tasks</div>
                {tasks ? 
                   tasks.map(task => (
                      <li key={task.id} className={"w-full px-1 " + is_selected_task(task.id)} >
@@ -179,18 +179,11 @@ const TasksList = props => {
                      update_session={update_session}
                   /> 
                :  <div>
-               
-                     {/* to do : create component ProjectDashboard or similar name.. 
-                     
-                              this is a mockup of features we would want..  */}
-
+            
                      <h3>welcome to the project page</h3>
 
-                     <p className="p-5">project statement here</p>
+                     <p className="p-5">project overview here</p>
 
-                     <p className="p-5">
-                        {/* to do : initially - just list latest 5 items for each category */}
-                        new items here - messages.. </p>
                   </div>
             }
          </section>
