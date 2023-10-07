@@ -68,3 +68,18 @@ h6 {
 .tooltipped:hover .tooltip {
    visibility:visible;
 }
+
+
+input[name='username'],
+label[data-in="username"] {
+   display:none;
+   max-width:0px;
+   max-height:0px;
+   border:none;
+   line-height:0;
+   font-size:.01px;
+}
+input[name='username']:focus {
+   outline:none;
+}
+
