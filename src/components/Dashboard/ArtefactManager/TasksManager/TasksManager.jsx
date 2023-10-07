@@ -29,9 +29,10 @@ const TasksManager = () => {
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setTasks(jsonData.data)
-            } else {
+            } 
+            else {
                setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve Tasks.")
-               }
+            }
          } catch {
             setStatusMsg('Sorry, unable to fetch data from the server.')
          }
@@ -53,7 +54,7 @@ const TasksManager = () => {
          const data = await fetch(`${api}/${params.project_slug}/${selected_task.slug}/delete_permanently`,reqInit("DELETE",bearer_token,selected_task))
          
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
 
@@ -66,7 +67,7 @@ const TasksManager = () => {
          }
 
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {

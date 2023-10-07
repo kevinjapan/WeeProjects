@@ -29,7 +29,7 @@ const Project = props => {
       try {
          const data = await fetch(`${api}/${project.slug}/tasks`,reqInit("POST",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === 'success') {
                formJson['id'] = jsonData.id
                formJson['slug'] = formJson.title.replace(/ /g,'-')
@@ -51,7 +51,7 @@ const Project = props => {
       try {
          const data = await fetch(`${api}/projects/${project.slug}`,reqInit("PUT",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === 'success') {
             dispatch({
                type: 'update_project',
@@ -85,17 +85,18 @@ const Project = props => {
       try {
          const data = await fetch(`${api}/projects`,reqInit("DELETE",bearer_token,project))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === 'success') {
 
             const deleted_project_id = project.id
-            dispatch({
-               type: 'delete_project_local_copy'
-            })
+            dispatch({type: 'delete_project_local_copy'})
             
             // refresh list in Projects component once project is deleted
             props.removed_deleted_project(deleted_project_id)
+         } 
+         else {
+            setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve the Projects.")
          }
       } catch(error) {
          setStatusMsg('Sorry, we are unable to update data on the server at this time.' + error)

@@ -30,7 +30,7 @@ const CheckList = props => {
       try {
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/${props.todo_slug}/checklistitems/${todo_id}`,reqInit("GET",bearer_token))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === 'success') {
             setCheckListItems(jsonData.data)
          }
@@ -69,7 +69,7 @@ const CheckList = props => {
 
          const data = await fetch(`${api}/checklistitems`,reqInit("POST",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          
          if(jsonData.outcome === 'success') {
             formJson['id'] = jsonData.id

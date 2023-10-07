@@ -30,9 +30,10 @@ const TodosManager = () => {
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setTodos(jsonData.data)
-            } else {
+            } 
+            else {
                setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve Todos.")
-               }
+            }
          } catch {
             setStatusMsg('Sorry, unable to fetch data from the server.')
          }
@@ -54,7 +55,7 @@ const TodosManager = () => {
          const data = await fetch(`${api}/${params.project_slug}/${params.task_slug}/${selected_todo.slug}/delete_permanently`,reqInit("DELETE",bearer_token,selected_todo))
          
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
 
@@ -68,7 +69,7 @@ const TodosManager = () => {
          }
 
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {

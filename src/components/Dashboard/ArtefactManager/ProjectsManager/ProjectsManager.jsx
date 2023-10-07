@@ -30,7 +30,8 @@ const ProjectsManager = () => {
 
             if(jsonData.outcome === 'success') {
                setProjects(jsonData.data)
-            } else {
+            } 
+            else {
                setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve Projects.")
             }
          } catch(error) {
@@ -54,7 +55,7 @@ const ProjectsManager = () => {
          const data = await fetch(`${api}/projects/delete_permanently`,reqInit("DELETE",bearer_token,selected_project))
 
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
 
@@ -68,7 +69,7 @@ const ProjectsManager = () => {
          }
 
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {

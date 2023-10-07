@@ -40,7 +40,7 @@ const CommentsList = props => {
       try {
          const data = await fetch(`${api}/${props.commentable_type}/comments/${props.commentable_type}/${props.commentable_id}`,reqInit("GET",bearer_token))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === 'success') {
             setComments(jsonData.data)
             setRetrievalAttempted(true)
@@ -61,7 +61,7 @@ const CommentsList = props => {
       try {
          const data = await fetch(`${api}/comments`,reqInit("POST",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          
          if(jsonData.outcome === 'success') {
             formJson['id'] = jsonData.id

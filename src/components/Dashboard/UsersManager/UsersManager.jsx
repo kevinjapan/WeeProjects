@@ -3,7 +3,7 @@ import { Link,useParams } from 'react-router-dom'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 import { Notifications } from '../../Utility/utilities/enums'
-import get_ui_ready_date from '../../Utility/DateTime/DateTime'
+import get_ui_ready_date, { get_db_ready_datetime } from '../../Utility/DateTime/DateTime'
 import Modal from '../../Utility/Modal/Modal'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
 import { PlusIcon } from '@heroicons/react/24/solid'
@@ -31,19 +31,17 @@ const UsersManager = () => {
    
    useEffect(() => {
       const get_users = async (api) => {
+         
          try {
-
-            //
-            // to do : align w/ Users table...
-            //
             const data = await fetch(`${api}/users/usersmanager/users/users_inclusive`,reqInit("GET",bearer_token))
 
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setUsers(jsonData.data)
-            } else {
+            } 
+            else {
                // setLoadingStatus(jsonData.user)
-               }
+            }
          } catch {
             setStatusMsg('Sorry, unable to fetch data from the server.')
          }
@@ -63,7 +61,7 @@ const UsersManager = () => {
 
          const data = await fetch(`${api}/users/usersmanager`,reqInit("POST",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          
          if(jsonData.outcome === 'success') {
             formJson['id'] = jsonData.id
@@ -95,7 +93,7 @@ const UsersManager = () => {
 
          const data = await fetch(`${api}/users/usersmanager/${formJson['id']}`,reqInit("PUT",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
 
@@ -124,49 +122,56 @@ const UsersManager = () => {
 
    const delete_user = async (formJson) => {
 
-      console.log('to do : call soft_delete on server...')
+      let date = new Date()                                    
+      formJson['deleted_at'] = get_db_ready_datetime(date)
 
+      try {
+         const data = await fetch(`${api}/users/usersmanager/users/${formJson['id']}`,reqInit("DELETE",bearer_token,formJson))
+         const jsonData = await data.json()
+         
+
+         if(jsonData.outcome === 'success') {
+
+            // const deleted_project_id = project.id
+            // dispatch({type: 'delete_project_local_copy'})
+            // let modified = users.filter((user) => user.id !== formJson['id'])
+            // setUsers[...modified]
+
+            let index = users.findIndex((user) => parseInt(user.id) === parseInt(formJson['id']))
+            let deleted_user = users[index]
+            deleted_user['deleted_at'] = formJson['deleted_at']
+            
+         } 
+         else {
+            setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't delete the User.")
+         }
+      } catch(error) {
+         setStatusMsg('Sorry, we are unable to update data on the server at this time.' + error)
+      }
       setShowDeleteModal(false)
    }
 
+
    const confirm_permanently_delete_user = () => {
-
-      console.log('UsersManager - confirm_permanently_delete_user')
       setShowEditModal(false)
-
-      //
-      // to do : this isn't working..
-      //
       setShowPermanentlyDeleteModal(true)
    }
+
 
    const permanently_delete_user = async (formJson) => {
       try {
          setLocalStatus(Notifications.UPDATING)
 
-
-         // ---------------------------------
-         // to do : align w/ Users table..
-         // ---------------------------------
-         
-         const data = await fetch(`${api}/projects/${params.project_slug}/messageboard/users/delete_permanently/${formJson.id}`,reqInit("DELETE",bearer_token,selected_message))
-         
+         const data = await fetch(`${api}/users/usersmanager/users/${formJson['id']}/delete_permanently`,reqInit("DELETE",bearer_token,formJson)) 
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
-
+         
          if(jsonData.outcome === Notifications.SUCCESS) {
-
-            // we don't reset this - we don't mind that form contains prev user - it's not accessible
-            // setSelectedUser({})
-
-            // refresh UI list
-            let modified = users.filter((user) => user.id !== selected_user.id)
-            setUsers(modified)
+            let modified = users.filter((user) => user.id !== formJson['id'])
+            setUsers([...modified])
          }
-
-         setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
-         setLocalStatus('')
+         else {
+            setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't permantently delete the User.")
+         }
       }
       catch(error) {
          setStatusMsg(Notifications.FAILED_SERVER_UPDATE + error)
@@ -180,6 +185,9 @@ const UsersManager = () => {
    }
 
    const is_unique = (item_id,item_field,value) => {
+
+      // to do : we have to check at server..
+
       if(!users) return true
       // exclude selected User from check
       const filtered_users = users.filter(user => parseInt(user.id) !== parseInt(item_id))
@@ -214,7 +222,7 @@ const UsersManager = () => {
                   {users.map((user) => (
                      <tr key={user.id} className="border-b hover:bg-yellow-100 cursor-default">
 
-                        <td className="">{user.username}</td>
+                        <td className="">{user.user_name}</td>
                         <td className="">{user.email}</td>
                         <td className="">{user.created_at ? get_ui_ready_date(user.created_at) : <span className="text-slate-400">today</span>}</td>
                         <td className="">{get_ui_ready_date(user.updated_at)}</td>

@@ -31,10 +31,11 @@ const MessagesManager = () => {
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setMessages(jsonData.data)
-            } else {
-               await new Promise(resolve => setTimeout(resolve, 1000))
+            } 
+            else {
+               
                // setLoadingStatus(jsonData.message)
-               }
+            }
          } catch {
             setStatusMsg('Sorry, unable to fetch data from the server.')
          }
@@ -56,7 +57,7 @@ const MessagesManager = () => {
          const data = await fetch(`${api}/projects/${params.project_slug}/messageboard/messages/delete_permanently/${formJson.id}`,reqInit("DELETE",bearer_token,selected_message))
          
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
 
@@ -69,7 +70,7 @@ const MessagesManager = () => {
          }
 
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {

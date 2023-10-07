@@ -38,7 +38,7 @@ const Message = props => {
 
          const data = await fetch(`${api}/projects/${props.project_slug}/messageboard/messages/${message.id}`,reqInit("PUT",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
             setMessage(formJson)
@@ -46,7 +46,7 @@ const Message = props => {
          }
 
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {
@@ -73,7 +73,7 @@ const Message = props => {
          
          const data = await fetch(`${api}/projects/${props.project_slug}/messageboard/messages/${message.id}`,reqInit("DELETE",bearer_token,message))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
             // update local copy of parent Task
@@ -82,7 +82,7 @@ const Message = props => {
          }
 
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {
@@ -125,7 +125,6 @@ const Message = props => {
 
             {is_open
                ?  <>
-                     {/* to do : rollout - pre-line whitepace.. */}
                      <div className="pt-6" style={{whiteSpace:'pre-line'}}>{props.message.body}</div> 
                      <section className="w-10/12 ml-auto mr-12">              
                         <CommentsList 

@@ -41,7 +41,7 @@ const CheckListItem = props => {
 
          const data = await fetch(`${api}/checklistitems/${checklistitem.id}`,reqInit("PUT",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
 
@@ -53,7 +53,7 @@ const CheckListItem = props => {
          }
 
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {
@@ -74,14 +74,14 @@ const CheckListItem = props => {
          setLocalStatus(Notifications.UPDATING)
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/${props.todo_slug}/checklistitems/${checklistitem.id}`,reqInit("DELETE",bearer_token,checklistitem))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
             props.remove_deleted_checklistitem(checklistitem.id)
          }
          
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {

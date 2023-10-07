@@ -34,7 +34,7 @@ const Comment = props => {
             setComment(formJson)
          }
          setStatusMsg(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setStatusMsg('')
       }
       catch(error) {
@@ -50,12 +50,12 @@ const Comment = props => {
          setStatusMsg(Notifications.UPDATING)
          const data = await fetch(`${api}/comments`,reqInit("DELETE",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === Notifications.SUCCESS) {
             props.remove_deleted_comment(comment.id)
          }
          setStatusMsg(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setStatusMsg('')
       }
       catch(error) {
