@@ -42,7 +42,7 @@ const TodosList = props => {
       try {
          const data = await fetch(`${api}/${props.project_slug}/${props.task_slug}/todos`,reqInit("GET",bearer_token))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === 'success') {
             setTodos(jsonData.data)
          }
@@ -71,7 +71,7 @@ const TodosList = props => {
 
          const data = await fetch(`${api}/${project_slug}/${task_slug}/todos`,reqInit("POST",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          
          if(jsonData.outcome === 'success') {
             formJson['id'] = jsonData.id

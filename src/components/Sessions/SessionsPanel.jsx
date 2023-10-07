@@ -29,7 +29,7 @@ const SessionsPanel = props => {
          const data = await fetch(`${api}/sessions`,reqInit("POST",bearer_token,formJson))
 
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          
          if(jsonData.outcome === 'success') {
             formJson['id'] = jsonData.id

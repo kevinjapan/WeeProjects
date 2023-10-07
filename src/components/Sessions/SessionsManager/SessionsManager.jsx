@@ -102,7 +102,7 @@ const SessionsManager = props => {
          setLocalStatus(Notifications.UPDATING)
          const data = await fetch(`${api}/sessions`,reqInit("PUT",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
 
@@ -114,7 +114,7 @@ const SessionsManager = props => {
          }
 
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {
@@ -136,7 +136,7 @@ const SessionsManager = props => {
          setLocalStatus(Notifications.UPDATING)
          const data = await fetch(`${api}/sessions`,reqInit("DELETE",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === Notifications.SUCCESS) {
             
             // refresh dataset
@@ -144,7 +144,7 @@ const SessionsManager = props => {
 
          }
          setLocalStatus(Notifications.DONE)
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          setLocalStatus('')
       }
       catch(error) {

@@ -38,7 +38,7 @@ const TaskCard = props => {
       try {
          const data = await fetch(`${api}/${props.project_slug}/tasks/${task.slug}`,reqInit("PUT",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === 'success') {
                // dispatch({
                //    type: 'update_task',
@@ -73,7 +73,7 @@ const TaskCard = props => {
       try {
          const data = await fetch(`${api}/${props.project_slug}/tasks`,reqInit("DELETE",bearer_token,task))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === 'success') {
             props.remove_deleted_task(task.id)
             close_task()
