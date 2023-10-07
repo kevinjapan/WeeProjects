@@ -10,7 +10,7 @@ const UserAccount = () => {
             stub for user account
          </p>
          <p className="px-5 py-2">
-            to do : simple data - no updates available - all updates are through admin only
+            
          </p>
       </section>
    )

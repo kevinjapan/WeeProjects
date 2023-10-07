@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import StyledButton from '../../../Utility/StyledButton/StyledButton'
-import { validate_int, validate_string } from '../../../Utility/Validation/uiValidation'
+import { validate_string,validate_email,validate_confirm_password} from '../../../Utility/Validation/uiValidation'
 import FormElement from '../../../Utility/Forms/FormElement/FormElement'
 import StyledInput from '../../../Utility/StyledInput/StyledInput'
-import StyledTextArea from '../../../Utility/StyledTextArea/StyledTextArea'
 import FormElementFeedback from '../../../Utility/Forms/FormElementFeedback/FormElementFeedback'
-import { generate_slug } from '../../../Utility/Stringer/uiStringer'
-import { datetimestamp } from '../../../Utility/DateTime/DateTime'
 
 
 //
@@ -18,15 +15,18 @@ import { datetimestamp } from '../../../Utility/DateTime/DateTime'
 const EditUserManagerForm = props => {
 
    const [id] = useState(props.user.id)
-   const [username,setUsername] = useState(props.user.username)
+   const [username,setUsername] = useState('')
+   const [user_name,setUserUnderScoreName] = useState(props.user.user_name)
    const [email,setEmail] = useState(props.user.email)
-   const [password,setPassword] = useState(props.user.password)      // to do : password is an update field only - don't show existing..
+   const [password,setPassword] = useState() // password update only - we don't show existing.
+   const [password_confirmation,setPasswordConfirmation] = useState()
    const [projects,setProjects] = useState(props.user.projects)
    const [deleted_at,setDeletedAt] = useState(props.user.deleted_at)
 
    // created_at / updated_at / deleted_at
 
    const [username_feedback,setUsernameFeedback] = useState('')
+   const [user_name_feedback,setUserUnderScoreNameFeedback] = useState('')
    const [email_feedback,setEmailFeedback] = useState('')
    const [password_feedback,setPasswordFeedback] = useState('')
    const [projects_feedback,setProjectsFeedback] = useState('')
@@ -35,8 +35,9 @@ const EditUserManagerForm = props => {
       
       setUsernameFeedback('')
       setEmailFeedback('')
-      setPasswordFeedback('')
       setProjectsFeedback('')
+      setPasswordFeedback('')
+      setUserUnderScoreNameFeedback('')
 
       e.preventDefault()
       
@@ -46,30 +47,28 @@ const EditUserManagerForm = props => {
 
       let validated = true
 
-      formJson['username'] = formJson['username'].trim()
+      formJson['user_name'] = formJson['user_name'].trim()
    
-      // to do : ensure we have unique usernames.. is_unique is complete test/search?
-      if(!props.is_unique(formJson['id'],'username',formJson['username'])) {
-         setUsernameFeedback('This username already exists, please enter a different username.')
+      if(!props.is_unique(formJson['id'],'user_name',formJson['user_name'])) {
+         setUserUnderScoreNameFeedback('This username already exists, please enter a different username.')
          validated = false
       }
 
-      if(!validate_string(formJson['username'],{'min_length':3,'max_length':120},setUsernameFeedback)) {
+      if(!validate_string(formJson['user_name'],{'min_length':3,'max_length':120},setUserUnderScoreNameFeedback)) {
          validated = false
       }
 
-      if(!validate_string(formJson['email'],{'min_length':10,'max_length':120},setEmailFeedback)) {
+      if(!validate_email(formJson['email'],{'min_length':10,'max_length':150},setEmailFeedback)) {
          validated = false
       }
-      // to do : validate password
-      // if(!validate_string(formJson['password'],{'min_length':10,'max_length':120},setPasswordFeedback)) {
-      //    validated = false
-      // }
 
-      // to do : validation on projects list..  - may be null
-      // if(!validate_string(formJson['projects'],{'min_length':10,'max_length':120},setProjectsFeedback)) {
-      //    validated = false
-      // }
+      if(!validate_confirm_password(formJson['password'],formJson['password_confirmation'],setPasswordFeedback)) {
+         validated = false
+      }
+
+      if(!validate_string(formJson['projects'],{'min_length':10,'max_length':120},setProjectsFeedback)) {
+         validated = false
+      }
       
       
       if(validated) props.onSubmit(formJson)
@@ -90,6 +89,7 @@ const EditUserManagerForm = props => {
                <FormElement>
                   <label htmlFor="id" className="italic pt-1 w-12/12 md:w-6/12">Id</label>  
                   <StyledInput 
+                     id="id"
                      name="id" 
                      value={id || ''}
                      readonly
@@ -103,42 +103,47 @@ const EditUserManagerForm = props => {
             <section className="w-10/12 pl-12">
 
                <FormElement>
-                  <label htmlFor="username" className="italic pt-1 w-12/12 md:w-1/12">Username</label>  
+                  <label htmlFor="username" data-in="username" className="italic pt-1 w-12/12 md:w-1/12">Username</label>  
                   <StyledInput 
+                     id="username"
                      name="username" 
                      value={username || ''}
                      onChanged={setUsername}
-                     classes="w-11/12"
-                  ></StyledInput>
+                     classes="w-6/12"
+                     readonly></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={username_feedback}/>
 
                <FormElement>
+                  <label htmlFor="user_name" className="italic pt-1 w-12/12 md:w-1/12">user name</label>
+                  <StyledInput 
+                     id="user_name"
+                     name="user_name" 
+                     value={user_name || ''}
+                     placeholder="enter User Name"
+                     classes="w-6/12"
+                     onChanged={setUserUnderScoreName}>
+                  </StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={user_name_feedback}/>
+
+               <FormElement>
                   <label htmlFor="body" className="italic pt-1 w-12/12 md:w-1/12">email</label>
                   <StyledInput 
+                     id="email"
                      name="email" 
                      value={email || ''}
                      onChanged={setEmail}
                      classes="w-11/12"
-               ></StyledInput>
+                     readonly></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={email_feedback}/>
 
-               {/* to do : reset password..  (requries confirmation?) */}
-               <FormElement>
-                  <label htmlFor="password" className="italic pt-1 w-12/12 md:w-1/12">reset password</label>
-                  <StyledInput 
-                     name="password" 
-                     value={password || ''}
-                     onChanged={setPassword}
-                     classes="w-11/12"
-                  ></StyledInput>
-               </FormElement>
-               <FormElementFeedback feedback_msg={password_feedback}/>
-            
+
                <FormElement>
                   <label htmlFor="projects" className="italic pt-1 w-12/12 md:w-1/12">projects</label>
                   <StyledInput 
+                     id="projects"
                      name="projects" 
                      value={projects || ''}
                      onChanged={setProjects}
@@ -147,6 +152,34 @@ const EditUserManagerForm = props => {
                </FormElement>
                <FormElementFeedback feedback_msg={projects_feedback}/>
 
+
+               <section className="border rounded-lg my-5 p-5">
+
+                  <FormElement>
+                     <label htmlFor="password" className="italic pt-1 w-12/12 md:w-1/12">reset password</label>
+                     <StyledInput 
+                        id="password"
+                        name="password" 
+                        value={password || ''}
+                        onChanged={setPassword}
+                        classes="w-11/12"
+                     ></StyledInput>
+                  </FormElement>
+
+                  <FormElement>
+                     <label htmlFor="password_confirmation" className="italic pt-1 w-12/12 md:w-1/12">password confirmation</label>
+                     <StyledInput 
+                        id="password_confirmation"
+                        name="password_confirmation" 
+                        value={password_confirmation || ''}
+                        onChanged={setPasswordConfirmation}
+                        classes="w-11/12"
+                     ></StyledInput>
+                  </FormElement>
+
+                  <FormElementFeedback feedback_msg={password_feedback}/>
+
+               </section>
             </section>
 
          </div>
@@ -154,10 +187,7 @@ const EditUserManagerForm = props => {
          <div className="flex justify-end gap-1 my-1">
             <StyledButton aria-label="Apply." type="submit">Apply</StyledButton>
 
-            {/* 
-               to do :  first 'delete' is 'soft-delete'
-                        then 'delete' changes to 'permanently delete'
-            */}
+            {/* first 'delete' is 'soft-delete' - then changes to 'permanently delete' */}
             {deleted_at
                ?  <StyledButton aria-label="Delete" onClicked={props.onPermanentlyDelete}>Permanently Delete</StyledButton>
                :  <StyledButton aria-label="Delete" onClicked={props.onDelete}>Delete</StyledButton>

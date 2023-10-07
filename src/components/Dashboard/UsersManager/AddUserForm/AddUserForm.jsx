@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import StyledButton from '../../../Utility/StyledButton/StyledButton'
-import { validate_int, validate_string } from '../../../Utility/Validation/uiValidation'
+import { validate_string,validate_email,validate_confirm_password } from '../../../Utility/Validation/uiValidation'
 import FormElement from '../../../Utility/Forms/FormElement/FormElement'
 import StyledInput from '../../../Utility/StyledInput/StyledInput'
-import StyledTextArea from '../../../Utility/StyledTextArea/StyledTextArea'
 import FormElementFeedback from '../../../Utility/Forms/FormElementFeedback/FormElementFeedback'
-import { generate_slug } from '../../../Utility/Stringer/uiStringer'
-import { datetimestamp } from '../../../Utility/DateTime/DateTime'
 
 
 //
@@ -15,19 +12,19 @@ import { datetimestamp } from '../../../Utility/DateTime/DateTime'
 // 
 
 
-// to do : adopt from copied EditUserForm :
-
-
 const AddUserForm = props => {
 
    const [username,setUsername] = useState('')
+   const [user_name,setUserUnderScoreName] = useState('')
    const [email,setEmail] = useState('')
-   const [password,setPassword] = useState('')      // to do : password is an update field only - don't show existing..
+   const [password,setPassword] = useState('')
+   const [password_confirmation,setPasswordConfirmation] = useState()
    const [projects,setProjects] = useState('')
 
    // created_at / updated_at / deleted_at
 
    const [username_feedback,setUsernameFeedback] = useState('')
+   const [user_name_feedback,setUserUnderScoreNameFeedback] = useState('')
    const [email_feedback,setEmailFeedback] = useState('')
    const [password_feedback,setPasswordFeedback] = useState('')
    const [projects_feedback,setProjectsFeedback] = useState('')
@@ -38,6 +35,7 @@ const AddUserForm = props => {
       setEmailFeedback('')
       setPasswordFeedback('')
       setProjectsFeedback('')
+      setUserUnderScoreNameFeedback('')
 
       e.preventDefault()
       
@@ -47,26 +45,28 @@ const AddUserForm = props => {
 
       let validated = true
 
-      formJson['username'] = formJson['username'].trim()
+      formJson['user_name'] = formJson['user_name'].trim()
    
-      // to do : ensure we have unique usernames.. is_unique is complete test/search?
-      if(!props.is_unique(formJson['id'],'username',formJson['username'])) {
-         setUsernameFeedback('This username already exists, please enter a different username.')
+      if(!props.is_unique(formJson['id'],'user_name',formJson['user_name'])) {
+         setUserUnderScoreNameFeedback('This username already exists, please enter a different username.')
          validated = false
       }
 
-      if(!validate_string(formJson['username'],{'min_length':3,'max_length':120},setUsernameFeedback)) {
+      if(!validate_string(formJson['user_name'],{'min_length':3,'max_length':120},setUserUnderScoreNameFeedback)) {
          validated = false
       }
 
-      if(!validate_string(formJson['email'],{'min_length':10,'max_length':120},setEmailFeedback)) {
+      if(!validate_email(formJson['email'],{'min_length':10,'max_length':150},setEmailFeedback)) {
          validated = false
       }
-      if(!validate_string(formJson['password'],{'min_length':10,'max_length':120},setPasswordFeedback)) {
+      
+      
+      if(!validate_confirm_password(formJson['password'],formJson['password_confirmation'],setPasswordFeedback)) {
          validated = false
       }
 
-      // to do : validation on projects list..
+      // future : validate projects list..  -  
+      // may be null  -  (permit ',' / numbers only (or tokens?)) - rollout to EditUserForm
       if(!validate_string(formJson['projects'],{'min_length':1,'max_length':120},setProjectsFeedback)) {
          validated = false
       }
@@ -80,23 +80,16 @@ const AddUserForm = props => {
 
          <h5 className="text-2xl mb-5">Add User</h5>
 
-
          <div className="flex">
 
-         
-            <section className="w-2/12">
+            <section className="w-2/12"></section>
 
-       
-       
-
-            </section>
-
-            
             <section className="w-10/12 pl-12">
 
                <FormElement>
-                  <label htmlFor="username" className="italic pt-1 w-12/12 md:w-1/12">Username</label>  
+                  <label htmlFor="username" data-in="username" className="italic pt-1 w-12/12 md:w-1/12">Username</label>  
                   <StyledInput 
+                     id="username"
                      name="username" 
                      value={username || ''}
                      onChanged={setUsername}
@@ -106,8 +99,22 @@ const AddUserForm = props => {
                <FormElementFeedback feedback_msg={username_feedback}/>
 
                <FormElement>
+                  <label htmlFor="user_name" className="italic pt-1 w-12/12 md:w-1/12">user name</label>
+                  <StyledInput 
+                     id="user_name"
+                     name="user_name" 
+                     value={user_name || ''}
+                     placeholder="enter User Name"
+                     classes="w-6/12"
+                     onChanged={setUserUnderScoreName}>
+                  </StyledInput>
+               </FormElement>
+               <FormElementFeedback feedback_msg={user_name_feedback}/>
+
+               <FormElement>
                   <label htmlFor="body" className="italic pt-1 w-12/12 md:w-1/12">email</label>
                   <StyledInput 
+                     id="email"
                      name="email" 
                      value={email || ''}
                      onChanged={setEmail}
@@ -116,21 +123,10 @@ const AddUserForm = props => {
                </FormElement>
                <FormElementFeedback feedback_msg={email_feedback}/>
 
-               {/* to do : reset password..  (requries confirmation?) */}
-               <FormElement>
-                  <label htmlFor="password" className="italic pt-1 w-12/12 md:w-1/12">password</label>
-                  <StyledInput 
-                     name="password" 
-                     value={password || ''}
-                     onChanged={setPassword}
-                     classes="w-11/12"
-                  ></StyledInput>
-               </FormElement>
-               <FormElementFeedback feedback_msg={password_feedback}/>
-            
                <FormElement>
                   <label htmlFor="projects" className="italic pt-1 w-12/12 md:w-1/12">projects</label>
                   <StyledInput 
+                     id="projects"
                      name="projects" 
                      value={projects || ''}
                      onChanged={setProjects}
@@ -138,6 +134,33 @@ const AddUserForm = props => {
                   ></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={projects_feedback}/>
+
+               <section className="border rounded-lg my-5 p-5">
+
+                  <FormElement>
+                     <label htmlFor="password" className="italic pt-1 w-12/12 md:w-1/12">password</label>
+                     <StyledInput 
+                        id="password"
+                        name="password" 
+                        value={password || ''}
+                        onChanged={setPassword}
+                        classes="w-11/12"
+                     ></StyledInput>
+                  </FormElement>
+                  <FormElementFeedback feedback_msg={password_feedback}/>
+            
+                  <FormElement>
+                     <label htmlFor="password_confirmation" className="italic pt-1 w-12/12 md:w-1/12">password confirmation</label>
+                     <StyledInput 
+                        id="password_confirmation"
+                        name="password_confirmation" 
+                        value={password_confirmation || ''}
+                        onChanged={setPasswordConfirmation}
+                        classes="w-11/12"
+                     ></StyledInput>
+                  </FormElement>
+
+               </section>
 
             </section>
 
