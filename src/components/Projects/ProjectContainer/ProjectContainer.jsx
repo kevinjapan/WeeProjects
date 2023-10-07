@@ -22,7 +22,8 @@ const ProjectContainer = props => {
             const jsonData = await data.json()
             if(jsonData.outcome === 'success') {
                setProject(jsonData.data)
-            } else {
+            } 
+            else {
                setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve Project.")
             }
          } catch {

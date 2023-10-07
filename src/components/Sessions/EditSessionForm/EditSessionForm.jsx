@@ -37,7 +37,8 @@ const EditSessionForm = props => {
          if(!validate_datetime_string(formJson['ended_at'],{},setEndedAtFeedback)) {
             validated = false
          }
-      } else {
+      } 
+      else {
          formJson['ended_at'] = null
       }
 

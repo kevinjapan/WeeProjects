@@ -35,7 +35,8 @@ const AddCheckListItemForm = props => {
       }
       if(!validate_string(formJson['title'],{'min_length':10,'max_length':80},setTitleFeedback)) {
          validated = false
-      } else {
+      } 
+      else {
          formJson['slug'] = generate_slug(formJson['title'])
       }
 
@@ -61,6 +62,7 @@ const AddCheckListItemForm = props => {
                <FormElement>
                   <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
+                     id="author_id"
                      name="author_id" 
                      value={author_id || 1}
                      placeholder="enter the author id here"
@@ -76,6 +78,7 @@ const AddCheckListItemForm = props => {
                <FormElement>
                   <label htmlFor="title" className="italic pt-1 w-12/12 md:w-1/12">Title</label>
                   <StyledInput 
+                     id="name"
                      name="title" 
                      value={title}
                      placeholder="enter the title here"

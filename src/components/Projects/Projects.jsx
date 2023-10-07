@@ -19,16 +19,17 @@ const Projects = () => {
    useEffect(() => {
       const get_projects = async(api) => {
          try {
-               const data = await fetch(`${api}/`,reqInit("GET",bearer_token))
-               const jsonData = await data.json()
+            const data = await fetch(`${api}/`,reqInit("GET",bearer_token))
+            const jsonData = await data.json()
 
             if(jsonData.outcome === 'success') {
                setProjects(jsonData.data)
-            } else {
+            } 
+            else {
                setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve Projects.")
             }
          } catch(error) {
-               setStatusMsg('Sorry, we were unable to fetch data from the server. [' + error + ']')
+            setStatusMsg('Sorry, we were unable to fetch data from the server. [' + error + ']')
          }
       }
       get_projects(api)
@@ -40,13 +41,13 @@ const Projects = () => {
          setAddingProject(true)
          const data = await fetch(`${api}/projects`,reqInit("POST",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          if(jsonData.outcome === 'success') {
-               let modified = [...projects]
-               if(!modified.some(todo => todo.id === formJson.id)) {
-                  modified.push(jsonData.data)
-               }
-               setProjects(modified)
+            let modified = [...projects]
+            if(!modified.some(todo => todo.id === formJson.id)) {
+               modified.push(jsonData.data)
+            }
+            setProjects(modified)
          }
          else {
             setStatusMsg("Server couldn't create new Project")
@@ -62,15 +63,16 @@ const Projects = () => {
       let modified = []    
       if(asc) {
          modified = projects.sort((a,b) => {
-               if(a[selected_col] < b[selected_col]) return -1
-               if(a[selected_col] > b[selected_col]) return 1
-               return 0 // no sort
+            if(a[selected_col] < b[selected_col]) return -1
+            if(a[selected_col] > b[selected_col]) return 1
+            return 0 // no sort
          })
-      } else {
+      } 
+      else {
          modified = projects.sort((a,b) => {
-               if(a[selected_col] > b[selected_col]) return -1
-               if(a[selected_col] < b[selected_col]) return 1
-               return 0 // no sort
+            if(a[selected_col] > b[selected_col]) return -1
+            if(a[selected_col] < b[selected_col]) return 1
+            return 0 // no sort
          })
       }
       setProjects([...modified])

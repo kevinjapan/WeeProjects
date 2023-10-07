@@ -30,23 +30,14 @@ const MessageBoard = props => {
          const data = await fetch(`${api}/projects/${params.project_slug}/messageboard/messages`,reqInit("GET",bearer_token))
          const jsonData = await data.json()
          if(jsonData.outcome === 'success') {
-            
             setMessages(jsonData.data)
-
             // we retrieve project_id from returned dataset
             if(jsonData.project_id) {
                setProjectId(jsonData.project_id)
             }
-
-            // to do : equivalent required?
-            // if(selected_task) {
-            //    const selected_task_id = selected_task.id
-            //    const updated_selected_task = jsonData.data.filter(task => parseInt(task.id) === parseInt(selected_task_id))
-            //    setSelectedTask(updated_selected_task[0])
-            //    setTaskUpdated(task_updated + 1)
-            // }
          }
-         else {
+         else 
+         {
             setStatusMsg("Server couldn't retrieve updated Messages list.")
          }
       } catch (error){
@@ -67,7 +58,7 @@ const MessageBoard = props => {
 
          const data = await fetch(`${api}/projects/${params.project_slug}/messageboard/messages`,reqInit("POST",bearer_token,formJson))
          const jsonData = await data.json()
-         await new Promise(resolve => setTimeout(resolve, 1000))
+         
          
          if(jsonData.outcome === 'success') {
             formJson['id'] = jsonData.id

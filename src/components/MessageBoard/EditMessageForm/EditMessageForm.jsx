@@ -48,7 +48,8 @@ const EditMessageForm = props => {
 
       if(!validate_string(formJson['title'],{'min_length':10,'max_length':120},setTitleFeedback)) {
          validated = false
-      } else {
+      } 
+      else {
          formJson['slug'] = generate_slug(formJson['title'])
       }
 
