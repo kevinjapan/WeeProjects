@@ -70,7 +70,8 @@ const EditTodoManagerForm = props => {
 
       if(!validate_string(formJson['title'],{'min_length':10,'max_length':80},setTitleFeedback)) {
          validated = false
-      } else {
+      } 
+      else {
          formJson['slug'] = generate_slug(formJson['title'])
       }
 
@@ -129,6 +130,7 @@ const EditTodoManagerForm = props => {
                <FormElement>
                   <label htmlFor="id" className="italic pt-1 w-12/12 md:w-6/12">ID</label>  
                   <StyledInput 
+                     id="id"
                      name="id" 
                      value={id || ''}
                      classes="w-6/12"
@@ -139,6 +141,7 @@ const EditTodoManagerForm = props => {
                <FormElement>
                   <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
+                     id="author_id"
                      name="author_id" 
                      value={author_id || 1} 
                      onChanged={setAuthorId}
@@ -152,6 +155,7 @@ const EditTodoManagerForm = props => {
                <FormElement>
                      <label htmlFor="outline" className="italic pt-1 w-12/12 md:w-1/12">Pitch, Outline</label>
                      <StyledTextArea 
+                        id="outline"
                         name="outline" 
                         value={outline || ''}
                         placeholder=""
@@ -164,6 +168,7 @@ const EditTodoManagerForm = props => {
                <FormElement>
                      <label htmlFor="solution" className="italic pt-1 w-12/12 md:w-1/12">Solution</label>
                      <StyledTextArea 
+                        id="solution"
                         name="solution" 
                         value={solution || ''}
                         placeholder=""
@@ -180,6 +185,7 @@ const EditTodoManagerForm = props => {
 
             <div className="flex gap-2 items-center mr-7">
                <input 
+                  id="has_checklist"
                   name="has_checklist"
                   type="checkbox" 
                   checked={has_checklist || false}
@@ -189,7 +195,8 @@ const EditTodoManagerForm = props => {
             </div>
 
             <div className="flex gap-2 items-center mr-7">
-               <input 
+               <input
+                  id="done_at" 
                   name="done_at"
                   type="checkbox" 
                   checked={done_at || false}
@@ -200,6 +207,7 @@ const EditTodoManagerForm = props => {
 
             <div className="flex gap-2 items-center mr-7">
                <input 
+                  id="on_going"
                   name="on_going"
                   type="checkbox" 
                   checked={is_on_going || false}
@@ -210,6 +218,7 @@ const EditTodoManagerForm = props => {
             
             <div className="flex gap-2 items-center mr-7">
                <input 
+                  id="pin"
                   name="pin"
                   type="checkbox" 
                   checked={pin || false}

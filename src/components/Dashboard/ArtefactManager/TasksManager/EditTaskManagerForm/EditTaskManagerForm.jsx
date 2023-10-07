@@ -48,7 +48,8 @@ const EditTaskManagerForm = props => {
 
       if(!validate_string(formJson['title'],{'min_length':3,'max_length':120},setTitleFeedback)) {
          validated = false
-      } else {
+      } 
+      else {
          formJson['slug'] = generate_slug(formJson['title'])
       }
 
@@ -80,6 +81,7 @@ const EditTaskManagerForm = props => {
                <FormElement>
                   <label htmlFor="id" className="italic pt-1 w-12/12 md:w-6/12">Id</label>  
                   <StyledInput 
+                     id="id"
                      name="id" 
                      value={id || ''}
                      readonly
@@ -90,6 +92,7 @@ const EditTaskManagerForm = props => {
                <FormElement>
                   <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
+                     id="author_id"
                      name="author_id" 
                      value={author_id || 1}
                      onChanged={setAuthorId}
@@ -106,7 +109,8 @@ const EditTaskManagerForm = props => {
 
                <FormElement>
                   <label htmlFor="title" className="italic pt-1 w-12/12 md:w-1/12">Title</label>  
-                  <StyledInput 
+                  <StyledInput
+                     id="title" 
                      name="title" 
                      value={title || ''}
                      onChanged={setTitle}
@@ -118,6 +122,7 @@ const EditTaskManagerForm = props => {
                <FormElement>
                   <label htmlFor="outline" className="italic pt-1 w-12/12 md:w-1/12">Outline</label>
                   <StyledTextArea 
+                     id="outline"
                      name="outline" 
                      value={outline || ''}
                      onChanged={setOutline}
@@ -132,6 +137,7 @@ const EditTaskManagerForm = props => {
 
          <div className="flex gap-2 items-center text-slate-400 text-sm mr-7">
             <input 
+               id="pin"
                name="pin"
                type="checkbox" 
                checked={pin || false}

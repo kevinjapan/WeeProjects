@@ -49,9 +49,10 @@ const AddMessageForm = props => {
          validated = false
       }
 
-      if(!validate_string(formJson['title'],{'min_length':10,'max_length':120},setTitleFeedback)) {
+      if(!validate_string(formJson['title'],{'min_length':zz,'max_length':120},setTitleFeedback)) {
          validated = false
-      } else {
+      } 
+      else {
          formJson['slug'] = generate_slug(formJson['title'])
       }
 
@@ -83,6 +84,7 @@ const AddMessageForm = props => {
                <FormElement>
                   <label htmlFor="project_id" className="italic pt-1 w-12/12 md:w-6/12">Project Id</label>
                   <StyledInput 
+                     id="project_id"
                      name="project_id" 
                      value={project_id || 0}
                      placeholder="the project id"
@@ -95,6 +97,7 @@ const AddMessageForm = props => {
                <FormElement>
                   <label htmlFor="author_id" className="italic pt-1 w-12/12 md:w-6/12">Author Id</label>
                   <StyledInput 
+                     id="author_id"
                      name="author_id" 
                      value={author_id || 1}
                      placeholder="enter the author id here"
@@ -111,6 +114,7 @@ const AddMessageForm = props => {
                <FormElement>
                   <label htmlFor="title" className="italic pt-1 w-12/12 md:w-1/12">Title</label>
                   <StyledInput 
+                     id="title"
                      name="title" 
                      value={title}
                      placeholder="enter the title here"
@@ -122,6 +126,7 @@ const AddMessageForm = props => {
                <FormElement>
                      <label htmlFor="body" className="italic pt-1 w-12/12 md:w-1/12">Body</label>
                      <StyledTextArea 
+                        id="body"
                         name="body" 
                         value={body}
                         placeholder=""
