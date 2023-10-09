@@ -20,15 +20,15 @@ const StyledInput = props => {
 
    const on_change = (e) => {
 
-      // we exclude chars not URI friendly eg '/' (use g since user could paste.)
-      let valid_string = e.target.value.replace(/[^a-z0-9\-\? \'\:\;]/gi, '')
-  
+      // whitelist URI friendly chars we permit - exclude eg '/'
+      let valid_string = e.target.value.replace(/[^a-z0-9\-\? \'\:\;\,]/gi, '')
+      
       if(props.onChanged) {
          props.onChanged(valid_string)
       }
    }
 
-   // to do :  An element doesn't have an AutoComplete attribute.
+   // future :  "An element doesn't have an AutoComplete attribute."
    // we have issue for improvement - see 'issues' tab on dev tools while visiting form pages.. eg login.
    // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
 
