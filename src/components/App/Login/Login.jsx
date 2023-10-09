@@ -8,6 +8,7 @@ import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormEle
 import StyledInput from '../../Utility/StyledInput/StyledInput'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
 import { validate_email,validate_password } from '../../Utility/Validation/uiValidation'
+import { LENGTHS as LEN } from '../../Utility/utilities/enums'
 
 
 
@@ -24,6 +25,8 @@ const Login = props => {
    const [password_feedback,setPasswordFeedback] = useState('')
    const [username_feedback,setUserNameFeedback] = useState('')
 
+   const [login_failed,setLoginFailed] = useState(false)
+
 
    const handleSubmit = e => {
 
@@ -39,10 +42,10 @@ const Login = props => {
 
       let validated = true
 
-      if(!validate_email(formJson['email'],{'min_length':10,'max_length':150},setEmailFeedback)) {
+      if(!validate_email(formJson['email'],{'min_length':LEN.EMAIL_MIN,'max_length':LEN.EMAIL_MAX},setEmailFeedback)) {
          validated = false
       }
-      if(!validate_password(formJson['password'],setPasswordFeedback)) {
+      if(!validate_password(formJson['password'],{},setPasswordFeedback)) {
          validated = false
       }
 
@@ -64,6 +67,10 @@ const Login = props => {
             setAppUserName(jsonData.user_name)
             navigate('/projects')
          }
+         else {
+            setStatusMsg(jsonData.message ? jsonData.message : "Login attempt was unsuccessful.")
+            setLoginFailed(true)
+         }
          //setLocalStatus(Notifications.DONE)         
          //setLocalStatus('')
       }
@@ -72,60 +79,73 @@ const Login = props => {
       }
    }
 
+   const try_again = () => {
+      console.log('try')
+      setLoginFailed(false)
+      // navigate('/login')
+   }
 
    return (
-      <section className="w-4/12 mx-auto">
-         <form onSubmit={handleSubmit}>
-            
-            <h5 className="text-2xl mb-5">Login</h5>
-             
-            <FormElement>
-               <label htmlFor="username" data-in="username" className="italic pt-1 w-12/12 md:w-6/12">User Name</label>
-               <StyledInput 
-                  id="username"
-                  name="username" 
-                  value={username || ''}
-                  placeholder="enter User Name"
-                  classes="w-6/12"
-                  onChanged={setUserName}>
-               </StyledInput>
-            </FormElement>
-            <FormElementFeedback feedback_msg={username_feedback}/>
+      <>
+         {!login_failed
+            ?  <section className="w-4/12 mx-auto">
+                  <form onSubmit={handleSubmit}>
+                     
+                     <h5 className="text-2xl mb-5">Login</h5>
+                     
+                     <FormElement>
+                        <label htmlFor="username" data-in="username" className="italic pt-1 w-12/12 md:w-6/12">User Name</label>
+                        <StyledInput 
+                           id="username"
+                           name="username" 
+                           value={username || ''}
+                           placeholder="enter User Name"
+                           classes="w-6/12"
+                           onChanged={setUserName}>
+                        </StyledInput>
+                     </FormElement>
+                     <FormElementFeedback feedback_msg={username_feedback}/>
 
-            <FormElement>
-               <label htmlFor="email" className="italic pt-1 w-12/12 md:w-6/12">email</label>
-               <StyledInput 
-                  id="email"
-                  name="email" 
-                  value={email || ''}
-                  placeholder="enter email"
-                  classes="w-6/12"
-                  onChanged={setEmail}
-                  autocomplete="email">
-               </StyledInput>
-            </FormElement>
-            <FormElementFeedback feedback_msg={email_feedback}/>
+                     <FormElement>
+                        <label htmlFor="email" className="italic pt-1 w-12/12 md:w-6/12">email</label>
+                        <StyledInput 
+                           id="email"
+                           name="email" 
+                           value={email || ''}
+                           placeholder="enter email"
+                           classes="w-6/12"
+                           onChanged={setEmail}
+                           autocomplete="email">
+                        </StyledInput>
+                     </FormElement>
+                     <FormElementFeedback feedback_msg={email_feedback}/>
 
-            <FormElement>
-               <label htmlFor="password" className="italic pt-1 w-12/12 md:w-6/12">password</label>
-               <StyledInput 
-                  id="password"
-                  name="password" 
-                  value={password || ''}
-                  placeholder="enter password"
-                  classes="w-6/12"
-                  onChanged={setPassword}
-                  autocomplete="off">
-               </StyledInput>
-            </FormElement>
-            <FormElementFeedback feedback_msg={password_feedback}/>
+                     <FormElement>
+                        <label htmlFor="password" className="italic pt-1 w-12/12 md:w-6/12">password</label>
+                        <StyledInput 
+                           id="password"
+                           name="password" 
+                           value={password || ''}
+                           placeholder="enter password"
+                           classes="w-6/12"
+                           onChanged={setPassword}
+                           autocomplete="off">
+                        </StyledInput>
+                     </FormElement>
+                     <FormElementFeedback feedback_msg={password_feedback}/>
 
-            <div className="flex justify-end gap-1 my-1">
-               <StyledButton aria-label="Apply." type="submit">Login</StyledButton>
-            </div>
+                     <div className="flex justify-end gap-1 my-1">
+                        <StyledButton aria-label="Apply" type="submit">Login</StyledButton>
+                     </div>
 
-         </form>
-      </section>
+                  </form>
+               </section>
+            :  <section className="w-4/12 mx-auto mt-12">
+                  Your login attempt was unsuccessful 
+                  <a className="text-blue-500 cursor-pointer block mx-auto" onClick={() => try_again()}>try again</a>
+               </section>
+         }
+      </>
    )
 }
 
