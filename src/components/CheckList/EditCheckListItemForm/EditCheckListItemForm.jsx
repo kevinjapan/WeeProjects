@@ -6,6 +6,7 @@ import StyledInput from '../../Utility/StyledInput/StyledInput'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 import { generate_slug } from '../../Utility/Stringer/uiStringer'
 import { datetimestamp } from '../../Utility/DateTime/DateTime'
+import { LENGTHS as LEN } from '../../Utility/utilities/enums'
 
 
 
@@ -45,7 +46,7 @@ const EditCheckListItemForm = props => {
       //    validated = false
       // }
 
-      if(!validate_string(formJson['title'],{'min_length':10,'max_length':80},setTitleFeedback)) {
+      if(!validate_string(formJson['title'],{'min_length':LEN.TITLE_MIN,'max_length':LEN.TITLE_MAX},setTitleFeedback)) {
          validated = false
       } 
       else {

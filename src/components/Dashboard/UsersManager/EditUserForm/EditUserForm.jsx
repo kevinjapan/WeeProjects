@@ -62,11 +62,11 @@ const EditUserManagerForm = props => {
          validated = false
       }
 
-      if(!validate_confirm_password(formJson['password'],formJson['password_confirmation'],setPasswordFeedback)) {
+      if(!validate_confirm_password(formJson['password'],formJson['password_confirmation'],{'min_length':0},setPasswordFeedback,false)) {
          validated = false
       }
 
-      if(!validate_string(formJson['projects'],{'min_length':10,'max_length':120},setProjectsFeedback)) {
+      if(!validate_string(formJson['projects'],{'min_length':1,'max_length':120},setProjectsFeedback)) {
          validated = false
       }
       
@@ -110,7 +110,8 @@ const EditUserManagerForm = props => {
                      value={username || ''}
                      onChanged={setUsername}
                      classes="w-6/12"
-                     readonly></StyledInput>
+                     readonly
+                  ></StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={username_feedback}/>
 
@@ -122,13 +123,15 @@ const EditUserManagerForm = props => {
                      value={user_name || ''}
                      placeholder="enter User Name"
                      classes="w-6/12"
-                     onChanged={setUserUnderScoreName}>
+                     onChanged={setUserUnderScoreName}
+                     readonly
+                  >
                   </StyledInput>
                </FormElement>
                <FormElementFeedback feedback_msg={user_name_feedback}/>
 
                <FormElement>
-                  <label htmlFor="body" className="italic pt-1 w-12/12 md:w-1/12">email</label>
+                  <label htmlFor="email" className="italic pt-1 w-12/12 md:w-1/12">email</label>
                   <StyledInput 
                      id="email"
                      name="email" 

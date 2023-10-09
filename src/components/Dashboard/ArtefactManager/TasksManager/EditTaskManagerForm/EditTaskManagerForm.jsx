@@ -6,7 +6,7 @@ import StyledInput from '../../../../Utility/StyledInput/StyledInput'
 import StyledTextArea from '../../../../Utility/StyledTextArea/StyledTextArea'
 import FormElementFeedback from '../../../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 import { generate_slug } from '../../../../Utility/Stringer/uiStringer'
-import { datetimestamp } from '../../../../Utility/DateTime/DateTime'
+import { LENGTHS as LEN } from '../../../../Utility/utilities/enums'
 
 
 //
@@ -46,7 +46,7 @@ const EditTaskManagerForm = props => {
          validated = false
       }
 
-      if(!validate_string(formJson['title'],{'min_length':3,'max_length':120},setTitleFeedback)) {
+      if(!validate_string(formJson['title'],{'min_length':LEN.TITLE_MIN,'max_length':LEN.TITLE_MAX},setTitleFeedback)) {
          validated = false
       } 
       else {
@@ -56,7 +56,7 @@ const EditTaskManagerForm = props => {
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {
          validated = false
       }
-      if(!validate_string(formJson['outline'],{'min_length':10,'max_length':500},setOutlineFeedback)) {
+      if(!validate_string(formJson['outline'],{'min_length':LEN.TEXT_MIN,'max_length':LEN.TEXT_MAX},setOutlineFeedback)) {
          validated = false
       }
       

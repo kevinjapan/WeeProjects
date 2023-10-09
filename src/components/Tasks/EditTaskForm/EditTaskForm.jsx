@@ -6,6 +6,7 @@ import StyledTextArea from '../../Utility/StyledTextArea/StyledTextArea'
 import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 import { generate_slug } from '../../Utility/Stringer/uiStringer'
+import { LENGTHS as LEN } from '../../Utility/utilities/enums'
 
 
 
@@ -41,7 +42,7 @@ const UpdateTaskForm = props => {
          validated = false
       }
 
-      if(!validate_string(formJson['title'],{'min_length':3,'max_length':120},setTitleFeedback)) {
+      if(!validate_string(formJson['title'],{'min_length':LEN.TITLE_MIN,'max_length':LEN.TITLE_MAX},setTitleFeedback)) {
          validated = false
       } 
       else {
@@ -51,7 +52,7 @@ const UpdateTaskForm = props => {
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {
          validated = false
       }
-      if(!validate_string(formJson['outline'],{'min_length':10,'max_length':500},setOutlineFeedback)) {
+      if(!validate_string(formJson['outline'],{'min_length':LEN.TEXT_MIN,'max_length':LEN.TEXT_MAX},setOutlineFeedback)) {
          validated = false
       }
       

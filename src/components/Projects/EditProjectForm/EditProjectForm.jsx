@@ -5,6 +5,7 @@ import FormElement from '../../Utility/Forms/FormElement/FormElement'
 import StyledInput from '../../Utility/StyledInput/StyledInput'
 import FormElementFeedback from '../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 import { generate_slug } from '../../Utility/Stringer/uiStringer'
+import { LENGTHS as LEN } from '../../Utility/utilities/enums'
 
 
 
@@ -35,7 +36,7 @@ const UpdateProjectForm = props => {
          validated = false
       }
 
-      if(!validate_string(formJson['title'],{'min_length':3,'max_length':50},setTitleFeedback)) {
+      if(!validate_string(formJson['title'],{'min_length':LEN.TITLE_MIN,'max_length':LEN.TITLE_MAX},setTitleFeedback)) {
          validated = false
       } 
       else {

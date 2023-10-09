@@ -7,6 +7,7 @@ import StyledTextArea from '../../../../Utility/StyledTextArea/StyledTextArea'
 import FormElementFeedback from '../../../../Utility/Forms/FormElementFeedback/FormElementFeedback'
 import { generate_slug } from '../../../../Utility/Stringer/uiStringer'
 import { datetimestamp } from '../../../../Utility/DateTime/DateTime'
+import { LENGTHS as LEN } from '../../../../Utility/utilities/enums'
 
 
 //
@@ -68,7 +69,7 @@ const EditTodoManagerForm = props => {
          validated = false
       }
 
-      if(!validate_string(formJson['title'],{'min_length':10,'max_length':80},setTitleFeedback)) {
+      if(!validate_string(formJson['title'],{'min_length':LEN.TITLE_MIN,'max_length':LEN.TITLE_MAX},setTitleFeedback)) {
          validated = false
       } 
       else {
@@ -78,10 +79,10 @@ const EditTodoManagerForm = props => {
       if(!validate_int(formJson['author_id'],{},setAuthorIdFeedback)) {
          validated = false
       }
-      if(!validate_string(formJson['outline'],{'min_length':10,'max_length':1000},setOutlineFeedback)) {
+      if(!validate_string(formJson['outline'],{'min_length':LEN.TEXT_MIN,'max_length':LEN.TEXT_MAX},setOutlineFeedback)) {
          validated = false
       }
-      if(!validate_string(formJson['solution'],{'min_length':0,'max_length':1000},setSolutionFeedback,false)) {
+      if(!validate_string(formJson['solution'],{'min_length':LEN.TEXT_MIN,'max_length':LEN.TEXT_MAX},setSolutionFeedback,false)) {
          validated = false
       }
       
