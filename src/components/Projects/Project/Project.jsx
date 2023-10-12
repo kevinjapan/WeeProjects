@@ -1,9 +1,8 @@
-import React, { useState,useContext,useReducer } from 'react'
-import { Routes,Route,Link } from 'react-router-dom'
+import React, { useState,useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { AppContext } from '../../App/AppContext/AppContext'
 import reqInit from '../../Utility/RequestInit/RequestInit'
 import NavBar from '../../App/NavBar/NavBar'
-import projectReducer from './projectReducer'
 import TasksList from '../../Tasks/TasksList/TasksList'
 import Modal from '../../Utility/Modal/Modal'
 import {get_db_ready_datetime} from '../../Utility/DateTime/DateTime'
@@ -12,13 +11,12 @@ import DeleteProjectForm from '../DeleteProjectForm/DeleteProjectForm'
 import AddTaskForm from '../../Tasks/AddTaskForm/AddTaskForm'
 import StyledButton from '../../Utility/StyledButton/StyledButton'
 import { PencilIcon } from '@heroicons/react/24/solid'
-import CommentsList from '../../Comments/CommentsList'
 
 
 
 const Project = props => {
 
-   const [project, dispatch] = useReducer(projectReducer, props.project)
+   const [project, setProject] = useState(props.project)
    const {api,bearer_token,setStatusMsg } = useContext(AppContext)
    const [show_add_task_modal,setShowAddTaskModal] = useState(false)
    const [show_delete_modal,setShowDeleteModal] = useState(false)
@@ -31,12 +29,16 @@ const Project = props => {
          const jsonData = await data.json()
          
          if(jsonData.outcome === 'success') {
-               formJson['id'] = jsonData.id
-               formJson['slug'] = formJson.title.replace(/ /g,'-')
-               dispatch({
-                  type: 'add_task',
-                  task: formJson
-               })
+            formJson['id'] = jsonData.id
+            formJson['slug'] = formJson.title.replace(/ /g,'-')
+
+            let modified = {...project}
+            if(modified){
+               if(!modified.tasks.some(task => task.id === action.task.id)) {
+                  modified.tasks.unshift(action.task)
+               }
+            }
+            setProject(modified)
          }
          else {
             setStatusMsg("Server couldn't add a new Task")
@@ -53,11 +55,7 @@ const Project = props => {
          const jsonData = await data.json()
          
          if(jsonData.outcome === 'success') {
-            dispatch({
-               type: 'update_project',
-               project: formJson
-            })
-               
+            setProject({...formJson})               
             props.update_project_in_list(formJson)
          }
          else {
@@ -90,7 +88,7 @@ const Project = props => {
          if(jsonData.outcome === 'success') {
 
             const deleted_project_id = project.id
-            dispatch({type: 'delete_project_local_copy'})
+            setProject({})
             
             // refresh list in Projects component once project is deleted
             props.removed_deleted_project(deleted_project_id)
@@ -138,15 +136,6 @@ const Project = props => {
                setShowAddTaskModal={setShowAddTaskModal} 
                setShowWelcome={setShowWelcome}
             />
-
-            <section className="my-16 mx-auto w-11/12 border border-gray-400 rounded-lg p-1 pt-0 shadow-lg"> 
-               <CommentsList 
-                  title_tag="h1"
-                  commentable_type="project"
-                  commentable_id={props.project.id}
-                  comments={props.project.comments} 
-               />
-            </section>
 
             {show_edit_modal && (
                <Modal show={show_edit_modal} close_modal={() => setShowEditModal(false)}>
