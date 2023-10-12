@@ -118,7 +118,7 @@ const CheckList = props => {
                   />
                   
                ))
-            : <h6 className="text-center text-slate-300 mt-1">Loading...</h6>}
+            : <h6 className="text-center text-slate-400 mt-1">Loading...</h6>}
             {adding_checklistitem && (
                <li className="h-fit text-left p-1 border rounded bg-yellow-50" style={{color:'lightgrey'}}>creating on server..</li>
             )}

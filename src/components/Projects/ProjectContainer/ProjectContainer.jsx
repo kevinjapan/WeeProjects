@@ -42,7 +42,7 @@ const ProjectContainer = props => {
                update_project_in_list={props.update_project_in_list}
                removed_deleted_project={props.removed_deleted_project}
             />
-         :  <h6 className="text-center text-slate-300 mt-24">Loading...</h6>
+         :  <h6 className="text-center text-slate-400 mt-24">Loading...</h6>
    )
 }
 
