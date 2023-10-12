@@ -21,7 +21,7 @@ const TaskContainer = () => {
                setTask(jsonData.data)
             } 
             else {
-               setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve the Task.")  // to do : rollout this pattern..
+               setStatusMsg(jsonData.message ? jsonData.message : "Sorry, we couldn't retrieve the Task.")
             }
          } catch {
             setStatusMsg('Sorry, unable to fetch data from the server.')

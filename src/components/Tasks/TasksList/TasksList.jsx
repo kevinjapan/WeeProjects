@@ -9,7 +9,6 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 
 
 
-// to do : consider name - this is much more than the TasksList  ?
 
 const TasksList = props => {
 
@@ -183,6 +182,17 @@ const TasksList = props => {
                      <h3>welcome to the project page</h3>
 
                      <p className="p-5">project overview here</p>
+
+                     {/* future : separate component (& links?) */}
+                     <h5>Team</h5>
+                     <ul className="m-5 p-2 border rounded">
+                        {props.project.users
+                           ?  props.project.users.map((user) => (
+                                 <li key={user.id}>{user.user_name}</li>
+                              ))
+                           :  null
+                        }
+                     </ul>
 
                   </div>
             }
