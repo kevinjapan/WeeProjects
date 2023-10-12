@@ -16,6 +16,7 @@ const MessageBoard = props => {
 
    const [project_id,setProjectId] = useState(0)
    const [messages,setMessages] = useState([])
+   const [get_messages_outcome,setGetMessagesOutcome] = useState('')    // 'success' may still be empty 'messages'
    const [adding_message,setAddingMessage] = useState(false)
    const [show_add_modal,setShowAddModal] = useState(false)
 
@@ -29,6 +30,9 @@ const MessageBoard = props => {
       try {
          const data = await fetch(`${api}/projects/${params.project_slug}/messageboard/messages`,reqInit("GET",bearer_token))
          const jsonData = await data.json()
+
+         setGetMessagesOutcome(jsonData.outcome)
+
          if(jsonData.outcome === 'success') {
             setMessages(jsonData.data)
             // we retrieve project_id from returned dataset
@@ -36,9 +40,8 @@ const MessageBoard = props => {
                setProjectId(jsonData.project_id)
             }
          }
-         else 
-         {
-            setStatusMsg("Server couldn't retrieve updated Messages list.")
+         else {
+            setStatusMsg(jsonData.message ? jsonData.message : "Messages not found.")
          }
       } catch (error){
          setStatusMsg('Sorry, we are unable to retrieve data from the server at this time. ' + error)
@@ -107,33 +110,35 @@ const MessageBoard = props => {
 
    return (
       <>
-         <section className="flex flex-col m-5">
+      {messages && get_messages_outcome === 'success'
+         ?  <section className="flex flex-col m-5">
 
-            <Link to={`/projects/${params.project_slug}`} className="self-center border rounded-3xl px-3 text-blue-300">
-               {params.project_slug} <span className="text-slate-400 italic">- back to project</span></Link>
-         
-            {messages 
-               ?  <div className="text-slate-400 italic self-center my-5">This project has {messages.length} message{messages.length === 1 ? '' : 's'}</div>
-               :  <div className="text-slate-400 italic self-center my-5">This project has no messages.</div>
-            }
-            <ul className="flex flex-col gap-12 p-1">
-               {messages ? 
-                  messages.map(message => (
-                     <Message 
-                        key={message.id} 
-                        message={message}
-                        is_unique={is_unique}
-                        update_messages={update_messages}
-                        remove_deleted_message={remove_deleted_message}
-                     />
-                  ))
-               :null}
+               <Link to={`/projects/${params.project_slug}`} className="self-center border rounded-3xl px-3 text-blue-300">
+                  {params.project_slug} <span className="text-slate-400 italic">- back to project</span></Link>
+            
+               {messages 
+                  ?  <div className="text-slate-400 italic self-center my-5">This project has {messages.length} message{messages.length === 1 ? '' : 's'}</div>
+                  :  <div className="text-slate-400 italic self-center my-5">This project has no messages.</div>
+               }
+               <ul className="flex flex-col gap-12 p-1">
+                  {messages ? 
+                     messages.map(message => (
+                        <Message 
+                           key={message.id} 
+                           message={message}
+                           is_unique={is_unique}
+                           update_messages={update_messages}
+                           remove_deleted_message={remove_deleted_message}
+                        />
+                     ))
+                  :null}
                <StyledButton classes="self-center" aria-label="Add a new task." onClicked={() => setShowAddModal(true)}>
                   <PlusIcon style={{width:'16px',height:'16px'}}/>Add A Message
                </StyledButton>
             </ul>
-
          </section>
+         :  null}
+
 
        
             
