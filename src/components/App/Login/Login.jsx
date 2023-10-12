@@ -68,11 +68,10 @@ const Login = props => {
             navigate('/projects')
          }
          else {
-            setStatusMsg(jsonData.message ? jsonData.message : "Login attempt was unsuccessful.")
+            // we replace login w/ msg (see below) so don't need status msg
+            // setStatusMsg(jsonData.message ? jsonData.message : "Login attempt was unsuccessful.")
             setLoginFailed(true)
          }
-         //setLocalStatus(Notifications.DONE)         
-         //setLocalStatus('')
       }
       catch(error) {
          setStatusMsg(Notifications.FAILED_SERVER_UPDATE + error)
@@ -80,18 +79,16 @@ const Login = props => {
    }
 
    const try_again = () => {
-      console.log('try')
       setLoginFailed(false)
-      // navigate('/login')
    }
 
    return (
       <>
          {!login_failed
-            ?  <section className="w-4/12 mx-auto">
+            ?  <section className="w-4/12 mx-auto mt-20">
                   <form onSubmit={handleSubmit}>
                      
-                     <h5 className="text-2xl mb-5">Login</h5>
+                     <h4>Login</h4>
                      
                      <FormElement>
                         <label htmlFor="username" data-in="username" className="italic pt-1 w-12/12 md:w-6/12">User Name</label>
@@ -140,9 +137,9 @@ const Login = props => {
 
                   </form>
                </section>
-            :  <section className="w-4/12 mx-auto mt-12">
-                  Your login attempt was unsuccessful 
-                  <a className="text-blue-500 cursor-pointer block mx-auto" onClick={() => try_again()}>try again</a>
+            :  <section className="flex flex-col justify-center w-4/12 mx-auto mt-12 p-5 ">
+                  <p className="mx-auto">Your login attempt was unsuccessful.</p> 
+                  <a className="text-blue-500 cursor-pointer block mx-auto" onClick={() => try_again()}>Try again</a>
                </section>
          }
       </>

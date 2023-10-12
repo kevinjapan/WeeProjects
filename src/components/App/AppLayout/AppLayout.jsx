@@ -2,6 +2,7 @@ import React, { lazy,Suspense } from 'react'
 import { Routes,Route,Outlet } from 'react-router-dom'
 import Home from '../../Home/Home'
 import Login from '../Login/Login'
+import Logout from '../Logout/Logout'
 import UserAccount from '../../UserAccount/UserAccount'
 import Dashboard from '../../Dashboard/Dashboard/Dashboard'
 
@@ -40,6 +41,7 @@ const AppLayout = () => {
                   <Route path="/user_account/*" element={<UserAccount />} />
                   <Route path="/dashboard/*" element={<Dashboard />} />
                   <Route path="/login/*" element={<Login />} />
+                  <Route path="/logout/*" element={<Logout />} />
                </Route>
             </Routes>
          </main>
@@ -52,7 +54,7 @@ const AppLayout = () => {
 // simple wrap to enable Suspense.
 function AppWrap() {
    return (
-      <Suspense fallback={<h6 className="text-center text-slate-300 mt-24">Loading...</h6>}>
+      <Suspense fallback={<h6 className="text-center text-slate-400 mt-24">Loading...</h6>}>
          <Outlet />
       </Suspense>
    )

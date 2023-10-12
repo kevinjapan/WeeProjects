@@ -19,8 +19,6 @@ const MainNavBarLinks = () => {
             className={({ isActive }) => isActive ? active_link_classes : ""}
                >Home</NavLink>
          </li>
-         
-         {/* to do : do we want a link here (conditional or not - it does incrse opportunity for breach.) */}
          {bearer_token
             ?  <li>
                   <NavLink to="/dashboard" 
@@ -38,7 +36,7 @@ const MainNavBarLinks = () => {
             ?  <>
                   <li><NavLink to="/user_account" onClick={() => setDisplayDropdown(false)}
                            className={({ isActive }) => isActive ? `${active_link_classes}` : ``}>{app_user_name}</NavLink></li>
-                  <li><NavLink to="/login" onClick={() => setDisplayDropdown(false)}
+                  <li><NavLink to="/logout" onClick={() => setDisplayDropdown(false)}
                            className={({ isActive }) => isActive ? active_link_classes : ""}>Logout</NavLink></li>
                </>
                
@@ -47,9 +45,6 @@ const MainNavBarLinks = () => {
                            className={({ isActive }) => isActive ? active_link_classes : ""}>Login</NavLink>
                </li>
          }
-
-         {/* to do : alternate above w/ Logout link depending on login status.. */}
-
          {/* <li>
             <NavLink to="/search" onClick={() => setDisplayDropdown(false)}
             className={({ isActive }) => isActive ? active_link_classes : ""}>Search</NavLink>
