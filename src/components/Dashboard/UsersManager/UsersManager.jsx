@@ -54,7 +54,6 @@ const UsersManager = () => {
 
    const add_user = async(formJson) => {
 
-         console.log('add_user')
       try {
          // let project_slug = props.project_slug
          //setAddingUser(true)
@@ -97,9 +96,15 @@ const UsersManager = () => {
 
          if(jsonData.outcome === Notifications.SUCCESS) {
 
+            // to do : for some reason, deleted_at is not being preserved in local copy..
+
+            // numeric sort of project ids
+            let projects_array = formJson['projects'].split(',')
+            projects_array.sort(function(a,b) {return a - b})
+            formJson['projects'] = projects_array.toString()
+
             let index = users.findIndex((user) => parseInt(user.id) === parseInt(formJson.id))
             let modified = [...users]
-            console.log(index)
             modified[index] = formJson
             setUsers(modified)
             
@@ -186,7 +191,8 @@ const UsersManager = () => {
 
    const is_unique = (item_id,item_field,value) => {
 
-      // to do : we have to check at server..
+      // future : check at server
+      // currently only checks current user list on client (ok just now)
 
       if(!users) return true
       // exclude selected User from check
@@ -224,6 +230,7 @@ const UsersManager = () => {
 
                         <td className="">{user.user_name}</td>
                         <td className="">{user.email}</td>
+                        {/* to do : this is incorrectly showing on 'update' */}
                         <td className="">{user.created_at ? get_ui_ready_date(user.created_at) : <span className="text-slate-400">today</span>}</td>
                         <td className="">{get_ui_ready_date(user.updated_at)}</td>
                         <td className="">{get_ui_ready_date(user.deleted_at)}</td>
