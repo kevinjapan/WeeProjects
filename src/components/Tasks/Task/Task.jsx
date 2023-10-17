@@ -13,22 +13,26 @@ const Task = props => {
    },[props.task])
 
    return (
-      <div className="md:w-8/12 mx-auto">
-         {/* Task details */}
-         <section className="mb-5">
-            <h3 className="text-sm text-slate-500">
-               <Link to={`/projects/${params.project_slug}`}>{params.project_slug}</Link>
-            </h3>
-            <h1 className="text-2xl text-slate-600">title: {props.task.title}</h1>
-         </section>
+      <>
+         {task.id
+            ?  <div className="md:w-8/12 mx-auto">
+                  {/* Task details */}
+                  <section className="mb-5">
+                     <h3 className="text-sm text-slate-500">
+                        <Link to={`/projects/${params.project_slug}`}>{params.project_slug}</Link>
+                     </h3>
+                     <h1 className="text-2xl text-slate-600">title: {props.task.title}</h1>
+                  </section>
 
-         <section className="flex flex-col gap-2 border rounded m-2 p-2">
-            <div>created at: {get_ui_ready_date(props.task.created_at)}</div>
-            <div>updated at:{get_ui_ready_date(props.task.updated_at)}</div>
-            <div>author:{props.task.author_id}</div>
-            <div></div>
-         </section>
-      </div>
+                  <section className="flex flex-col gap-2 border rounded m-2 p-2">
+                     <div>created at: {get_ui_ready_date(props.task.created_at)}</div>
+                     <div>updated at:{get_ui_ready_date(props.task.updated_at)}</div>
+                     <div>author:{props.task.author_id}</div>
+                     <div></div>
+                  </section>
+               </div>
+            :  null}
+      </>
    )
 }
 
