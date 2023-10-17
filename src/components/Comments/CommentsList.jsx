@@ -64,7 +64,7 @@ const CommentsList = props => {
          
          
          if(jsonData.outcome === 'success') {
-            formJson['id'] = jsonData.id
+            formJson['id'] = jsonData.data.id
             let modified_comments = comments ? [...comments] : []
             if(!modified_comments.some(todo => todo.id === formJson.id)) {
                modified_comments.push(formJson)

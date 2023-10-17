@@ -12,6 +12,8 @@ import { LENGTHS as LEN } from '../../Utility/utilities/enums'
 
 
 
+// to do : research store bearer_token in local storage for btwn session persistance (still w/ expiry)
+
 
 const Login = props => {
 
@@ -63,8 +65,9 @@ const Login = props => {
          const jsonData = await data.json()
 
          if(jsonData.outcome === Notifications.SUCCESS) {
-            setBearerToken(jsonData.bearer_token)
-            setAppUserName(jsonData.user_name)
+            setBearerToken(jsonData.data.bearer_token)
+            //setBearerToken('ladkfjdasfdas;f')      // to do : remove this - re-enable prev line
+            setAppUserName(jsonData.data.user_name)
             navigate('/projects')
          }
          else {

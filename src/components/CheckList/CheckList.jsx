@@ -72,7 +72,7 @@ const CheckList = props => {
          
          
          if(jsonData.outcome === 'success') {
-            formJson['id'] = jsonData.id
+            formJson['id'] = jsonData.data.id
             let modified_checklistitems = checklistitems ? [...checklistitems] : []
             if(!modified_checklistitems.some(checklistitem => checklistitem.id === formJson.id)) {
                modified_checklistitems.push(formJson)

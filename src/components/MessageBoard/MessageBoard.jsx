@@ -34,10 +34,10 @@ const MessageBoard = props => {
          setGetMessagesOutcome(jsonData.outcome)
 
          if(jsonData.outcome === 'success') {
-            setMessages(jsonData.data)
+            setMessages(jsonData.data.message)
             // we retrieve project_id from returned dataset
             if(jsonData.project_id) {
-               setProjectId(jsonData.project_id)
+               setProjectId(jsonData.data.project_id)
             }
          }
          else {
@@ -64,14 +64,12 @@ const MessageBoard = props => {
          
          
          if(jsonData.outcome === 'success') {
-            formJson['id'] = jsonData.id
+            formJson['id'] = jsonData.data.id
             let modified_messages = messages ? [...messages] : []
             if(!modified_messages.some(message => message.id === formJson.id)) {
                modified_messages.push(formJson)
             }
             setMessages(modified_messages)
-
-            //props.update_messages(modified_messages)
          }
          else {
             setStatusMsg("Server couldn't create a new Message")
@@ -114,7 +112,7 @@ const MessageBoard = props => {
          ?  <section className="flex flex-col m-5">
 
                <Link to={`/projects/${params.project_slug}`} className="self-center border rounded-3xl px-3 text-blue-300">
-                  {params.project_slug} <span className="text-slate-400 italic">- back to project</span></Link>
+                  {params.project_slug} <span className="text-slate-400 italic">- go to project</span></Link>
             
                {messages 
                   ?  <div className="text-slate-400 italic self-center my-5">This project has {messages.length} message{messages.length === 1 ? '' : 's'}</div>

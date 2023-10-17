@@ -74,7 +74,7 @@ const TodosList = props => {
          
          
          if(jsonData.outcome === 'success') {
-            formJson['id'] = jsonData.id
+            formJson['id'] = jsonData.data.id
             let modified_todos = todos ? [...todos] : []
             if(!modified_todos.some(todo => todo.id === formJson.id)) {
                modified_todos.push(formJson)
