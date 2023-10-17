@@ -34,8 +34,10 @@ const Project = props => {
 
             let modified = {...project}
             if(modified){
-               if(!modified.tasks.some(task => task.id === action.task.id)) {
-                  modified.tasks.unshift(action.task)
+               if(!modified.tasks.some(task => task.id === formJson.id)) {
+
+                  // to do : research - unshift here?
+                  modified.tasks.unshift(formJson)
                }
             }
             setProject(modified)
