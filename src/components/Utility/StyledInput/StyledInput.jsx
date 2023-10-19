@@ -20,8 +20,8 @@ const StyledInput = props => {
 
    const on_change = (e) => {
 
-      // whitelist URI friendly chars we permit - exclude eg '/'
-      let valid_string = e.target.value.replace(/[^a-z0-9\-\? \'\:\;\,]/gi, '')
+      // Whitelist URI friendly chars we permit - exclude eg '/'
+      let valid_string = props.name === 'email' ? e.target.value.replace(/[^a-z0-9\-\? \'\:\;\,\.\@]/gi, '') : e.target.value.replace(/[^a-z0-9\-\? \'\:\;\,]/gi, '')
       
       if(props.onChanged) {
          props.onChanged(valid_string)
