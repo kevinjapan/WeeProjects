@@ -91,21 +91,18 @@ const UsersManager = () => {
          setLocalStatus(Notifications.UPDATING)
 
          const data = await fetch(`${api}/users/usersmanager/${formJson['id']}`,reqInit("PUT",bearer_token,formJson))
-         const jsonData = await data.json()
-         
+         const jsonData = await data.json()         
 
          if(jsonData.outcome === Notifications.SUCCESS) {
-
-            // to do : for some reason, deleted_at is not being preserved in local copy..
 
             // numeric sort of project ids
             let projects_array = formJson['projects'].split(',')
             projects_array.sort(function(a,b) {return a - b})
             formJson['projects'] = projects_array.toString()
 
-            let index = users.findIndex((user) => parseInt(user.id) === parseInt(formJson.id))
+            let index = users.findIndex((user) => parseInt(user.id) === parseInt(jsonData.data.id))
             let modified = [...users]
-            modified[index] = formJson
+            modified[index] = jsonData.data
             setUsers(modified)
             
             setLocalStatus(Notifications.DONE)
@@ -210,42 +207,44 @@ const UsersManager = () => {
             <span className="font-bold">Users</span>
          </h5>
 
-         <h6 className="w-fit text-slate-500 ml-5 mt-2 bg-yellow">{users.length} user{users.length !== 1 ? 's' : ''}</h6>
+         {users
+            ?  <><h6 className="w-fit text-slate-500 ml-5 mt-2 bg-yellow">{users.length} user{users.length !== 1 ? 's' : ''}</h6>
+            
 
-         <section className="m-5">
-            <table className="w-full my-5">
-               <thead className="text-slate-400 font-thin">
-                  <tr>
-                     <td className="px-3 pt-0.5">username</td>
-                     <td className="px-3 pt-0.5">email</td>
-                     <td className="px-3 pt-0.5">created</td>
-                     <td className="px-3 pt-0.5">last update</td>
-                     <td className="px-3 pt-0.5">deleted_at</td>
-                     <td></td>
-                  </tr>
-               </thead>
-               <tbody>
-                  {users.map((user) => (
-                     <tr key={user.id} className="border-b hover:bg-yellow-100 cursor-default">
+                  <section className="m-5">
+                     <table className="w-full my-5">
+                        <thead className="text-slate-400 font-thin">
+                           <tr>
+                              <td className="px-3 pt-0.5">username</td>
+                              <td className="px-3 pt-0.5">email</td>
+                              <td className="px-3 pt-0.5">created</td>
+                              <td className="px-3 pt-0.5">last update</td>
+                              <td className="px-3 pt-0.5">deleted_at</td>
+                              <td></td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {users.map((user) => (
+                              <tr key={user.id} className="border-b hover:bg-yellow-100 cursor-default">
 
-                        <td className="">{user.user_name}</td>
-                        <td className="">{user.email}</td>
-                        {/* to do : this is incorrectly showing on 'update' */}
-                        <td className="">{user.created_at ? get_ui_ready_date(user.created_at) : <span className="text-slate-400">today</span>}</td>
-                        <td className="">{get_ui_ready_date(user.updated_at)}</td>
-                        <td className="">{get_ui_ready_date(user.deleted_at)}</td>
+                                 <td className="">{user.user_name}</td>
+                                 <td className="">{user.email}</td>
+                                 <td className="">{user.created_at ? get_ui_ready_date(user.created_at) : <span className="text-slate-400">today</span>}</td>
+                                 <td className="">{get_ui_ready_date(user.updated_at)}</td>
+                                 <td className="">{get_ui_ready_date(user.deleted_at)}</td>
 
-                        <td>
-                           <div onClick={() => edit_user(user)} className="text-blue-600 cursor-pointer">edit</div>
-                           {/* <StyledButton aria-label="Edit this user." onClicked={() => setShowEditModal(true)}>
-                              <TrashIcon style={{width:'16px',height:'16px'}}/>Permanently Delete
-                           </StyledButton> */}
-                        </td>
-                     </tr>
-                  ))}
-               </tbody>
-            </table>
-         </section>
+                                 <td>
+                                    <div onClick={() => edit_user(user)} className="text-blue-600 cursor-pointer">edit</div>
+                                    {/* <StyledButton aria-label="Edit this user." onClicked={() => setShowEditModal(true)}>
+                                       <TrashIcon style={{width:'16px',height:'16px'}}/>Permanently Delete
+                                    </StyledButton> */}
+                                 </td>
+                              </tr>
+                           ))}
+                        </tbody>
+                     </table>
+                  </section></>
+            :  null}
 
          <StyledButton aria-label="Add a user." onClicked={() => setShowAddModal(true)} >
                      <PlusIcon style={{width:'16px',height:'16px'}}/>Add
