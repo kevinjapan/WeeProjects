@@ -132,3 +132,20 @@ export const days_elapsed_this_week = () => {
    const today = new Date()
    return today.getDay() + 1
 }
+
+//
+// delay execution - max 60 seconds
+//
+export const wait_for = (secs) => {
+
+   if(secs < 0) return
+   secs = secs * 1000
+   if(parseInt(secs) > 60000) secs = 60000
+
+   let datetime1 = new Date().getTime()
+   let datetime2 = datetime1 + parseInt(secs)
+   while(datetime1 < datetime2) {
+      datetime1 = new Date().getTime()
+   }
+
+}
